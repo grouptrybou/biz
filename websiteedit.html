@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Group Trybou — Voor elke onderneming die groots durft te dromen</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#0a539d;--blue-dark:#073d75;--blue-light:#1a6cbd;
+  --blue-pale:#eaf1f8;--blue-ghost:#f5f8fc;
+  --ink:#111827;--cream:#faf9f7;--white:#ffffff;
+  --slate:#4b5563;--muted:#9ca3af;
+  --radius:16px;--radius-lg:24px;
+  --gold:#c9972e;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;overflow-x:hidden}
+
+/* PAGE SYSTEM */
+.page{display:none;min-height:100vh}
+.page.active{display:block}
+
+/* NAV */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:101;background:rgba(0,0,0,.28);backdrop-filter:blur(8px);color:rgba(255,255,255,.7);font-size:.78rem;padding:7px 48px;display:flex;justify-content:space-between;align-items:center;transition:all .4s}
+.topbar.hidden{transform:translateY(-100%);opacity:0}
+.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-weight:500}
+nav{position:fixed;top:33px;left:0;right:0;z-index:100;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:transparent;transition:all .4s}
+nav.scrolled{top:0;background:rgba(255,255,255,.97);backdrop-filter:blur(24px);box-shadow:0 1px 12px rgba(0,0,0,.06);padding:12px 48px}
+nav.solid{top:0;background:rgba(255,255,255,.97);backdrop-filter:blur(24px);box-shadow:0 1px 12px rgba(0,0,0,.06);padding:12px 48px}
+
+/* SVG LOGO */
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
+.nav-logo svg{width:130px;height:32px;transition:all .4s}
+.nav-logo .logo-white{display:block}
+.nav-logo .logo-dark{display:none}
+nav.scrolled .nav-logo .logo-white,nav.solid .nav-logo .logo-white{display:none}
+nav.scrolled .nav-logo .logo-dark,nav.solid .nav-logo .logo-dark{display:block}
+
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{text-decoration:none;color:rgba(255,255,255,.8);font-size:.88rem;font-weight:500;transition:color .3s;cursor:pointer}
+.nav-links a:hover{color:var(--white)}
+nav.scrolled .nav-links a,nav.solid .nav-links a{color:var(--slate)}
+nav.scrolled .nav-links a:hover,nav.solid .nav-links a:hover{color:var(--blue)}
+.nav-cta{background:var(--blue)!important;color:var(--white)!important;padding:10px 24px;border-radius:100px;font-weight:600;font-size:.85rem;transition:all .3s}
+.nav-cta:hover{background:var(--blue-dark)!important;transform:translateY(-1px);box-shadow:0 6px 20px rgba(10,83,157,.25)}
+
+/* HERO */
+.hero{position:relative;width:100%;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,20,40,.35) 0%,rgba(15,35,65,.3) 40%,rgba(7,25,50,.7) 100%);z-index:1}
+.hero-content{position:relative;z-index:2;max-width:860px;text-align:center;padding:120px 48px 100px}
+.hero-label{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.7);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:10px}
+.hero-label .line{width:32px;height:2px;background:rgba(255,255,255,.4);border-radius:2px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5.5vw,4.4rem);line-height:1.1;margin-bottom:40px;color:var(--white);text-shadow:0 2px 20px rgba(0,0,0,.2)}
+.hero h1 em{font-style:italic;color:#5badff}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--white);color:var(--blue);padding:16px 34px;border-radius:100px;text-decoration:none;font-weight:700;font-size:.95rem;transition:all .3s;border:none;cursor:pointer}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,0,0,.25)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--white);padding:16px 34px;border-radius:100px;text-decoration:none;font-weight:600;font-size:.95rem;border:1.5px solid rgba(255,255,255,.35);transition:all .3s;cursor:pointer}
+.btn-ghost:hover{border-color:var(--white);background:rgba(255,255,255,.1)}
+.btn-blue{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:var(--white);padding:14px 30px;border-radius:100px;text-decoration:none;font-weight:700;font-size:.92rem;transition:all .3s;border:none;cursor:pointer}
+.btn-blue:hover{background:var(--blue-dark);transform:translateY(-2px);box-shadow:0 10px 28px rgba(10,83,157,.3)}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--blue);padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:600;font-size:.9rem;border:1.5px solid var(--blue);transition:all .3s;cursor:pointer}
+.btn-outline:hover{background:var(--blue);color:var(--white)}
+.hero-stats{display:flex;gap:48px;justify-content:center;margin-top:56px;padding-top:40px;border-top:1px solid rgba(255,255,255,.12)}
+.hero-stat{text-align:center}
+.hero-stat strong{display:block;font-family:'Playfair Display',serif;font-size:2rem;color:var(--white);font-weight:700;line-height:1}
+.hero-stat span{font-size:.78rem;color:rgba(255,255,255,.5);margin-top:4px;display:block}
+.hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;color:rgba(255,255,255,.45);font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;transition:color .3s}
+.hero-scroll:hover{color:rgba(255,255,255,.8)}
+.hero-scroll .arrow{width:20px;height:20px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);animation:scrollBounce 2s infinite}
+@keyframes scrollBounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(5px)}}
+
+/* SECTION BASICS */
+.slabel{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.slabel .line{width:24px;height:2px;background:var(--blue);border-radius:2px}
+.stitle{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);margin-bottom:16px;max-width:560px;line-height:1.2}
+.sdesc{color:var(--slate);font-size:1rem;max-width:520px;line-height:1.7;margin-bottom:48px}
+
+/* REVIEWS */
+.reviews{padding:100px 48px;overflow:hidden}
+.reviews-inner{max-width:1320px;margin:0 auto}
+.reviews-header{text-align:center;margin-bottom:64px}
+.reviews-header .stitle,.reviews-header .sdesc{margin-left:auto;margin-right:auto}
+.fan-container{position:relative;width:100%;max-width:900px;height:480px;margin:0 auto;user-select:none}
+.fan-card{position:absolute;left:50%;width:280px;height:380px;margin-left:-140px;border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.12);cursor:pointer;transform-origin:bottom center;background:var(--white);will-change:transform,opacity;transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .55s cubic-bezier(.4,0,.2,1),box-shadow .55s cubic-bezier(.4,0,.2,1)}
+.fan-card img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.fan-card-overlay{position:absolute;bottom:0;left:0;right:0;padding:24px;background:linear-gradient(transparent,rgba(0,0,0,.75));color:var(--white)}
+.fan-card-overlay .stars{color:#f59e0b;font-size:.85rem;letter-spacing:1px;margin-bottom:6px}
+.fan-card-overlay .quote{font-size:.82rem;line-height:1.5;margin-bottom:8px;opacity:.9}
+.fan-card-overlay .author{font-size:.78rem;font-weight:600}
+.fan-card-overlay .role{font-size:.7rem;opacity:.7}
+.fan-card.center{z-index:10;box-shadow:0 20px 50px rgba(0,0,0,.18)}
+.fan-card.center:hover{transform:translateX(0) translateY(-12px) rotate(0deg) scale(1.03)!important;box-shadow:0 28px 60px rgba(0,0,0,.22)}
+.fan-nav{display:flex;justify-content:center;gap:12px;margin-top:32px;align-items:center}
+.fan-nav button{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(10,83,157,.15);background:var(--white);cursor:pointer;font-size:1rem;color:var(--blue);transition:all .3s;display:flex;align-items:center;justify-content:center}
+.fan-nav button:hover{background:var(--blue);color:var(--white);border-color:var(--blue)}
+.fan-dots{display:flex;gap:8px;margin:0 12px}
+.fan-dot{width:8px;height:8px;border-radius:50%;background:rgba(10,83,157,.15);border:none;cursor:pointer;transition:all .35s;padding:0}
+.fan-dot.active{background:var(--blue);transform:scale(1.3)}
+
+/* SECTOREN */
+.sectors{padding:100px 48px;max-width:1320px;margin:0 auto}
+.sectors-main{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:20px}
+.sectors-sub{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.sector-card{display:block;position:relative;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:transform .4s cubic-bezier(.4,0,.2,1);background:linear-gradient(135deg,#0a539d,#073d75)}
+.sector-card:hover{transform:translateY(-6px)}
+.sector-card.main{min-height:340px}
+.sector-card.sub{min-height:200px}
+.sector-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.sector-card:hover img{transform:scale(1.04)}
+.sector-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,83,157,.05) 0%,rgba(10,83,157,.82) 65%,rgba(7,61,117,.95) 100%)}
+.sector-content{position:relative;z-index:2;padding:32px;display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+.sector-card.sub .sector-content{padding:24px}
+.sector-icon{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.15);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:1.15rem}
+.sector-card h3{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--white);margin-bottom:6px}
+.sector-card.sub h3{font-size:1.1rem}
+.sector-card p{font-size:.82rem;color:rgba(255,255,255,.65);line-height:1.55}
+.sector-arrow{margin-top:14px;font-size:.8rem;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:6px;transition:all .3s}
+.sector-card:hover .sector-arrow{color:rgba(255,255,255,.9);gap:10px}
+
+/* HOE TE WERK */
+.how{padding:100px 48px;background:var(--blue);position:relative;overflow:hidden}
+.how::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:rgba(255,255,255,.04)}
+.how::after{content:'';position:absolute;bottom:-150px;left:-100px;width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,.03)}
+.how-inner{max-width:1320px;margin:0 auto;position:relative;z-index:1}
+.how .slabel{color:rgba(255,255,255,.5)}.how .slabel .line{background:rgba(255,255,255,.3)}
+.how .stitle{color:var(--white)}.how .sdesc{color:rgba(255,255,255,.55)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.step{padding:32px 24px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);transition:all .35s;position:relative}
+.step:hover{background:rgba(255,255,255,.13);transform:translateY(-4px)}
+.step-n{font-family:'Playfair Display',serif;font-size:2.4rem;color:rgba(255,255,255,.1);line-height:1;margin-bottom:16px}
+.step h3{color:var(--white);font-size:.95rem;font-weight:600;margin-bottom:8px}
+.step p{font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.65}
+.step-arrow{position:absolute;top:36px;right:-13px;color:rgba(255,255,255,.15);font-size:1rem}
+
+/* ONDERSCHEIDT */
+.diff{padding:100px 48px;max-width:1320px;margin:0 auto}
+.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.diff-img{border-radius:var(--radius-lg);overflow:hidden;height:460px;background:linear-gradient(135deg,#0a539d,#073d75)}
+.diff-img img{width:100%;height:100%;object-fit:cover}
+.diff-list{display:flex;flex-direction:column;gap:28px}
+.diff-item{display:flex;gap:18px}
+.diff-ic{width:48px;height:48px;min-width:48px;border-radius:14px;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.diff-item h4{font-size:.95rem;font-weight:600;margin-bottom:4px}
+.diff-item p{font-size:.85rem;color:var(--muted);line-height:1.6}
+
+/* PARTNERS */
+.partners{padding:80px 48px;text-align:center;max-width:1320px;margin:0 auto}
+.partners .stitle,.partners .sdesc{margin-left:auto;margin-right:auto}
+.logos{display:flex;gap:28px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:48px}
+.logo-box{height:56px;padding:14px 28px;background:var(--white);border-radius:12px;border:1px solid rgba(0,0,0,.04);display:flex;align-items:center;justify-content:center;transition:all .3s;gap:6px}
+.logo-box:hover{box-shadow:0 6px 24px rgba(10,83,157,.06);transform:translateY(-2px)}
+.logo-text{font-weight:700;font-size:1.05rem;letter-spacing:.02em}
+
+/* FAQ */
+.faq{padding:100px 48px;max-width:860px;margin:0 auto}
+.faq-item{border-bottom:1px solid rgba(0,0,0,.06);padding:22px 0;cursor:pointer}
+.faq-q{display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:1rem}
+.faq-q .t{width:32px;height:32px;border-radius:50%;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;color:var(--blue);transition:all .3s;flex-shrink:0;font-size:1.1rem}
+.faq-item:hover .t{background:var(--blue);color:var(--white)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s,padding .4s;font-size:.9rem;color:var(--muted);line-height:1.75}
+.faq-item.open .faq-a{max-height:200px;padding-top:14px}
+.faq-item.open .t{transform:rotate(45deg);background:var(--blue);color:var(--white)}
+
+/* CTA BAR */
+.cta-bar{margin:0 48px 80px;max-width:1224px;margin-left:auto;margin-right:auto;background:var(--blue);border-radius:var(--radius-lg);padding:56px 64px;display:flex;align-items:center;justify-content:space-between;gap:40px;position:relative;overflow:hidden}
+.cta-bar::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.06)}
+.cta-bar>*{position:relative;z-index:1}
+.cta-bar h2{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--white);max-width:480px}
+.cta-bar p{color:rgba(255,255,255,.65);margin-top:8px;font-size:.95rem}
+.btn-w{display:inline-flex;align-items:center;gap:8px;background:var(--white);color:var(--blue);padding:15px 32px;border-radius:100px;text-decoration:none;font-weight:700;font-size:.92rem;transition:all .3s;white-space:nowrap;border:none;cursor:pointer}
+.btn-w:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.15)}
+
+/* FOOTER */
+footer{background:#0b1a2d;color:rgba(255,255,255,.45);padding:64px 48px 36px}
+.foot-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
+.foot-brand{margin-bottom:12px}
+.foot-brand svg{width:110px;height:27px;opacity:.9}
+footer p{font-size:.84rem;line-height:1.75;max-width:300px}
+footer h4{color:var(--white);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;font-weight:600}
+footer ul{list-style:none}footer li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,.4);text-decoration:none;font-size:.84rem;transition:color .3s;cursor:pointer}
+footer a:hover{color:var(--white)}
+.foot-bottom{max-width:1320px;margin:40px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;font-size:.75rem}
+.foot-bottom a{margin-left:12px}
+.fsma{font-size:.7rem;color:rgba(255,255,255,.25);margin-top:8px}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(28px);animation:fadeUp .7s cubic-bezier(.4,0,.2,1) forwards;animation-play-state:paused}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}.d5{animation-delay:.5s}
+
+/* SECTOR PAGE STYLES */
+.sector-hero{position:relative;height:60vh;min-height:480px;display:flex;align-items:flex-end;overflow:hidden}
+.sector-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sector-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,20,40,.2) 0%,rgba(7,25,50,.85) 100%)}
+.sector-hero-content{position:relative;z-index:2;max-width:1320px;width:100%;margin:0 auto;padding:0 48px 60px}
+.sector-hero-content .slabel{color:rgba(255,255,255,.6)}.sector-hero-content .slabel .line{background:rgba(255,255,255,.3)}
+.sector-hero-content h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,4vw,3.6rem);color:var(--white);line-height:1.1;margin-bottom:16px;max-width:700px}
+.sector-hero-content p{color:rgba(255,255,255,.7);font-size:1.05rem;max-width:560px}
+
+.sector-body{max-width:1320px;margin:0 auto;padding:80px 48px}
+.sector-intro{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;margin-bottom:80px}
+.sector-intro-text h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:20px;line-height:1.2}
+.sector-intro-text p{color:var(--slate);line-height:1.75;margin-bottom:16px}
+.insurance-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.insurance-card{background:var(--white);border-radius:var(--radius);padding:24px;border:1px solid rgba(0,0,0,.04);transition:all .3s}
+.insurance-card:hover{box-shadow:0 8px 32px rgba(10,83,157,.08);transform:translateY(-3px)}
+.insurance-card h4{font-size:.95rem;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.insurance-card h4 .ico{width:36px;height:36px;border-radius:10px;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.insurance-card p{font-size:.83rem;color:var(--muted);line-height:1.6}
+
+.cases-section{background:var(--blue-ghost);border-radius:var(--radius-lg);padding:56px;margin-bottom:64px}
+.cases-section h2{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:8px}
+.cases-section .sub{color:var(--slate);margin-bottom:40px}
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.case-card{background:var(--white);border-radius:var(--radius);padding:28px;border-left:4px solid var(--blue)}
+.case-card .tag{font-size:.72rem;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.case-card p{font-size:.88rem;color:var(--slate);line-height:1.65;font-style:italic}
+.case-card .person{margin-top:14px;font-size:.82rem;font-weight:600;color:var(--ink)}
+
+/* CONTACT PAGE */
+.contact-hero{background:var(--blue);padding:120px 48px 80px;position:relative;overflow:hidden}
+.contact-hero::before{content:'';position:absolute;top:-150px;right:-150px;width:500px;height:500px;border-radius:50%;background:rgba(255,255,255,.04)}
+.contact-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.2rem);color:var(--white);max-width:600px;line-height:1.15}
+.contact-hero p{color:rgba(255,255,255,.6);margin-top:14px;max-width:480px}
+.contact-body{max-width:1200px;margin:0 auto;padding:80px 48px;display:grid;grid-template-columns:1.2fr 1fr;gap:64px}
+.contact-form{background:var(--white);border-radius:var(--radius-lg);padding:48px;box-shadow:0 8px 40px rgba(0,0,0,.06)}
+.contact-form h2{font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:8px}
+.contact-form .sub{color:var(--muted);margin-bottom:32px;font-size:.9rem}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--ink)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;border:1.5px solid rgba(0,0,0,.08);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--ink);background:var(--cream);transition:border-color .3s;outline:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--blue)}
+.form-group textarea{resize:vertical;min-height:120px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-submit{width:100%;padding:16px;background:var(--blue);color:var(--white);border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .3s;margin-top:8px}
+.form-submit:hover{background:var(--blue-dark);transform:translateY(-2px);box-shadow:0 10px 28px rgba(10,83,157,.3)}
+.contact-info h3{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:24px}
+.office-card{background:var(--white);border-radius:var(--radius);padding:24px 28px;margin-bottom:16px;border:1px solid rgba(0,0,0,.04);transition:all .3s}
+.office-card:hover{box-shadow:0 6px 24px rgba(10,83,157,.07);transform:translateY(-2px)}
+.office-card h4{font-size:.95rem;font-weight:600;color:var(--blue);margin-bottom:8px}
+.office-card p{font-size:.85rem;color:var(--slate);line-height:1.7}
+.form-success{display:none;background:#e8f4f0;border-radius:12px;padding:24px;text-align:center;margin-top:16px}
+.form-success.show{display:block}
+.form-success p{color:#1a7a5e;font-weight:600}
+
+/* OVER ONS PAGE */
+.about-hero{position:relative;height:55vh;min-height:420px;display:flex;align-items:center;overflow:hidden}
+.about-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.about-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,25,50,.85) 0%,rgba(7,25,50,.3) 100%)}
+.about-hero-content{position:relative;z-index:2;max-width:1320px;width:100%;margin:0 auto;padding:0 48px}
+.about-hero-content h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,4vw,3.4rem);color:var(--white);line-height:1.1;margin-bottom:16px;max-width:620px}
+.about-hero-content p{color:rgba(255,255,255,.7);max-width:500px;font-size:1.05rem}
+.about-body{max-width:1320px;margin:0 auto;padding:80px 48px}
+.about-story{display:grid;grid-template-columns:1fr 1.2fr;gap:64px;align-items:center;margin-bottom:80px}
+.about-story-text p{color:var(--slate);line-height:1.8;margin-bottom:16px}
+.about-story-img{border-radius:var(--radius-lg);overflow:hidden;height:440px}
+.about-story-img img{width:100%;height:100%;object-fit:cover}
+.timeline{margin-bottom:80px}
+.timeline h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:40px;text-align:center}
+.timeline-items{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;position:relative}
+.timeline-items::before{content:'';position:absolute;top:28px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--blue-light),var(--blue))}
+.timeline-item{text-align:center;padding-top:56px;position:relative}
+.timeline-dot{width:16px;height:16px;background:var(--blue);border-radius:50%;position:absolute;top:21px;left:50%;transform:translateX(-50%);border:3px solid var(--cream)}
+.timeline-item h4{font-size:.82rem;font-weight:600;color:var(--blue);margin-bottom:6px}
+.timeline-item p{font-size:.8rem;color:var(--muted);line-height:1.5}
+.timeline-year{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+.team-section h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:8px}
+.team-section .sub{color:var(--slate);margin-bottom:40px}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:20px}
+.team-card{background:var(--white);border-radius:var(--radius-lg);padding:24px 16px 20px;text-align:center;transition:all .3s;cursor:pointer;position:relative;overflow:hidden;}
+.team-card:hover{box-shadow:0 8px 30px rgba(10,83,157,.15);transform:translateY(-3px)}
+.team-card-hover{position:absolute;inset:0;background:rgba(255,255,255,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;opacity:0;transition:opacity .25s;border-radius:var(--radius-lg);backdrop-filter:blur(2px);}
+.team-card:hover .team-card-hover{opacity:1;}
+.team-card-hover .th-photo{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--blue-pale);flex-shrink:0;}
+.team-card-hover .th-name{font-size:.82rem;font-weight:700;color:var(--ink);margin:0;}
+.team-card-hover a{display:flex;align-items:center;gap:6px;color:var(--blue);text-decoration:none;font-size:.7rem;font-weight:600;padding:8px 10px;border-radius:8px;background:var(--blue-pale);width:100%;box-sizing:border-box;transition:background .2s;min-width:0;overflow:hidden;}
+.team-card-hover a svg{flex-shrink:0;}
+.team-card-hover a span{white-space:nowrap;font-size:clamp(.58rem,.9vw,.7rem);}
+.team-card-hover a:hover{background:#ccdff2;}
+.team-card-img{width:110px;height:110px;border-radius:50%;overflow:hidden;margin:0 auto 14px;border:3px solid var(--blue-pale)}
+.team-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.team-card:hover .team-card-img img{transform:scale(1.06)}
+.team-card-info{padding:0}
+.team-card-info h3{font-size:.95rem;font-weight:600;margin-bottom:4px}
+.team-card-info .role{font-size:.78rem;color:var(--blue);font-weight:500;margin-bottom:6px}
+.team-card-info p{font-size:.76rem;color:var(--muted);line-height:1.5}
+.team-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s;}
+.team-modal-overlay.open{opacity:1;pointer-events:all;}
+.team-modal{background:#fff;border-radius:var(--radius-lg);width:100%;max-width:420px;overflow:hidden;position:relative;transform:translateY(20px);transition:transform .25s;}
+.team-modal-overlay.open .team-modal{transform:translateY(0);}
+.team-modal-photo{height:260px;overflow:hidden;}
+.team-modal-photo img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.team-modal-close{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.95);border:none;border-radius:50%;width:34px;height:34px;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15);transition:background .2s;}
+.team-modal-close:hover{background:#fff;}
+.team-modal-body{padding:24px;}
+.team-modal-body h3{font-size:1.15rem;font-weight:700;margin-bottom:4px;}
+.team-modal-body .tm-role{font-size:.82rem;color:var(--blue);font-weight:600;margin-bottom:12px;}
+.team-modal-body p{font-size:.85rem;color:var(--muted);line-height:1.65;margin-bottom:20px;}
+.tm-contacts{display:flex;flex-direction:column;gap:10px;}
+.tm-contacts a{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--ink);text-decoration:none;padding:10px 14px;border-radius:12px;background:var(--blue-pale);transition:background .2s;}
+.tm-contacts a:hover{background:#d5e5f5;}
+.values-section{background:var(--blue);border-radius:var(--radius-lg);padding:64px;margin:64px 0}
+.values-section h2{font-family:'Playfair Display',serif;font-size:2rem;color:var(--white);margin-bottom:8px;text-align:center}
+.values-section .sub{color:rgba(255,255,255,.55);text-align:center;margin-bottom:48px}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.value-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:28px;transition:all .3s}
+.value-card:hover{background:rgba(255,255,255,.14)}
+.value-card .icon{font-size:1.8rem;margin-bottom:14px}
+.value-card h4{color:var(--white);font-size:.95rem;font-weight:600;margin-bottom:8px}
+.value-card p{color:rgba(255,255,255,.5);font-size:.83rem;line-height:1.65}
+
+/* PAGE HERO (sub-pages without image) */
+.page-hero{background:linear-gradient(135deg,var(--blue-dark),var(--blue));padding:140px 48px 80px;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,.05)}
+.page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.2rem);color:var(--white);position:relative;z-index:1;max-width:600px;line-height:1.15}
+.page-hero p{color:rgba(255,255,255,.65);margin-top:14px;max-width:500px;position:relative;z-index:1}
+.breadcrumb{font-size:.78rem;color:rgba(255,255,255,.45);margin-bottom:16px;position:relative;z-index:1}
+.breadcrumb span{cursor:pointer;transition:color .3s}.breadcrumb span:hover{color:rgba(255,255,255,.9)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .hero-content{padding:100px 32px 80px}.hero-stats{gap:28px}
+  .sectors-main{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.step-arrow{display:none}
+  .diff-grid{grid-template-columns:1fr}.diff-img{height:320px}
+  .cta-bar{flex-direction:column;text-align:center;padding:40px 28px}
+  .foot-inner{grid-template-columns:1fr 1fr}.fan-container{height:400px}.fan-card{width:240px;height:320px}
+  .sector-intro{grid-template-columns:1fr}.about-story{grid-template-columns:1fr}
+  .about-story-img{height:320px}.team-grid{grid-template-columns:1fr 1fr}
+  .contact-body{grid-template-columns:1fr}.timeline-items{grid-template-columns:1fr 1fr;gap:32px}
+  .timeline-items::before{display:none}.timeline-item{padding-top:0}.timeline-dot{display:none}
+  .cases-grid{grid-template-columns:1fr 1fr}.values-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .topbar{display:none}nav{padding:14px 20px}.nav-links{display:none}
+  .hero-content{padding:80px 20px 60px}.hero h1{font-size:clamp(2rem,7vw,2.8rem)}
+  .hero-stats{flex-direction:column;gap:16px}.hero-scroll{display:none}
+  .sectors-main,.sectors-sub{grid-template-columns:1fr}.steps{grid-template-columns:1fr}
+  .fan-container{height:360px}.fan-card{width:200px;height:280px}
+  .foot-inner{grid-template-columns:1fr}
+  .reviews,.sectors,.how,.diff,.partners,.faq{padding-left:20px;padding-right:20px}
+  .cta-bar{margin:0 20px 60px}.sector-body,.about-body,.contact-body{padding:40px 20px}
+  .contact-body{grid-template-columns:1fr}.cases-grid{grid-template-columns:1fr}
+  .insurance-grid{grid-template-columns:1fr}.values-grid{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr}.timeline-items{grid-template-columns:1fr}
+  .sector-hero-content,.contact-hero,.page-hero,.about-hero-content{padding-left:20px;padding-right:20px}
+  .cases-section{padding:32px 24px}.form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar" id="topbar">
+  <span>📍 Ieper · Poperinge · Houthulst — We staan klaar voor ondernemers over heel België</span>
+  <div style="display:flex;gap:20px">
+    <a href="tel:057207720">📞 057 20 77 20</a>
+    <a href="mailto:info@grouptrybou.be">✉️ info@grouptrybou.be</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a class="nav-logo" onclick="showPage('home');scrollToTop()">
+    <!-- White version (on dark/transparent bg) -->
+    <svg class="logo-white" viewBox="0 0 260 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Three horizontal lines (the icon) -->
+      <rect x="0" y="4" width="38" height="6" rx="3" fill="white"/>
+      <rect x="0" y="18" width="38" height="6" rx="3" fill="white"/>
+      <rect x="0" y="32" width="38" height="6" rx="3" fill="white"/>
+      <!-- TRYBOU text -->
+      <text x="50" y="37" font-family="'DM Sans', sans-serif" font-weight="700" font-size="28" fill="white" letter-spacing="-0.5">TRYBOU</text>
+    </svg>
+    <!-- Dark version (on white bg) -->
+    <svg class="logo-dark" viewBox="0 0 260 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="4" width="38" height="6" rx="3" fill="#111827"/>
+      <rect x="0" y="18" width="38" height="6" rx="3" fill="#111827"/>
+      <rect x="0" y="32" width="38" height="6" rx="3" fill="#111827"/>
+      <text x="50" y="37" font-family="'DM Sans', sans-serif" font-weight="700" font-size="28" fill="#111827" letter-spacing="-0.5">TRYBOU</text>
+    </svg>
+  </a>
+  <div class="nav-links">
+    <a onclick="showPage('sectoren')">Sectoren</a>
+    <a onclick="showPage('home');setTimeout(()=>scrollToSection('hoe'),100)">Hoe te werk</a>
+    <a onclick="showPage('about')">Over ons</a>
+    <a onclick="showPage('home');setTimeout(()=>scrollToSection('partners'),100)">Partners</a>
+    <a onclick="showPage('home');setTimeout(()=>scrollToSection('faq'),100)">FAQ</a>
+    <a onclick="showPage('contact')" class="nav-cta">Verzekeringscheck</a>
+  </div>
+</nav>
+
+<!-- ==================== HOME PAGE ==================== -->
+<div id="page-home" class="page active">
+
+<section class="hero">
+  <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&q=80&auto=format&fit=crop">
+    <source src="https://videos.pexels.com/video-files/2519660/2519660-uhd_2732_1440_24fps.mp4" type="video/mp4">
+    <source src="https://videos.pexels.com/video-files/2519660/2519660-hd_1920_1012_24fps.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-label fade-up"><span class="line"></span> Uw gids in het Belgische KMO-landschap <span class="line"></span></div>
+    <h1 class="fade-up d1">Voor ondernemers die <em>zekerheid</em> willen.</h1>
+    <div class="hero-ctas fade-up d2">
+      <button class="btn-primary" onclick="showPage('contact')">Plan uw verzekeringscheck →</button>
+      <button class="btn-ghost" onclick="scrollToSection('hoe')">Hoe werkt het?</button>
+    </div>
+    <div class="hero-stats fade-up d3">
+      <div class="hero-stat"><strong>75+</strong><span>jaren expertise</span></div>
+      <div class="hero-stat"><strong>3</strong><span>kantoren in West-Vlaanderen</span></div>
+      <div class="hero-stat"><strong>100%</strong><span>onafhankelijk advies</span></div>
+    </div>
+  </div>
+  <a href="#beoordelingen" class="hero-scroll">Scroll<span class="arrow"></span></a>
+</section>
+
+<!-- REVIEWS FAN -->
+<section class="reviews" id="beoordelingen">
+  <div class="reviews-inner">
+    <div class="reviews-header">
+      <div class="slabel" style="justify-content:center"><span class="line"></span> Klantbeoordelingen</div>
+      <h2 class="stitle">Wat ondernemers zeggen</h2>
+      <p class="sdesc">Ontdek waarom bedrijven en zelfstandigen kiezen voor Group Trybou.</p>
+    </div>
+    <div class="fan-container" id="fanContainer"></div>
+    <div class="fan-nav">
+      <button onclick="rotateFan(-1)" aria-label="Vorige">←</button>
+      <div class="fan-dots" id="fanDots"></div>
+      <button onclick="rotateFan(1)" aria-label="Volgende">→</button>
+    </div>
+  </div>
+</section>
+
+<!-- SECTOREN -->
+<section class="sectors" id="sectoren-home">
+  <div class="slabel fade-up"><span class="line"></span> Onze sectoren</div>
+  <h2 class="stitle fade-up d1">Verzekeringen voor ondernemers</h2>
+  <p class="sdesc fade-up d2">Elke sector heeft unieke risico's. Wij bieden de juiste dekking — altijd op maat.</p>
+  <div class="sectors-main">
+    <a class="sector-card main fade-up d1" onclick="showPage('kmo')" style="text-decoration:none;cursor:pointer">
+      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&auto=format&fit=crop" alt="KMO" />
+      <div class="sector-content">
+        <div class="sector-icon">🏢</div>
+        <h3>KMO & Bedrijven</h3>
+        <p>Brand, BA, arbeidsongevallen, groepspolis en fleet voor uw onderneming.</p>
+        <div class="sector-arrow">Ontdek meer →</div>
+      </div>
+    </a>
+    <a class="sector-card main fade-up d2" onclick="showPage('zelfstandigen')" style="text-decoration:none;cursor:pointer">
+      <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&q=80&auto=format&fit=crop" alt="Zelfstandigen" />
+      <div class="sector-content">
+        <div class="sector-icon">💼</div>
+        <h3>Zelfstandigen</h3>
+        <p>Gewaarborgd inkomen, VAPZ, beroepsaansprakelijkheid en hospitalisatie.</p>
+        <div class="sector-arrow">Ontdek meer →</div>
+      </div>
+    </a>
+    <a class="sector-card main fade-up d3" onclick="showPage('vrije-beroepen')" style="text-decoration:none;cursor:pointer">
+      <img src="https://images.unsplash.com/photo-1507679799987-c73b1e23ad6c?w=600&q=80&auto=format&fit=crop" alt="Vrije beroepen" />
+      <div class="sector-content">
+        <div class="sector-icon">⚖️</div>
+        <h3>Vrije Beroepen</h3>
+        <p>Specifieke dekkingen voor artsen, advocaten, architecten en accountants.</p>
+        <div class="sector-arrow">Ontdek meer →</div>
+      </div>
+    </a>
+  </div>
+  <div class="sectors-sub">
+    <a class="sector-card sub fade-up d4" onclick="showPage('bouw')" style="text-decoration:none;cursor:pointer">
+      <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80&auto=format&fit=crop" alt="Bouw" />
+      <div class="sector-content">
+        <div class="sector-icon">🏗️</div>
+        <h3>Bouw & Vastgoed</h3>
+        <p>ABR, tienjarige aansprakelijkheid en werfverzekeringen.</p>
+        <div class="sector-arrow">Ontdek meer →</div>
+      </div>
+    </a>
+    <a class="sector-card sub fade-up d5" onclick="showPage('transport')" style="text-decoration:none;cursor:pointer">
+      <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80&auto=format&fit=crop" alt="Transport" />
+      <div class="sector-content">
+        <div class="sector-icon">🚛</div>
+        <h3>Transport & Logistiek</h3>
+        <p>CMR, goederenverzekering en wagenpark op maat.</p>
+        <div class="sector-arrow">Ontdek meer →</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- HOE TE WERK -->
+<section class="how" id="hoe">
+  <div class="how-inner">
+    <div class="slabel"><span class="line"></span> Hoe te werk</div>
+    <h2 class="stitle">In 4 stappen naar uw verzekering</h2>
+    <p class="sdesc">Eenvoudig, transparant en altijd met persoonlijk advies.</p>
+    <div class="steps">
+      <div class="step fade-up d1">
+        <div class="step-n">01</div><h3>Verzekeringscheck</h3>
+        <p>We analyseren uw huidige polissen en brengen de risico's van uw onderneming in kaart.</p>
+        <span class="step-arrow">→</span>
+      </div>
+      <div class="step fade-up d2">
+        <div class="step-n">02</div><h3>Vergelijking</h3>
+        <p>We vergelijken bij meerdere maatschappijen en zoeken de beste dekking tegen de scherpste prijs.</p>
+        <span class="step-arrow">→</span>
+      </div>
+      <div class="step fade-up d3">
+        <div class="step-n">03</div><h3>Advies op maat</h3>
+        <p>U ontvangt een helder voorstel — geen jargon, geen kleine lettertjes.</p>
+        <span class="step-arrow">→</span>
+      </div>
+      <div class="step fade-up d4">
+        <div class="step-n">04</div><h3>Doorlopende opvolging</h3>
+        <p>Schadebeheer, jaarlijkse evaluatie en proactieve bijsturing. Wij staan altijd paraat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ONDERSCHEIDT -->
+<section class="diff" id="team">
+  <div class="slabel fade-up"><span class="line"></span> Wat onderscheidt ons</div>
+  <h2 class="stitle fade-up d1">Waarom Group Trybou?</h2>
+  <p class="sdesc fade-up d2">Een beperkt, vast team met persoonlijke aandacht — dat maakt het verschil.</p>
+  <div class="diff-grid">
+    <div class="diff-img fade-up d2">
+      <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80&auto=format&fit=crop" alt="Team" />
+    </div>
+    <div class="diff-list">
+      <div class="diff-item fade-up d1"><div class="diff-ic">👤</div><div><h4>Beperkt & vast team</h4><p>U spreekt altijd met dezelfde mensen die uw dossier door en door kennen.</p></div></div>
+      <div class="diff-item fade-up d2"><div class="diff-ic">🔍</div><div><h4>Onafhankelijk advies</h4><p>Wij vergelijken bij meerdere maatschappijen en kiezen altijd in uw voordeel.</p></div></div>
+      <div class="diff-item fade-up d3"><div class="diff-ic">⚡</div><div><h4>Snelle schadeafhandeling</h4><p>Bij schade regelen wij alles — van aangifte tot uitbetaling.</p></div></div>
+      <div class="diff-item fade-up d4"><div class="diff-ic">🤝</div><div><h4>Sinds 1948</h4><p>Drie generaties expertise. Lokaal verankerd, nationaal actief.</p></div></div>
+      <div style="margin-top:8px"><button class="btn-blue" onclick="showPage('about')">Meer over ons →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="partners" id="partners">
+  <div class="slabel" style="justify-content:center"><span class="line"></span> Onze partners</div>
+  <h2 class="stitle">Verzekeraars waar wij mee werken</h2>
+  <p class="sdesc">Onafhankelijk advies dankzij samenwerking met de grootste maatschappijen.</p>
+  <div class="logos">
+    <div class="logo-box"><span class="logo-text" style="color:#00008f;font-size:1.4rem;font-weight:800">AXA</span></div>
+    <div class="logo-box"><span class="logo-text" style="color:#006a4e">Crelan</span></div>
+    <div class="logo-box"><span class="logo-text" style="color:#e4002b;font-weight:800">AG</span><span style="font-size:.75rem;color:#e4002b;font-weight:600;margin-left:4px">Insurance</span></div>
+    <div class="logo-box"><span class="logo-text" style="color:#003781">Allianz</span></div>
+    <div class="logo-box"><span class="logo-text" style="color:#003d6a">Baloise</span></div>
+    <div class="logo-box"><span class="logo-text" style="color:#0a539d">Ethias</span></div>
+    <div class="logo-box"><span class="logo-text" style="color:#1a1a1a">KBC</span></div>
+    <div class="logo-box"><span class="logo-text" style="color:#ff6200;font-weight:800">NN</span></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="slabel"><span class="line"></span> FAQ</div>
+  <h2 class="stitle">Veelgestelde vragen</h2>
+  <div style="margin-top:36px">
+    <div class="faq-item open" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Wat kost een verzekeringscheck? <span class="t">+</span></div>
+      <div class="faq-a">Onze verzekeringscheck is volledig vrijblijvend en gratis. We analyseren uw huidige polissen en geven eerlijk advies — zonder verplichtingen.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Kan ik mijn bestaande polissen overzetten? <span class="t">+</span></div>
+      <div class="faq-a">Absoluut. Wij bekijken uw huidige verzekeringen, vergelijken en regelen de volledige overstap als dat voordeliger is.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Met welke maatschappijen werken jullie? <span class="t">+</span></div>
+      <div class="faq-a">Wij zijn onafhankelijk en werken met alle grote maatschappijen: AXA, AG Insurance, Baloise, Ethias, Allianz, KBC, NN en meer.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Hoe snel wordt een schadeclaim behandeld? <span class="t">+</span></div>
+      <div class="faq-a">Wij starten dezelfde dag met de aangifte en volgen actief op tot alles geregeld is.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Zijn jullie enkel actief in West-Vlaanderen? <span class="t">+</span></div>
+      <div class="faq-a">Onze kantoren staan in Ieper, Poperinge en Houthulst, maar wij bedienen ondernemers in heel België.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Hoe lang duurt de overstap naar Group Trybou? <span class="t">+</span></div>
+      <div class="faq-a">Gemiddeld 2 tot 4 weken. Wij regelen alle administratie en contacten met uw vorige makelaar of verzekeraar volledig voor u.</div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-bar">
+  <div>
+    <h2>Klaar voor uw verzekeringscheck?</h2>
+    <p>Ontdek vrijblijvend of uw onderneming optimaal beschermd is.</p>
+  </div>
+  <button class="btn-w" onclick="showPage('contact')">Plan een gesprek →</button>
+</div>
+
+</div><!-- end home -->
+
+<!-- ==================== SECTOREN OVERZICHT ==================== -->
+<div id="page-sectoren" class="page">
+  <div class="page-hero">
+    <div class="breadcrumb"><span onclick="showPage('home')">Home</span> / Sectoren</div>
+    <h1>Verzekeringen voor elke sector</h1>
+    <p>Van KMO tot vrij beroep — wij kennen de risico's van uw branche.</p>
+  </div>
+  <div style="max-width:1320px;margin:0 auto;padding:80px 48px">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:24px">
+      <div onclick="showPage('kmo')" class="sector-card main" style="cursor:pointer">
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&auto=format&fit=crop" alt="KMO"/>
+        <div class="sector-content"><div class="sector-icon">🏢</div><h3>KMO & Bedrijven</h3><p>Volledig verzekeringspakket voor uw onderneming.</p><div class="sector-arrow">Ontdek meer →</div></div>
+      </div>
+      <div onclick="showPage('zelfstandigen')" class="sector-card main" style="cursor:pointer">
+        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&q=80&auto=format&fit=crop" alt="Zelfstandigen"/>
+        <div class="sector-content"><div class="sector-icon">💼</div><h3>Zelfstandigen</h3><p>Inkomensbescherming en pensioenopbouw voor de zelfstandige.</p><div class="sector-arrow">Ontdek meer →</div></div>
+      </div>
+      <div onclick="showPage('vrije-beroepen')" class="sector-card main" style="cursor:pointer">
+        <img src="https://images.unsplash.com/photo-1507679799987-c73b1e23ad6c?w=600&q=80&auto=format&fit=crop" alt="Vrije beroepen"/>
+        <div class="sector-content"><div class="sector-icon">⚖️</div><h3>Vrije Beroepen</h3><p>Beroepsaansprakelijkheid en bescherming op maat.</p><div class="sector-arrow">Ontdek meer →</div></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      <div onclick="showPage('bouw')" class="sector-card sub" style="cursor:pointer">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80&auto=format&fit=crop" alt="Bouw"/>
+        <div class="sector-content"><div class="sector-icon">🏗️</div><h3>Bouw & Vastgoed</h3><p>ABR, aansprakelijkheid en werfverzekeringen.</p><div class="sector-arrow">Ontdek meer →</div></div>
+      </div>
+      <div onclick="showPage('transport')" class="sector-card sub" style="cursor:pointer">
+        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80&auto=format&fit=crop" alt="Transport"/>
+        <div class="sector-content"><div class="sector-icon">🚛</div><h3>Transport & Logistiek</h3><p>CMR, goederenverzekering en wagenpark.</p><div class="sector-arrow">Ontdek meer →</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== OVER ONS ==================== -->
+<div id="page-about" class="page">
+  <div class="about-hero">
+    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1400&q=80&auto=format&fit=crop" alt="Team"/>
+    <div class="about-hero-content">
+      <div class="slabel" style="color:rgba(255,255,255,.6)"><span class="line" style="background:rgba(255,255,255,.4)"></span> Ons verhaal</div>
+      <h1>Al meer dan 75 jaar naast de ondernemer</h1>
+      <p>Drie generaties vertrouwen, expertise en persoonlijke aanpak. Dat is Group Trybou.</p>
+    </div>
+  </div>
+  <div class="about-body">
+    <div class="about-story">
+      <div class="about-story-text">
+        <div class="slabel"><span class="line"></span> Onze geschiedenis</div>
+        <h2 class="stitle">Van West-Vlaanderen naar heel België</h2>
+        <p>In 1948 begon het verhaal van Group Trybou als een lokaal verzekeringskantoor in het hart van West-Vlaanderen. Oprichter Leon Trybou geloofde in één principe: de ondernemer verdient een eerlijke, transparante en persoonlijke begeleiding.</p>
+        <p>Drie generaties later is dat principe nog even sterk. Wij zijn gegroeid naar drie kantoren — in Ieper, Poperinge en Houthulst — en bedienen ondernemers in heel België, maar de persoonlijke aanpak van het eerste uur is nooit verdwenen.</p>
+        <p>Onze onafhankelijkheid is ons grootste troef: wij werken met meer dan acht grote verzekeringsmaatschappijen en kiezen altijd wat het best is voor u.</p>
+      </div>
+      <div class="about-story-img">
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80&auto=format&fit=crop" alt="Kantoor"/>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <h2>Onze mijlpalen</h2>
+      <div class="timeline-items">
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">1948</div><h4>Oprichting</h4><p>André Trybou opent het eerste kantoor in Houthulst</p></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">Nu</div><h4>Group Trybou</h4><p>75+ jaar expertise, 100% onafhankelijk</p></div>
+      </div>
+    </div>
+
+    <div class="team-section">
+      <div class="slabel"><span class="line"></span> Het team</div>
+      <h2 class="stitle">De mensen achter Group Trybou</h2>
+      <p class="sub" style="margin-bottom:40px">Een team dat uw dossier door en door kent.</p>
+      <div class="team-grid" id="teamGrid"><!-- dynamisch gevuld via JS --></div>
+    </div>
+
+    <!-- TEAM MODAL -->
+    <div id="teamModal" class="team-modal-overlay">
+      <div class="team-modal">
+        <button class="team-modal-close" id="teamModalClose">&times;</button>
+        <div class="team-modal-photo"><img id="tmImg" src="" alt=""/></div>
+        <div class="team-modal-body">
+          <h3 id="tmName"></h3>
+          <div class="tm-role" id="tmRole"></div>
+          <p id="tmDesc"></p>
+          <div class="tm-contacts">
+            <a id="tmPhone" href="#">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              <span id="tmPhoneText"></span>
+            </a>
+            <a id="tmEmail" href="#">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+              <span id="tmEmailText"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="values-section">
+      <div class="slabel" style="justify-content:center;color:rgba(255,255,255,.5)"><span class="line" style="background:rgba(255,255,255,.3)"></span> Onze waarden</div>
+      <h2>Waar wij voor staan</h2>
+      <p class="sub">Drie kernwaarden die al 75 jaar ons kompas zijn</p>
+      <div class="values-grid">
+        <div class="value-card"><div class="icon">🤝</div><h4>Vertrouwen</h4><p>Wij bouwen langetermijnrelaties op basis van eerlijkheid, transparantie en nakomen van beloftes.</p></div>
+        <div class="value-card"><div class="icon">🎯</div><h4>Expertise</h4><p>Drie generaties kennis, continu bijgeschoold en actief in elke sector van de Belgische economie.</p></div>
+        <div class="value-card"><div class="icon">❤️</div><h4>Persoonlijke aanpak</h4><p>U bent geen dossiernummer. U spreekt altijd met dezelfde adviseur die uw situatie echt kent.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-bar">
+    <div>
+      <h2>Wil u met ons team kennismaken?</h2>
+      <p>Plan een vrijblijvend gesprek op een kantoor naar keuze.</p>
+    </div>
+    <button class="btn-w" onclick="showPage('contact')">Neem contact op →</button>
+  </div>
+</div>
+
+<!-- ==================== CONTACT PAGE ==================== -->
+<div id="page-contact" class="page">
+  <div class="contact-hero">
+    <h1>Plan uw gratis verzekeringscheck</h1>
+    <p>Vrijblijvend, gratis en altijd met persoonlijk advies. Kies een kantoor en wij plannen een gesprek op maat.</p>
+  </div>
+  <div class="contact-body">
+    <div class="contact-form">
+      <h2>Stuur ons een bericht</h2>
+      <p class="sub">We nemen binnen 1 werkdag contact op.</p>
+      <div class="form-row">
+        <div class="form-group"><label>Voornaam *</label><input type="text" placeholder="Jan"/></div>
+        <div class="form-group"><label>Achternaam *</label><input type="text" placeholder="Janssen"/></div>
+      </div>
+      <div class="form-group"><label>E-mailadres *</label><input type="email" placeholder="jan@bedrijf.be"/></div>
+      <div class="form-group"><label>Telefoonnummer</label><input type="tel" placeholder="0470 00 00 00"/></div>
+      <div class="form-group"><label>Sector</label>
+        <select>
+          <option value="">Selecteer uw sector</option>
+          <option>KMO & Bedrijven</option>
+          <option>Zelfstandige</option>
+          <option>Vrij beroep</option>
+          <option>Bouw & Vastgoed</option>
+          <option>Transport & Logistiek</option>
+          <option>Andere</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Kantoorvoorkeur</label>
+        <select>
+          <option value="">Geen voorkeur</option>
+          <option>Ieper</option>
+          <option>Poperinge</option>
+          <option>Houthulst</option>
+          <option>Online gesprek</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Uw vraag of opmerking</label><textarea placeholder="Beschrijf kort uw situatie of vraag..."></textarea></div>
+      <button class="form-submit" onclick="submitForm()">Verstuur aanvraag →</button>
+      <div class="form-success" id="formSuccess">
+        <p>✅ Bedankt! We nemen zo snel mogelijk contact met u op.</p>
+      </div>
+    </div>
+    <div class="contact-info">
+      <div class="slabel"><span class="line"></span> Onze kantoren</div>
+      <h3 class="stitle" style="margin-bottom:28px">Bezoek ons</h3>
+      <div class="office-card">
+        <h4>📍 Ieper — Hoofdkantoor</h4>
+        <p>Grote Markt 12, 8900 Ieper<br>📞 057 20 77 20<br>ma–vr: 8u30–17u30</p>
+      </div>
+      <div class="office-card">
+        <h4>📍 Poperinge</h4>
+        <p>Casselstraat 5, 8970 Poperinge<br>📞 057 34 60 10<br>ma–vr: 9u–17u</p>
+      </div>
+      <div class="office-card">
+        <h4>📍 Houthulst</h4>
+        <p>Kaaskerkestraat 3, 8650 Houthulst<br>📞 051 70 35 17<br>ma–vr: 9u–17u</p>
+      </div>
+      <div style="margin-top:24px;padding:24px;background:var(--blue-pale);border-radius:var(--radius)">
+        <p style="font-size:.85rem;color:var(--slate);line-height:1.7"><strong style="color:var(--ink)">FSMA-erkenning:</strong><br>FSMA 023989 A-cB<br>RPR Gent, afdeling Veurne<br><br>Group Trybou is erkend door de FSMA als verzekeringsmakelaar en -agent.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER (shown on all pages) -->
+<footer id="siteFooter">
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand">
+        <svg viewBox="0 0 220 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="3" width="32" height="5" rx="2.5" fill="white" opacity="0.7"/>
+          <rect x="0" y="15" width="32" height="5" rx="2.5" fill="white" opacity="0.7"/>
+          <rect x="0" y="27" width="32" height="5" rx="2.5" fill="white" opacity="0.7"/>
+          <text x="42" y="31" font-family="'DM Sans', sans-serif" font-weight="700" font-size="24" fill="white" opacity="0.8" letter-spacing="-0.3">TRYBOU</text>
+        </svg>
+      </div>
+      <p>Onafhankelijk verzekeringsmakelaar voor ondernemers en zelfstandigen. Persoonlijke aanpak, al sinds 1948.</p>
+      <p class="fsma">FSMA 023989 A-cB · RPR Gent, afdeling Veurne</p>
+    </div>
+    <div>
+      <h4>Sectoren</h4>
+      <ul>
+        <li><a onclick="showPage('kmo')">KMO & Bedrijven</a></li>
+        <li><a onclick="showPage('zelfstandigen')">Zelfstandigen</a></li>
+        <li><a onclick="showPage('vrije-beroepen')">Vrije Beroepen</a></li>
+        <li><a onclick="showPage('bouw')">Bouw & Vastgoed</a></li>
+        <li><a onclick="showPage('transport')">Transport & Logistiek</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Bedrijf</h4>
+      <ul>
+        <li><a onclick="showPage('about')">Over ons</a></li>
+        <li><a onclick="showPage('about')">Team</a></li>
+        <li><a onclick="showPage('sectoren')">Sectoren</a></li>
+        <li><a onclick="showPage('contact')">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Kantoren</h4>
+      <ul>
+        <li><a href="tel:057207720">Ieper — 057 20 77 20</a></li>
+        <li><a href="tel:057346010">Poperinge — 057 34 60 10</a></li>
+        <li><a href="tel:051703517">Houthulst — 051 70 35 17</a></li>
+        <li><a href="mailto:info@grouptrybou.be">info@grouptrybou.be</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Group Trybou. Alle rechten voorbehouden.</span>
+    <span><a href="#">Privacybeleid</a><a href="#">Disclaimer</a></span>
+  </div>
+</footer>
+
+<script>
+// ===================== PAGE ROUTING =====================
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) {
+    page.classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    updateNav(id);
+    // Move footer inside page or after it
+    document.body.appendChild(document.getElementById('siteFooter'));
+  }
+}
+
+function updateNav(pageId) {
+  const nav = document.getElementById('mainNav');
+  const topbar = document.getElementById('topbar');
+  if (pageId === 'home') {
+    nav.classList.remove('solid');
+    topbar.style.display = '';
+  } else {
+    nav.classList.add('solid');
+    topbar.style.display = 'none';
+  }
+}
+
+function scrollToTop() {
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+
+// ===================== REVIEWS FAN =====================
+const reviews = [
+  {quote:"Eindelijk een makelaar die onze bedrijfsrisico's écht begrijpt.",author:"Thomas V.",role:"Zaakvoerder productiebedrijf",img:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&auto=format&fit=crop&crop=face"},
+  {quote:"Na een zware brandschade was alles binnen de week geregeld.",author:"Sarah M.",role:"Eigenares textielbedrijf",img:"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80&auto=format&fit=crop&crop=face"},
+  {quote:"Ze hebben onze fleet en BA-polis herbekeken. 30% bespaard.",author:"Dirk L.",role:"Transportbedrijf",img:"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80&auto=format&fit=crop&crop=face"},
+  {quote:"Als architect is het fijn om een vast aanspreekpunt te hebben.",author:"Nadia K.",role:"Zelfstandig architect",img:"https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80&auto=format&fit=crop&crop=face"},
+  {quote:"Professioneel, eerlijk en transparant. Geen verrassingen.",author:"Jan D.",role:"Zaakvoerder bouwbedrijf",img:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80&auto=format&fit=crop&crop=face"},
+];
+
+const fc = document.getElementById('fanContainer');
+const dotsContainer = document.getElementById('fanDots');
+const cards = [];
+const dots = [];
+let fi = 0;
+const total = reviews.length;
+const mid = Math.floor(total / 2);
+
+reviews.forEach((r, i) => {
+  const c = document.createElement('div');
+  c.className = 'fan-card';
+  c.innerHTML = `<img src="${r.img}" alt="${r.author}" loading="lazy"/><div class="fan-card-overlay"><div class="stars">★★★★★</div><div class="quote">"${r.quote}"</div><div class="author">${r.author}</div><div class="role">${r.role}</div></div>`;
+  c.addEventListener('click', () => {
+    const offset = ((i - fi) % total + total) % total;
+    if (offset !== mid) { fi = (i - mid + total) % total; positionCards(); }
+  });
+  fc.appendChild(c);
+  cards.push(c);
+});
+
+reviews.forEach((_, i) => {
+  const d = document.createElement('button');
+  d.className = 'fan-dot';
+  d.setAttribute('aria-label', `Review ${i + 1}`);
+  d.addEventListener('click', () => { fi = (i - mid + total) % total; positionCards(); });
+  dotsContainer.appendChild(d);
+  dots.push(d);
+});
+
+function positionCards() {
+  cards.forEach((c, i) => {
+    const offset = ((i - fi) % total + total) % total;
+    const pos = offset - mid;
+    const angle = pos * 8;
+    const tx = pos * 145;
+    const ty = Math.abs(pos) * 28;
+    const z = total - Math.abs(pos);
+    const s = 1 - Math.abs(pos) * .04;
+    const o = Math.abs(pos) <= mid ? 1 : 0;
+    c.style.transform = `translateX(${tx}px) translateY(${ty}px) rotate(${angle}deg) scale(${s})`;
+    c.style.zIndex = z;
+    c.style.opacity = o;
+    c.classList.toggle('center', pos === 0);
+  });
+  const activeIndex = (fi + mid) % total;
+  dots.forEach((d, i) => d.classList.toggle('active', i === activeIndex));
+}
+
+function rotateFan(dir) {
+  fi = (fi + dir + total) % total;
+  positionCards();
+}
+
+let touchStartX = 0, touchDelta = 0;
+fc.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; touchDelta = 0; }, {passive: true});
+fc.addEventListener('touchmove', e => { touchDelta = e.touches[0].clientX - touchStartX; }, {passive: true});
+fc.addEventListener('touchend', () => { if (Math.abs(touchDelta) > 40) rotateFan(touchDelta < 0 ? 1 : -1); touchDelta = 0; });
+
+let autoplay = setInterval(() => rotateFan(1), 4500);
+fc.addEventListener('mouseenter', () => clearInterval(autoplay));
+fc.addEventListener('mouseleave', () => { autoplay = setInterval(() => rotateFan(1), 4500); });
+positionCards();
+
+// ===================== VIDEO FALLBACK =====================
+const heroVideo = document.querySelector('.hero-video');
+if (heroVideo) {
+  const altSources = [
+    'https://videos.pexels.com/video-files/2519660/2519660-uhd_2560_1440_24fps.mp4',
+    'https://videos.pexels.com/video-files/2519660/2519660-hd_1920_1080_24fps.mp4',
+    'https://videos.pexels.com/video-files/1739010/1739010-hd_1920_1080_24fps.mp4',
+  ];
+  let attempt = 0;
+  heroVideo.addEventListener('error', function() {
+    if (attempt < altSources.length) { heroVideo.src = altSources[attempt]; heroVideo.load(); attempt++; }
+  }, true);
+}
+
+// ===================== NAV SCROLL =====================
+const nav = document.getElementById('mainNav');
+const topbar = document.getElementById('topbar');
+window.addEventListener('scroll', () => {
+  const activePage = document.querySelector('.page.active');
+  if (activePage && activePage.id === 'page-home') {
+    const scrolled = window.scrollY > 80;
+    nav.classList.toggle('scrolled', scrolled);
+    nav.classList.remove('solid');
+    if (topbar) topbar.classList.toggle('hidden', scrolled);
+  }
+});
+
+// ===================== FADE-UP OBSERVER =====================
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.style.animationPlayState = 'running'; obs.unobserve(e.target); }
+  });
+}, {threshold: 0.15});
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+// ===================== TEAM DATA =====================
+// ✏️  Voeg hier teamleden toe — gewoon een object toevoegen aan de array
+const teamMembers = [
+  {
+    name: "Tom Trybou",
+    role: "Verzekeringen Trybou BV",
+    desc: "Persoonlijk verzekeringsadvies, afgestemd op uw specifieke situatie.",
+    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/20250203095100dsc09194.jpg",
+    phone: "057 224 332",
+    email: "tom@grouptrybou.be"
+  },
+  {
+    name: "Jan Decruyenaere",
+    role: "Adviseur Verzekeringen & Beleggingen",
+    desc: "Combineert verzekerings- en beleggingsexpertise voor een volledig financieel plan.",
+    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/20250203095417dsc09109.jpg",
+    phone: "057 224 346",
+    email: "jan@grouptrybou.be"
+  },
+  {
+    name: "Sander Ampe",
+    role: "Verantwoordelijke Schade",
+    desc: "Staat u bij bij schadegevallen van aangifte tot volledige afhandeling.",
+    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/20250203095558dsc09247.jpg",
+    phone: "057 224 344",
+    email: "sander@grouptrybou.be"
+  },
+  {
+    name: "Linde Masson",
+    role: "Verantwoordelijke KMO",
+    desc: "Gespecialiseerd in kmo's en gedreven door ondernemerszin.",
+    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/20250203095840dsc09202.jpg",
+    phone: "057 224 341",
+    email: "linde@grouptrybou.be"
+  },
+  {
+    name: "Ruben Callewaert",
+    role: "Verantwoordelijke Levensverzekeringen",
+    desc: "Bouwt samen met u aan een solide bescherming voor uw gezin en vermogen.",
+    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/20250203100457dsc09168.jpg",
+    phone: "057 224 348",
+    email: "ruben@grouptrybou.be"
+  },
+  {
+    name: "Femke Hoet",
+    role: "Immo & Verzekeringen",
+    desc: "Uw aanspreekpunt voor vastgoed en de bijhorende verzekeringsoplossingen.",
+    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/20250203100412dsc09311.jpg",
+    phone: "057 224 340",
+    email: "femke@grouptrybou.be"
+  },
+  {
+    name: "Sandra Jonckheere",
+    role: "Verzekeringsadviseur",
+    desc: "Luistert naar uw noden en zoekt de polis die écht bij u past.",
+    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/20250403052353dsc03626-verbeterd-nr.jpg",
+    phone: "057 224 345",
+    email: "sandra@grouptrybou.be"
+  },
+  {
+    name: "Tine Dedeurwaerder",
+    role: "Schadebeheer",
+    desc: "Snel en nauwkeurig in de opvolging van elk schadedossier.",
+    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/202506181014112.jpg",
+    phone: "057 224 343",
+    email: "tine@grouptrybou.be"
+  },
+];
+
+function renderTeam() {
+  const grid = document.getElementById('teamGrid');
+  if (!grid) return;
+  grid.innerHTML = teamMembers.map((m, i) => `
+    <div class="team-card" data-index="${i}">
+      <div class="team-card-img"><img src="${m.img}" alt="${m.name}" loading="lazy"/></div>
+      <div class="team-card-info">
+        <h3>${m.name}</h3>
+        <div class="role">${m.role}</div>
+      </div>
+      <div class="team-card-hover">
+        <img class="th-photo" src="${m.img}" alt="${m.name}"/>
+        <p class="th-name">${m.name}</p>
+        <a href="tel:${m.phone.replace(/\s/g,'')}" onclick="event.stopPropagation()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" flex-shrink="0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <span>${m.phone}</span>
+        </a>
+        <a href="mailto:${m.email}" onclick="event.stopPropagation()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" flex-shrink="0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+          <span>${m.email}</span>
+        </a>
+      </div>
+    </div>
+  `).join('');
+}
+renderTeam();
+
+// ===================== TEAM MODAL =====================
+const teamModal = document.getElementById('teamModal');
+document.getElementById('teamGrid').addEventListener('click', e => {
+  const card = e.target.closest('.team-card');
+  if (!card) return;
+  const m = teamMembers[+card.dataset.index];
+  document.getElementById('tmImg').src = m.img;
+  document.getElementById('tmImg').alt = m.name;
+  document.getElementById('tmName').textContent = m.name;
+  document.getElementById('tmRole').textContent = m.role;
+  document.getElementById('tmDesc').textContent = m.desc;
+  document.getElementById('tmPhoneText').textContent = m.phone;
+  document.getElementById('tmPhone').href = 'tel:' + m.phone.replace(/\s/g, '');
+  document.getElementById('tmEmailText').textContent = m.email;
+  document.getElementById('tmEmail').href = 'mailto:' + m.email;
+  teamModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+});
+document.getElementById('teamModalClose').addEventListener('click', closeTeamModal);
+teamModal.addEventListener('click', e => { if (e.target === teamModal) closeTeamModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTeamModal(); });
+function closeTeamModal() {
+  teamModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ===================== SECTOR DATA =====================
+// ✏️  Voeg hier sectoren toe — een object toevoegen volstaat
+// Elke sector krijgt automatisch een eigen pagina + kaart op het overzicht
+const sectors = [
+  {
+    id: "kmo",
+    icon: "🏢",
+    title: "KMO & Bedrijven",
+    subtitle: "Volledig verzekeringspakket voor uw onderneming.",
+    heroDesc: "Een volledig en maatgericht verzekeringspakket voor uw onderneming — van brand tot BA en alles ertussen.",
+    img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&auto=format&fit=crop",
+    heroImg: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1400&q=80&auto=format&fit=crop",
+    introTitle: "Bescherming die meegroeit met uw onderneming",
+    introText: ["Als KMO draagt u dagelijks risico's: brand in uw pand, schade aan klanten, een ziek werknemer... Wij analyseren die risico's grondig en bouwen een polis die écht past bij uw activiteit.", "Met meer dan 75 jaar ervaring in het Belgische KMO-landschap kennen wij elke sector van binnenuit. Geen standaardpakket, maar een dossier op maat."],
+    coverages: [
+      {ico:"🔥",title:"Brandverzekering",desc:"Bescherming van uw gebouw, inboedel en machines tegen brand, storm en waterschade."},
+      {ico:"🛡️",title:"BA Onderneming",desc:"Lichamelijke en materiële schade aan derden door uw activiteiten of producten."},
+      {ico:"👷",title:"Arbeidsongevallen",desc:"Wettelijk verplicht voor elke werkgever. Wij regelen de volledige aangifte bij schade."},
+      {ico:"🚗",title:"Wagenparkbeheer",desc:"BA, omnium en bestuurdersverzekering voor uw volledige voertuigenpark."},
+      {ico:"👥",title:"Groepsverzekering",desc:"Pensioenopbouw en overlijdensdekking als aantrekkelijk werkgeversvoordeel."},
+      {ico:"💻",title:"Cyberverzekering",desc:"Bescherming bij datalekken, ransomware en andere digitale dreigingen."},
+    ],
+    cases: [
+      {tag:"Productiebedrijf",quote:"Na een ernstige machinebreuk was alles binnen 10 dagen geregeld. Trybou volgde elke stap op.",person:"Thomas V., Zaakvoerder"},
+      {tag:"Horecabedrijf",quote:"Onze brandpolis was onderverzekerd. Trybou ontdekte dit bij de jaarlijkse check en paste aan vóór het fout ging.",person:"Marie K., Uitbater"},
+      {tag:"Distributeur",quote:"Fleet van 24 voertuigen volledig beheerd. Eén aanspreekpunt, 30% kostenbesparing.",person:"Dirk L., CEO"},
+    ]
+  },
+  {
+    id: "zelfstandigen",
+    icon: "💼",
+    title: "Zelfstandigen",
+    subtitle: "Inkomensbescherming en pensioenopbouw voor de zelfstandige.",
+    heroDesc: "Inkomensbescherming, pensioenopbouw en aansprakelijkheid — alles wat een zelfstandige nodig heeft.",
+    img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&q=80&auto=format&fit=crop",
+    heroImg: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1400&q=80&auto=format&fit=crop",
+    introTitle: "Uw inkomen, uw pensioen, uw toekomst",
+    introText: ["Als zelfstandige heeft u geen vangnet van een werkgever. Wat als u ziek valt? Wat als een klant u aansprakelijk stelt? Wij helpen u elk risico in kaart brengen en de juiste bescherming uitbouwen.", "Van VAPZ tot beroepsaansprakelijkheid — wij spreken uw taal en denken mee over uw volledige financiële bescherming."],
+    coverages: [
+      {ico:"💰",title:"Gewaarborgd Inkomen",desc:"Maandelijkse uitkering bij arbeidsongeschiktheid door ziekte of accident."},
+      {ico:"🏦",title:"VAPZ / IPT",desc:"Vrij aanvullend pensioen voor zelfstandigen — fiscaal optimaal opgebouwd."},
+      {ico:"⚖️",title:"Beroepsaansprakelijkheid",desc:"Bescherming bij fouten in uw dienstverlening of professionele nalatigheid."},
+      {ico:"🏥",title:"Hospitalisatieverzekering",desc:"Terugbetaling van ziekenhuiskosten ver boven het niveau van de mutualiteit."},
+      {ico:"🏠",title:"Polis Privéleven",desc:"Brand, familiale BA en rechtsbijstand voor uw privésituatie."},
+      {ico:"🔐",title:"Arbeidsongevallen",desc:"Optionele arbeidsongevallendekking voor de zelfstandige zelf."},
+    ],
+    cases: [
+      {tag:"Vrije beroepen",quote:"Mijn VAPZ en IPT werden volledig geoptimaliseerd. Ik bespaar op belastingen én bouw pensioen op.",person:"Nadia K., Architect"},
+      {tag:"Consultant",quote:"Drie maanden ziek. Dankzij mijn gewaarborgd inkomen kon ik herstellen zonder financiële stress.",person:"Pieter D., IT-consultant"},
+      {tag:"Handelaar",quote:"Eindelijk iemand die alles in één overzicht bracht: privé én professioneel.",person:"Sofie M., Handelaar"},
+    ]
+  },
+  {
+    id: "vrije-beroepen",
+    icon: "⚖️",
+    title: "Vrije Beroepen",
+    subtitle: "Beroepsaansprakelijkheid en bescherming op maat.",
+    heroDesc: "Specifieke dekkingen voor artsen, advocaten, architecten, accountants en andere vrije beroepen.",
+    img: "https://images.unsplash.com/photo-1507679799987-c73b1e23ad6c?w=600&q=80&auto=format&fit=crop",
+    heroImg: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1400&q=80&auto=format&fit=crop",
+    introTitle: "Specialistische bescherming voor uw professie",
+    introText: ["Vrije beroepen hebben bijzondere verantwoordelijkheden. Een kleine fout in uw advies of handeling kan grote financiële gevolgen hebben voor uw klant — en voor u. Wij zorgen voor dekkingen die écht aansluiten op de risico's van uw professie.", "Onze specialisten kennen de specifieke noden van artsen, notarissen, architecten, advocaten en vele andere vrije beroepen."],
+    coverages: [
+      {ico:"⚕️",title:"Medische BA",desc:"Beroepsaansprakelijkheid voor artsen, tandartsen, kinesisten en andere zorgverstrekkers."},
+      {ico:"🏛️",title:"Advocaten BA",desc:"Dekking voor fouten in het kader van juridische bijstand en adviesverlening."},
+      {ico:"📐",title:"Architecten BA",desc:"Tienjarige aansprakelijkheid en burgerrechtelijke BA voor architecten."},
+      {ico:"📊",title:"Accountants BA",desc:"Bescherming bij fouten in boekhoudkundig of fiscaal advies."},
+      {ico:"💰",title:"VAPZ / IPT",desc:"Pensioenopbouw specifiek afgestemd op het statuut van het vrij beroep."},
+      {ico:"🏥",title:"Hospitalisatie",desc:"Uitgebreide hospitalisatiedekking voor uzelf en uw medewerkers."},
+    ],
+    cases: [
+      {tag:"Architect",quote:"Als architect is het fijn om een vast aanspreekpunt te hebben dat mijn specifieke aansprakelijkheidsrisico's kent.",person:"Nadia K., Architect"},
+      {tag:"Accountant",quote:"Mijn BA-polis werd volledig herbekeken. Betere dekking, lagere premie. Trybou deed wat mijn vorige makelaar nooit deed.",person:"Jan P., Accountant"},
+      {tag:"Huisarts",quote:"Snel, correct en transparant. Bij een klacht van een patiënt stond Trybou meteen klaar om alles op te volgen.",person:"Dr. S. Vermeersch"},
+    ]
+  },
+  {
+    id: "bouw",
+    icon: "🏗️",
+    title: "Bouw & Vastgoed",
+    subtitle: "ABR, aansprakelijkheid en werfverzekeringen.",
+    heroDesc: "ABR, tienjarige aansprakelijkheid, werfverzekeringen en BA voor aannemers en promotoren.",
+    img: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80&auto=format&fit=crop",
+    heroImg: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&q=80&auto=format&fit=crop",
+    introTitle: "Bescherming op elke bouwplaats",
+    introText: ["De bouwsector draagt enorme risico's: schade aan derden, constructiefouten, arbeidsongevallen op de werf... Wij begrijpen de complexiteit van uw activiteiten en zorgen voor een sluitend verzekeringsplan.", "Van kleine aannemers tot grote projectontwikkelaars — wij bieden op maat gemaakte oplossingen voor élke bouwer."],
+    coverages: [
+      {ico:"🏗️",title:"ABR — Alle Bouwplaatsrisico's",desc:"Dekking voor schade aan het werk in uitvoering, materialen en machines op de werf."},
+      {ico:"⏱️",title:"Tienjarige Aansprakelijkheid",desc:"Wettelijk verplicht voor aannemers en architecten op constructieve elementen."},
+      {ico:"🦺",title:"Arbeidsongevallen Werf",desc:"Uitgebreide bescherming voor werknemers en tijdelijke medewerkers op de bouwplaats."},
+      {ico:"🔧",title:"BA Aannemer",desc:"Aansprakelijkheid voor schade aan derden door uw werken of uw personeel."},
+      {ico:"🏢",title:"Vastgoedpromovering",desc:"Bescherming voor projectontwikkelaars tijdens de bouw en verkoopfase."},
+      {ico:"🚜",title:"Materieel & Machines",desc:"All-risk voor bouwmachines, kranen, heftrucks en zwaar materiaal."},
+    ],
+    cases: [
+      {tag:"Aannemer",quote:"Professioneel, eerlijk en transparant. Geen verrassingen bij schadeclaims.",person:"Jan D., Zaakvoerder bouwbedrijf"},
+      {tag:"Projectontwikkelaar",quote:"Trybou begeleidt ons van grondaankoop tot oplevering. Één dossier, één aanspreekpunt.",person:"Marc V., Promotor"},
+      {tag:"Elektricien",quote:"Mijn BA en arbeidsongevallenpolis werden geoptimaliseerd. Betere dekking voor minder premie.",person:"Kevin S., Installateur"},
+    ]
+  },
+  {
+    id: "transport",
+    icon: "🚛",
+    title: "Transport & Logistiek",
+    subtitle: "CMR, goederenverzekering en wagenpark.",
+    heroDesc: "CMR, goederenverzekering, wagenpark en aansprakelijkheid voor transporteurs en logistieke spelers.",
+    img: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80&auto=format&fit=crop",
+    heroImg: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1400&q=80&auto=format&fit=crop",
+    introTitle: "Op de weg én in het magazijn beschermd",
+    introText: ["Transport en logistiek zijn sectoren met hoge risico's: ongelukken, goederenschade, vertragingen en internationale aansprakelijkheid. Wij brengen alles samen in een efficiënt verzekeringsplan.", "Van eenpersoonszaak tot internationale carrier — wij kennen uw dagelijkse uitdagingen en zorgen voor de juiste dekking."],
+    coverages: [
+      {ico:"🚛",title:"CMR-verzekering",desc:"Internationale wegvervoerdersaansprakelijkheid conform het CMR-verdrag."},
+      {ico:"📦",title:"Goederenverzekering",desc:"All-risk of named-perils dekking voor goederen tijdens transport."},
+      {ico:"🚗",title:"Fleet Management",desc:"BA, mini-omnium en full-omnium voor uw volledige voertuigenpark, met één overzichtelijke premie."},
+      {ico:"🏭",title:"Magazijnverzekering",desc:"Brand, inbraak en aansprakelijkheid voor opgeslagen goederen van derden."},
+      {ico:"⚖️",title:"Expediteur BA",desc:"Aansprakelijkheidsdekking voor expeditiebedrijven en logistieke dienstverleners."},
+      {ico:"🦺",title:"Arbeidsongevallen",desc:"Bescherming voor chauffeurs en magazijnpersoneel bij arbeidsongevallen."},
+    ],
+    cases: [
+      {tag:"Transportbedrijf",quote:"Ze hebben onze fleet en BA-polis herbekeken. 30% bespaard op jaarpremie.",person:"Dirk L., Transportbedrijf"},
+      {tag:"Expediteur",quote:"Bij een goederenschade in Duitsland stond Trybou dezelfde dag klaar. Alles vlot afgehandeld.",person:"Luc B., Expediteur"},
+      {tag:"Logistiek centrum",quote:"Ons magazijn en fleet zijn nu perfect afgestemd. Geen overlappingen, geen gaten in de dekking.",person:"An V., Operations Manager"},
+    ]
+  },
+  // ✏️ NIEUWE SECTOR TOEVOEGEN — kopieer onderstaand blok en pas aan:
+  // {
+  //   id: "horeca",                      // unieke ID (geen spaties, geen accenten)
+  //   icon: "🍽️",
+  //   title: "Horeca",
+  //   subtitle: "Korte omschrijving voor de kaart.",
+  //   heroDesc: "Langere beschrijving voor de hero-sectie van de pagina.",
+  //   img: "URL_kaartfoto",              // afbeelding op sectorenkaart (600px breed)
+  //   heroImg: "URL_heroimago",          // afbeelding bovenaan de sectorpagina (1400px breed)
+  //   introTitle: "Titel in de introsectie",
+  //   introText: ["Paragraaf 1.", "Paragraaf 2."],
+  //   coverages: [
+  //     {ico:"🔥", title:"Verzekeringsnaam", desc:"Omschrijving."},
+  //     // ... max 6 coverages
+  //   ],
+  //   cases: [
+  //     {tag:"Bedrijfstype", quote:"Citaat van klant.", person:"Naam, Functie"},
+  //     // ... max 3 cases
+  //   ]
+  // },
+];
+
+// ===================== SECTOR PAGES RENDERER =====================
+function renderSectorPages() {
+  // Remove old static sector pages
+  ['kmo','zelfstandigen','vrije-beroepen','bouw','transport'].forEach(id => {
+    const old = document.getElementById('page-' + id);
+    if (old) old.remove();
+  });
+
+  sectors.forEach(s => {
+    const div = document.createElement('div');
+    div.id = 'page-' + s.id;
+    div.className = 'page';
+    div.innerHTML = `
+      <div class="sector-hero">
+        <img src="${s.heroImg}" alt="${s.title}"/>
+        <div class="sector-hero-content">
+          <div class="slabel"><span class="line"></span> Sectoren</div>
+          <h1>${s.title}</h1>
+          <p>${s.heroDesc}</p>
+        </div>
+      </div>
+      <div class="sector-body">
+        <div class="sector-intro">
+          <div class="sector-intro-text">
+            <div class="slabel"><span class="line"></span> Voor uw sector</div>
+            <h2>${s.introTitle}</h2>
+            ${s.introText.map(t => `<p>${t}</p>`).join('')}
+            <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+              <button class="btn-blue" onclick="showPage('contact')">Gratis verzekeringscheck →</button>
+              <button class="btn-outline" onclick="showPage('sectoren')">Alle sectoren</button>
+            </div>
+          </div>
+          <div class="insurance-grid">
+            ${s.coverages.map(c => `
+              <div class="insurance-card">
+                <h4><span class="ico">${c.ico}</span>${c.title}</h4>
+                <p>${c.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div class="cases-section">
+          <h2>Ervaringen van klanten</h2>
+          <p class="sub">Wat ondernemers zeggen over onze aanpak</p>
+          <div class="cases-grid">
+            ${s.cases.map(c => `
+              <div class="case-card">
+                <div class="tag">${c.tag}</div>
+                <p>"${c.quote}"</p>
+                <div class="person">— ${c.person}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div style="text-align:center"><button class="btn-blue" onclick="showPage('contact')">Plan uw gratis check →</button></div>
+      </div>
+    `;
+    // Insert before footer
+    const footer = document.getElementById('siteFooter');
+    document.body.insertBefore(div, footer);
+  });
+}
+
+// ===================== SECTOR OVERVIEW RENDERER =====================
+function renderSectorOverviews() {
+  // Update home page sector cards
+  const homeMain = document.querySelector('#sectoren-home .sectors-main');
+  const homeSub = document.querySelector('#sectoren-home .sectors-sub');
+  if (homeMain && homeSub) {
+    const mainSectors = sectors.slice(0, 3);
+    const subSectors = sectors.slice(3);
+    homeMain.innerHTML = mainSectors.map((s, i) => `
+      <a class="sector-card main fade-up d${i+1}" onclick="showPage('${s.id}')" style="text-decoration:none;cursor:pointer">
+        <img src="${s.img}" alt="${s.title}" />
+        <div class="sector-content">
+          <div class="sector-icon">${s.icon}</div>
+          <h3>${s.title}</h3>
+          <p>${s.subtitle}</p>
+          <div class="sector-arrow">Ontdek meer →</div>
+        </div>
+      </a>
+    `).join('');
+    // Sub sectors — wrap in grid or show if any
+    if (subSectors.length > 0) {
+      homeSub.style.gridTemplateColumns = subSectors.length === 1 ? '1fr' : 'repeat(2,1fr)';
+      homeSub.innerHTML = subSectors.map((s, i) => `
+        <a class="sector-card sub fade-up d${i+4}" onclick="showPage('${s.id}')" style="text-decoration:none;cursor:pointer">
+          <img src="${s.img}" alt="${s.title}" />
+          <div class="sector-content">
+            <div class="sector-icon">${s.icon}</div>
+            <h3>${s.title}</h3>
+            <p>${s.subtitle}</p>
+            <div class="sector-arrow">Ontdek meer →</div>
+          </div>
+        </a>
+      `).join('');
+    } else {
+      homeSub.style.display = 'none';
+    }
+  }
+
+  // Update sectoren overview page
+  const overviewMain = document.querySelector('#page-sectoren [style*="grid-template-columns:repeat(3"]');
+  const overviewSub = document.querySelector('#page-sectoren [style*="grid-template-columns:1fr 1fr"]');
+  if (overviewMain) {
+    overviewMain.innerHTML = sectors.slice(0, 3).map(s => `
+      <div onclick="showPage('${s.id}')" class="sector-card main" style="cursor:pointer">
+        <img src="${s.img}" alt="${s.title}"/>
+        <div class="sector-content"><div class="sector-icon">${s.icon}</div><h3>${s.title}</h3><p>${s.subtitle}</p><div class="sector-arrow">Ontdek meer →</div></div>
+      </div>
+    `).join('');
+  }
+  if (overviewSub) {
+    const subs = sectors.slice(3);
+    overviewSub.style.gridTemplateColumns = subs.length <= 2 ? 'repeat(2,1fr)' : 'repeat(3,1fr)';
+    overviewSub.innerHTML = subs.map(s => `
+      <div onclick="showPage('${s.id}')" class="sector-card sub" style="cursor:pointer">
+        <img src="${s.img}" alt="${s.title}"/>
+        <div class="sector-content"><div class="sector-icon">${s.icon}</div><h3>${s.title}</h3><p>${s.subtitle}</p><div class="sector-arrow">Ontdek meer →</div></div>
+      </div>
+    `).join('');
+  }
+
+  // Update footer sector links
+  const footerSectorList = document.querySelector('footer .foot-inner > div:nth-child(2) ul');
+  if (footerSectorList) {
+    footerSectorList.innerHTML = sectors.map(s =>
+      `<li><a onclick="showPage('${s.id}')">${s.title}</a></li>`
+    ).join('');
+  }
+
+  // Update contact form sector dropdown
+  const sectorSelect = document.querySelector('#page-contact select');
+  if (sectorSelect) {
+    const extras = ['<option value="">Selecteer uw sector</option>'];
+    sectors.forEach(s => extras.push(`<option>${s.title}</option>`));
+    extras.push('<option>Andere</option>');
+    sectorSelect.innerHTML = extras.join('');
+  }
+}
+
+// Boot
+renderSectorPages();
+renderSectorOverviews();
+
+// Re-observe fade-up elements after dynamic render
+setTimeout(() => {
+  document.querySelectorAll('.fade-up').forEach(el => {
+    el.style.animationPlayState = 'paused';
+    obs.observe(el);
+  });
+}, 100);
+
+// ===================== CONTACT FORM =====================
+function submitForm() {
+  document.getElementById('formSuccess').classList.add('show');
+  setTimeout(() => document.getElementById('formSuccess').classList.remove('show'), 5000);
+}
+</script>
+</body>
+</html>
