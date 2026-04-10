@@ -151,9 +151,11 @@ nav.scrolled .nav-links a:hover,nav.solid .nav-links a:hover{color:var(--blue)}
 .partners{padding:80px 48px;text-align:center;max-width:1320px;margin:0 auto}
 .partners .stitle,.partners .sdesc{margin-left:auto;margin-right:auto}
 .logos{display:flex;gap:28px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:48px}
-.logo-box{height:56px;padding:14px 28px;background:var(--white);border-radius:12px;border:1px solid rgba(0,0,0,.04);display:flex;align-items:center;justify-content:center;transition:all .3s;gap:6px}
-.logo-box:hover{box-shadow:0 6px 24px rgba(10,83,157,.06);transform:translateY(-2px)}
+.logo-box{height:72px;padding:12px 24px;background:var(--white);border-radius:12px;border:1px solid rgba(0,0,0,.07);display:flex;align-items:center;justify-content:center;transition:all .3s;gap:6px}
+.logo-box:hover{box-shadow:0 6px 24px rgba(10,83,157,.1);transform:translateY(-2px)}
+.logo-box img{height:38px;width:auto;max-width:140px;object-fit:contain;display:block}
 .logo-text{font-weight:700;font-size:1.05rem;letter-spacing:.02em}
+.partners-note{margin-top:28px;font-size:.9rem;color:var(--muted);font-style:italic}
 
 /* FAQ */
 .faq{padding:100px 48px;max-width:860px;margin:0 auto}
@@ -271,39 +273,16 @@ footer a:hover{color:var(--white)}
 .timeline-year{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--ink);margin-bottom:8px}
 .team-section h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:8px}
 .team-section .sub{color:var(--slate);margin-bottom:40px}
-.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:20px}
-.team-card{background:var(--white);border-radius:var(--radius-lg);padding:24px 16px 20px;text-align:center;transition:all .3s;cursor:pointer;position:relative;overflow:hidden;}
-.team-card:hover{box-shadow:0 8px 30px rgba(10,83,157,.15);transform:translateY(-3px)}
-.team-card-hover{position:absolute;inset:0;background:rgba(255,255,255,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;opacity:0;transition:opacity .25s;border-radius:var(--radius-lg);backdrop-filter:blur(2px);}
-.team-card:hover .team-card-hover{opacity:1;}
-.team-card-hover .th-photo{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--blue-pale);flex-shrink:0;}
-.team-card-hover .th-name{font-size:.82rem;font-weight:700;color:var(--ink);margin:0;}
-.team-card-hover a{display:flex;align-items:center;gap:6px;color:var(--blue);text-decoration:none;font-size:.7rem;font-weight:600;padding:8px 10px;border-radius:8px;background:var(--blue-pale);width:100%;box-sizing:border-box;transition:background .2s;min-width:0;overflow:hidden;}
-.team-card-hover a svg{flex-shrink:0;}
-.team-card-hover a span{white-space:nowrap;font-size:clamp(.58rem,.9vw,.7rem);}
-.team-card-hover a:hover{background:#ccdff2;}
-.team-card-img{width:110px;height:110px;border-radius:50%;overflow:hidden;margin:0 auto 14px;border:3px solid var(--blue-pale)}
-.team-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
-.team-card:hover .team-card-img img{transform:scale(1.06)}
-.team-card-info{padding:0}
-.team-card-info h3{font-size:.95rem;font-weight:600;margin-bottom:4px}
-.team-card-info .role{font-size:.78rem;color:var(--blue);font-weight:500;margin-bottom:6px}
-.team-card-info p{font-size:.76rem;color:var(--muted);line-height:1.5}
-.team-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s;}
-.team-modal-overlay.open{opacity:1;pointer-events:all;}
-.team-modal{background:#fff;border-radius:var(--radius-lg);width:100%;max-width:420px;overflow:hidden;position:relative;transform:translateY(20px);transition:transform .25s;}
-.team-modal-overlay.open .team-modal{transform:translateY(0);}
-.team-modal-photo{height:260px;overflow:hidden;}
-.team-modal-photo img{width:100%;height:100%;object-fit:cover;object-position:top;}
-.team-modal-close{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.95);border:none;border-radius:50%;width:34px;height:34px;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15);transition:background .2s;}
-.team-modal-close:hover{background:#fff;}
-.team-modal-body{padding:24px;}
-.team-modal-body h3{font-size:1.15rem;font-weight:700;margin-bottom:4px;}
-.team-modal-body .tm-role{font-size:.82rem;color:var(--blue);font-weight:600;margin-bottom:12px;}
-.team-modal-body p{font-size:.85rem;color:var(--muted);line-height:1.65;margin-bottom:20px;}
-.tm-contacts{display:flex;flex-direction:column;gap:10px;}
-.tm-contacts a{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--ink);text-decoration:none;padding:10px 14px;border-radius:12px;background:var(--blue-pale);transition:background .2s;}
-.tm-contacts a:hover{background:#d5e5f5;}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.team-card{background:var(--white);border-radius:var(--radius-lg);overflow:hidden;transition:all .3s}
+.team-card:hover{box-shadow:0 12px 40px rgba(10,83,157,.1);transform:translateY(-4px)}
+.team-card-img{height:260px;overflow:hidden}
+.team-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.team-card:hover .team-card-img img{transform:scale(1.04)}
+.team-card-info{padding:24px}
+.team-card-info h3{font-size:1.05rem;font-weight:600;margin-bottom:4px}
+.team-card-info .role{font-size:.82rem;color:var(--blue);font-weight:500;margin-bottom:8px}
+.team-card-info p{font-size:.82rem;color:var(--muted);line-height:1.6}
 .values-section{background:var(--blue);border-radius:var(--radius-lg);padding:64px;margin:64px 0}
 .values-section h2{font-family:'Playfair Display',serif;font-size:2rem;color:var(--white);margin-bottom:8px;text-align:center}
 .values-section .sub{color:rgba(255,255,255,.55);text-align:center;margin-bottom:48px}
@@ -313,6 +292,38 @@ footer a:hover{color:var(--white)}
 .value-card .icon{font-size:1.8rem;margin-bottom:14px}
 .value-card h4{color:var(--white);font-size:.95rem;font-weight:600;margin-bottom:8px}
 .value-card p{color:rgba(255,255,255,.5);font-size:.83rem;line-height:1.65}
+
+/* KANTOREN OVERVIEW */
+.offices-section{margin-bottom:72px}
+.offices-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:40px}
+.office-full-card{background:var(--white);border-radius:var(--radius-lg);padding:32px;border:1px solid rgba(0,0,0,.05);transition:box-shadow .3s}
+.office-full-card:hover{box-shadow:0 8px 32px rgba(10,83,157,.08)}
+.ofc-header{display:flex;gap:16px;align-items:flex-start;margin-bottom:16px}
+.ofc-pin{width:44px;height:44px;min-width:44px;border-radius:12px;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.ofc-header h3{font-size:1.05rem;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ofc-badge{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;background:var(--blue);color:white;padding:2px 9px;border-radius:100px}
+.ofc-header address{font-style:normal;font-size:.84rem;color:var(--slate)}
+.ofc-contact{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(0,0,0,.06)}
+.ofc-contact a{font-size:.82rem;color:var(--slate);text-decoration:none;transition:color .3s;display:flex;align-items:center;gap:5px}
+.ofc-contact a:hover{color:var(--blue)}
+.ofc-hours{margin-top:4px}
+.ofc-hours-title{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.hours-axis{position:relative;margin-left:34px;margin-bottom:4px;height:14px}
+.hours-axis-tick{position:absolute;font-size:.6rem;color:var(--muted);transform:translateX(-50%);line-height:1;user-select:none}
+.ofc-day-bar{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.day-lbl{font-size:.72rem;font-weight:700;color:var(--muted);width:26px;text-align:right;flex-shrink:0}
+.day-track{position:relative;flex:1;height:24px;background:rgba(0,0,0,.05);border-radius:5px;overflow:visible}
+.day-bar{position:absolute;top:2px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:default}
+.day-bar.open{background:var(--blue)}
+.day-bar.afspraak{background:#f59e0b}
+.bar-label{display:none}
+.day-bar[data-time]::after{content:attr(data-time);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#111827;color:white;font-size:.65rem;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;z-index:20;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.day-bar[data-time]:hover::after{opacity:1}
+.day-track.gesloten::after{content:'gesloten';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:.65rem;color:rgba(0,0,0,.25);font-style:italic}
+.hours-legend{display:flex;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,.05)}
+.hours-legend-item{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--slate)}
+.hours-legend-dot{width:12px;height:10px;border-radius:2px;flex-shrink:0}
+@media(max-width:900px){.offices-grid{grid-template-columns:1fr}}
 
 /* PAGE HERO (sub-pages without image) */
 .page-hero{background:linear-gradient(135deg,var(--blue-dark),var(--blue));padding:140px 48px 80px;position:relative;overflow:hidden}
@@ -356,7 +367,7 @@ footer a:hover{color:var(--white)}
 
 <!-- TOPBAR -->
 <div class="topbar" id="topbar">
-  <span>📍 Ieper · Poperinge · Houthulst — We staan klaar voor ondernemers over heel België</span>
+  <span>📍 Ieper · Poperinge · Houthulst · Westouter — We staan klaar voor ondernemers over heel België</span>
   <div style="display:flex;gap:20px">
     <a href="tel:057207720">📞 057 20 77 20</a>
     <a href="mailto:info@grouptrybou.be">✉️ info@grouptrybou.be</a>
@@ -459,12 +470,12 @@ footer a:hover{color:var(--white)}
         <div class="sector-arrow">Ontdek meer →</div>
       </div>
     </a>
-    <a class="sector-card main fade-up d3" onclick="showPage('vrije-beroepen')" style="text-decoration:none;cursor:pointer">
-      <img src="https://images.unsplash.com/photo-1507679799987-c73b1e23ad6c?w=600&q=80&auto=format&fit=crop" alt="Vrije beroepen" />
+    <a class="sector-card main fade-up d3" onclick="showPage('priveleven')" style="text-decoration:none;cursor:pointer">
+      <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80&auto=format&fit=crop" alt="Privéleven" />
       <div class="sector-content">
-        <div class="sector-icon">⚖️</div>
-        <h3>Vrije Beroepen</h3>
-        <p>Specifieke dekkingen voor artsen, advocaten, architecten en accountants.</p>
+        <div class="sector-icon">🏡</div>
+        <h3>Privéleven & Gezin</h3>
+        <p>Brandverzekering woning, familiale BA, rechtsbijstand en auto privé voor de ondernemer thuis.</p>
         <div class="sector-arrow">Ontdek meer →</div>
       </div>
     </a>
@@ -543,18 +554,18 @@ footer a:hover{color:var(--white)}
 <!-- PARTNERS -->
 <section class="partners" id="partners">
   <div class="slabel" style="justify-content:center"><span class="line"></span> Onze partners</div>
-  <h2 class="stitle">Verzekeraars waar wij mee werken</h2>
-  <p class="sdesc">Onafhankelijk advies dankzij samenwerking met de grootste maatschappijen.</p>
+  <h2 class="stitle">Maatschappijen</h2>
+  <p class="sdesc">Als onafhankelijk makelaar werken wij samen met een brede waaier aan verzekeraars — zo kiezen wij altijd wat het beste past bij uw situatie.</p>
   <div class="logos">
-    <div class="logo-box"><span class="logo-text" style="color:#00008f;font-size:1.4rem;font-weight:800">AXA</span></div>
-    <div class="logo-box"><span class="logo-text" style="color:#006a4e">Crelan</span></div>
-    <div class="logo-box"><span class="logo-text" style="color:#e4002b;font-weight:800">AG</span><span style="font-size:.75rem;color:#e4002b;font-weight:600;margin-left:4px">Insurance</span></div>
-    <div class="logo-box"><span class="logo-text" style="color:#003781">Allianz</span></div>
-    <div class="logo-box"><span class="logo-text" style="color:#003d6a">Baloise</span></div>
-    <div class="logo-box"><span class="logo-text" style="color:#0a539d">Ethias</span></div>
-    <div class="logo-box"><span class="logo-text" style="color:#1a1a1a">KBC</span></div>
-    <div class="logo-box"><span class="logo-text" style="color:#ff6200;font-weight:800">NN</span></div>
+    <div class="logo-box"><img src="https://ag.be/dam/transversal/hub/images/logo.svg" alt="AG Insurance"/></div>
+    <div class="logo-box"><img src="https://www.vivium.be/image/layout_set_logo?img_id=1235230" alt="Vivium"/></div>
+    <div class="logo-box"><img src="https://www.optimco.be/images/optimco-verzekeringen.svg" alt="Optimco"/></div>
+    <div class="logo-box"><img src="https://cdn.website.axa.be/-/media/shared/logos/axa%20logo%20solid%20rgb.svg" alt="AXA"/></div>
+    <div class="logo-box"><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Baloise_Logo_2022.svg" alt="Baloise"/></div>
+    <div class="logo-box"><img src="https://media.licdn.com/dms/image/v2/C4D0BAQHObNnc47iFhw/company-logo_200_200/company-logo_200_200/0/1630566033158/euromex_n_v__logo?e=2147483647&v=beta&t=I1yVe1xTzXZMoAyQUZv6l5XNHFdjFlwVZyIiTlrD1Oc" alt="Euromex" style="height:48px"/></div>
+    <div class="logo-box"><img src="https://images.seeklogo.com/logo-png/5/1/europ-assistance-logo-png_seeklogo-50155.png" alt="Europ Assistance" style="height:52px"/></div>
   </div>
+  <p class="partners-note">… en nog vele andere maatschappijen. Onze onafhankelijkheid laat ons toe om altijd de beste keuze voor u te maken.</p>
 </section>
 
 <!-- FAQ -->
@@ -572,7 +583,7 @@ footer a:hover{color:var(--white)}
     </div>
     <div class="faq-item" onclick="this.classList.toggle('open')">
       <div class="faq-q">Met welke maatschappijen werken jullie? <span class="t">+</span></div>
-      <div class="faq-a">Wij zijn onafhankelijk en werken met alle grote maatschappijen: AXA, AG Insurance, Baloise, Ethias, Allianz, KBC, NN en meer.</div>
+      <div class="faq-a">Wij zijn onafhankelijk en werken met een brede waaier aan maatschappijen, waaronder AG Insurance, Vivium, Optimco, AXA, Baloise, Euromex, Europ Assistance en nog vele anderen.</div>
     </div>
     <div class="faq-item" onclick="this.classList.toggle('open')">
       <div class="faq-q">Hoe snel wordt een schadeclaim behandeld? <span class="t">+</span></div>
@@ -616,9 +627,9 @@ footer a:hover{color:var(--white)}
         <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&q=80&auto=format&fit=crop" alt="Zelfstandigen"/>
         <div class="sector-content"><div class="sector-icon">💼</div><h3>Zelfstandigen</h3><p>Inkomensbescherming en pensioenopbouw voor de zelfstandige.</p><div class="sector-arrow">Ontdek meer →</div></div>
       </div>
-      <div onclick="showPage('vrije-beroepen')" class="sector-card main" style="cursor:pointer">
-        <img src="https://images.unsplash.com/photo-1507679799987-c73b1e23ad6c?w=600&q=80&auto=format&fit=crop" alt="Vrije beroepen"/>
-        <div class="sector-content"><div class="sector-icon">⚖️</div><h3>Vrije Beroepen</h3><p>Beroepsaansprakelijkheid en bescherming op maat.</p><div class="sector-arrow">Ontdek meer →</div></div>
+      <div onclick="showPage('priveleven')" class="sector-card main" style="cursor:pointer">
+        <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80&auto=format&fit=crop" alt="Privéleven"/>
+        <div class="sector-content"><div class="sector-icon">🏡</div><h3>Privéleven & Gezin</h3><p>Woning, familiale BA, rechtsbijstand en auto privé voor de ondernemer thuis.</p><div class="sector-arrow">Ontdek meer →</div></div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
@@ -634,6 +645,221 @@ footer a:hover{color:var(--white)}
   </div>
 </div>
 
+<!-- ==================== KMO PAGE ==================== -->
+<div id="page-kmo" class="page">
+  <div class="sector-hero">
+    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1400&q=80&auto=format&fit=crop" alt="KMO"/>
+    <div class="sector-hero-content">
+      <div class="slabel"><span class="line"></span> Sectoren</div>
+      <h1>KMO & Bedrijven</h1>
+      <p>Een volledig en maatgericht verzekeringspakket voor uw onderneming — van brand tot BA en alles ertussen.</p>
+    </div>
+  </div>
+  <div class="sector-body">
+    <div class="sector-intro">
+      <div class="sector-intro-text">
+        <div class="slabel"><span class="line"></span> Voor uw bedrijf</div>
+        <h2>Bescherming die meegroeit met uw onderneming</h2>
+        <p>Als KMO draagt u dagelijks risico's: brand in uw pand, schade aan klanten, een ziek werknemer... Wij analyseren die risico's grondig en bouwen een polis die écht past bij uw activiteit.</p>
+        <p>Met meer dan 75 jaar ervaring in het Belgische KMO-landschap kennen wij elke sector van binnenuit. Geen standaardpakket, maar een dossier op maat.</p>
+        <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+          <button class="btn-blue" onclick="showPage('contact')">Gratis verzekeringscheck →</button>
+          <button class="btn-outline" onclick="showPage('about')">Ons team</button>
+        </div>
+      </div>
+      <div class="insurance-grid">
+        <div class="insurance-card"><h4><span class="ico">🔥</span>Brandverzekering</h4><p>Bescherming van uw gebouw, inboedel en machines tegen brand, storm en waterschade.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🛡️</span>BA Onderneming</h4><p>Lichamelijke en materiële schade aan derden door uw activiteiten of producten.</p></div>
+        <div class="insurance-card"><h4><span class="ico">👷</span>Arbeidsongevallen</h4><p>Wettelijk verplicht voor elke werkgever. Wij regelen de volledige aangifte bij schade.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🚗</span>Wagenparkbeheer</h4><p>BA, omnium en bestuurdersverzekering voor uw volledige voertuigenpark.</p></div>
+        <div class="insurance-card"><h4><span class="ico">👥</span>Groepsverzekering</h4><p>Pensioenopbouw en overlijdensdekking als aantrekkelijk werkgeversvoordeel.</p></div>
+        <div class="insurance-card"><h4><span class="ico">💻</span>Cyberverzekering</h4><p>Bescherming bij datalekken, ransomware en andere digitale dreigingen.</p></div>
+      </div>
+    </div>
+    <div class="cases-section">
+      <h2>Ervaringen van klanten</h2>
+      <p class="sub">Wat ondernemers zeggen over onze aanpak</p>
+      <div class="cases-grid">
+        <div class="case-card"><div class="tag">Productiebedrijf</div><p>"Na een ernstige machinebreuk was alles binnen 10 dagen geregeld. Trybou volgde elke stap op."</p><div class="person">— Thomas V., Zaakvoerder</div></div>
+        <div class="case-card"><div class="tag">Horecabedrijf</div><p>"Onze brandpolis was onderverzekerd. Trybou ontdekte dit bij de jaarlijkse check en paste aan vóór het fout ging."</p><div class="person">— Marie K., Uitbater</div></div>
+        <div class="case-card"><div class="tag">Distributeur</div><p>"Fleet van 24 voertuigen volledig beheerd. Eén aanspreekpunt, 30% kostenbesparing."</p><div class="person">— Dirk L., CEO</div></div>
+      </div>
+    </div>
+    <div style="text-align:center"><button class="btn-blue" onclick="showPage('contact')">Plan uw gratis check →</button></div>
+  </div>
+</div>
+
+<!-- ==================== ZELFSTANDIGEN PAGE ==================== -->
+<div id="page-zelfstandigen" class="page">
+  <div class="sector-hero">
+    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1400&q=80&auto=format&fit=crop" alt="Zelfstandigen"/>
+    <div class="sector-hero-content">
+      <div class="slabel"><span class="line"></span> Sectoren</div>
+      <h1>Zelfstandigen</h1>
+      <p>Inkomensbescherming, pensioenopbouw en aansprakelijkheid — alles wat een zelfstandige nodig heeft.</p>
+    </div>
+  </div>
+  <div class="sector-body">
+    <div class="sector-intro">
+      <div class="sector-intro-text">
+        <div class="slabel"><span class="line"></span> Voor de zelfstandige</div>
+        <h2>Uw inkomen, uw pensioen, uw toekomst</h2>
+        <p>Als zelfstandige heeft u geen vangnet van een werkgever. Wat als u ziek valt? Wat als een klant u aansprakelijk stelt? Wij helpen u elk risico in kaart brengen en de juiste bescherming uitbouwen.</p>
+        <p>Van VAPZ tot beroepsaansprakelijkheid — wij spreken uw taal en denken mee over uw volledige financiële bescherming.</p>
+        <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+          <button class="btn-blue" onclick="showPage('contact')">Gratis adviesgesprek →</button>
+        </div>
+      </div>
+      <div class="insurance-grid">
+        <div class="insurance-card"><h4><span class="ico">💰</span>Gewaarborgd Inkomen</h4><p>Maandelijkse uitkering bij arbeidsongeschiktheid door ziekte of accident.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🏦</span>VAPZ / IPT</h4><p>Vrij aanvullend pensioen voor zelfstandigen — fiscaal optimaal opgebouwd.</p></div>
+        <div class="insurance-card"><h4><span class="ico">⚖️</span>Beroepsaansprakelijkheid</h4><p>Bescherming bij fouten in uw dienstverlening of professionele nalatigheid.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🏥</span>Hospitalisatieverzekering</h4><p>Terugbetaling van ziekenhuiskosten ver boven het niveau van de mutualiteit.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🏠</span>Polis Privéleven</h4><p>Brand, familiale BA en rechtsbijstand voor uw privésituatie.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🔐</span>Arbeidsongevallen</h4><p>Optionele arbeidsongevallendekking voor de zelfstandige zelf.</p></div>
+      </div>
+    </div>
+    <div class="cases-section">
+      <h2>Ervaringen van klanten</h2>
+      <p class="sub">Zelfstandigen over hun samenwerking met Trybou</p>
+      <div class="cases-grid">
+        <div class="case-card"><div class="tag">Vrije beroepen</div><p>"Mijn VAPZ en IPT werden volledig geoptimaliseerd. Ik bespaar op belastingen én bouw pensioen op."</p><div class="person">— Nadia K., Architect</div></div>
+        <div class="case-card"><div class="tag">Consultant</div><p>"Drie maanden ziek. Dankzij mijn gewaarborgd inkomen kon ik herstellen zonder financiële stress."</p><div class="person">— Pieter D., IT-consultant</div></div>
+        <div class="case-card"><div class="tag">Handelaar</div><p>"Eindelijk iemand die alles in één overzicht bracht: privé én professioneel."</p><div class="person">— Sofie M., Handelaar</div></div>
+      </div>
+    </div>
+    <div style="text-align:center"><button class="btn-blue" onclick="showPage('contact')">Plan uw gratis check →</button></div>
+  </div>
+</div>
+
+<!-- ==================== VRIJE BEROEPEN PAGE ==================== -->
+<div id="page-priveleven" class="page">
+  <div class="sector-hero">
+    <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1400&q=80&auto=format&fit=crop" alt="Privéleven & Gezin"/>
+    <div class="sector-hero-content">
+      <div class="slabel"><span class="line"></span> Sectoren</div>
+      <h1>Privéleven & Gezin</h1>
+      <p>Uw woning, uw gezin en uw auto — ook buiten de zaak verdient u de beste bescherming.</p>
+    </div>
+  </div>
+  <div class="sector-body">
+    <div class="sector-intro">
+      <div class="sector-intro-text">
+        <div class="slabel"><span class="line"></span> Voor de ondernemer thuis</div>
+        <h2>Niet enkel uw bedrijf, ook uw thuis beschermd</h2>
+        <p>Als ondernemer bent u gewend risico's te beheren — maar ook privé loopt u risico's die vaak over het hoofd gezien worden. Wat als uw woning afbrandt? Wat als uw kind schade veroorzaakt? Wij bekijken uw privésituatie even grondig als uw zaak.</p>
+        <p>Eén aanspreekpunt voor zowel uw professionele als uw persoonlijke verzekeringen. Geen versnippering, geen lacunes.</p>
+        <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+          <button class="btn-blue" onclick="showPage('contact')">Gratis privécheck →</button>
+        </div>
+      </div>
+      <div class="insurance-grid">
+        <div class="insurance-card"><h4><span class="ico">🔥</span>Brandverzekering woning</h4><p>Bescherming van uw eigen woning, inboedel en bijgebouwen tegen brand, storm, waterschade en meer.</p></div>
+        <div class="insurance-card"><h4><span class="ico">👨‍👩‍👧</span>Familiale BA</h4><p>Dekt schade die uzelf, uw gezinsleden of uw huisdieren aan derden veroorzaken in het privéleven.</p></div>
+        <div class="insurance-card"><h4><span class="ico">⚖️</span>Rechtsbijstand</h4><p>Juridische bijstand bij conflicten als consument, buur of verkeersdeelnemer — privé en zonder extra kosten.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🚗</span>Auto privé</h4><p>BA, mini-omnium of full-omnium voor uw privéwagen, afgestemd op uw rijprofiel.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🏥</span>Hospitalisatieverzekering</h4><p>Terugbetaling van ziekenhuiskosten ver boven het niveau van de mutualiteit, voor het hele gezin.</p></div>
+        <div class="insurance-card"><h4><span class="ico">💛</span>Levensverzekering</h4><p>Financiële zekerheid voor uw gezin bij overlijden of ernstige ziekte — ook los van uw zaak.</p></div>
+      </div>
+    </div>
+    <div class="cases-section">
+      <h2>Ervaringen van klanten</h2>
+      <p class="sub">Ondernemers over hun privébescherming via Trybou</p>
+      <div class="cases-grid">
+        <div class="case-card"><div class="tag">Zaakvoerder</div><p>"Ik dacht dat mijn privéverzekeringen in orde waren. Trybou ontdekte meteen twee gaten in mijn dekking."</p><div class="person">— Peter V., Zaakvoerder</div></div>
+        <div class="case-card"><div class="tag">Zelfstandige</div><p>"Eindelijk iemand die alles in één overzicht bracht: privé én professioneel. Zo hoort het."</p><div class="person">— Sofie M., Zelfstandige</div></div>
+        <div class="case-card"><div class="tag">Ondernemer</div><p>"Na de waterschade in onze woning regelde Trybou alles van A tot Z. Geen stress, alleen oplossingen."</p><div class="person">— Lien D., Ondernemer</div></div>
+      </div>
+    </div>
+    <div style="text-align:center"><button class="btn-blue" onclick="showPage('contact')">Plan uw gratis check →</button></div>
+  </div>
+</div>
+
+<!-- ==================== BOUW PAGE ==================== -->
+<div id="page-bouw" class="page">
+  <div class="sector-hero">
+    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&q=80&auto=format&fit=crop" alt="Bouw"/>
+    <div class="sector-hero-content">
+      <div class="slabel"><span class="line"></span> Sectoren</div>
+      <h1>Bouw & Vastgoed</h1>
+      <p>ABR, tienjarige aansprakelijkheid, werfverzekeringen en BA voor aannemers en promotoren.</p>
+    </div>
+  </div>
+  <div class="sector-body">
+    <div class="sector-intro">
+      <div class="sector-intro-text">
+        <div class="slabel"><span class="line"></span> Voor de bouwsector</div>
+        <h2>Bescherming op elke bouwplaats</h2>
+        <p>De bouwsector draagt enorme risico's: schade aan derden, constructiefouten, arbeidsongevallen op de werf... Wij begrijpen de complexiteit van uw activiteiten en zorgen voor een sluitend verzekeringsplan.</p>
+        <p>Van kleine aannemers tot grote projectontwikkelaars — wij bieden op maat gemaakte oplossingen voor élke bouwer.</p>
+        <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+          <button class="btn-blue" onclick="showPage('contact')">Gratis werfanalyse →</button>
+        </div>
+      </div>
+      <div class="insurance-grid">
+        <div class="insurance-card"><h4><span class="ico">🏗️</span>ABR — Alle Bouwplaatsrisico's</h4><p>Dekking voor schade aan het werk in uitvoering, materialen en machines op de werf.</p></div>
+        <div class="insurance-card"><h4><span class="ico">⏱️</span>Tienjarige Aansprakelijkheid</h4><p>Wettelijk verplicht voor aannemers en architecten op constructieve elementen.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🦺</span>Arbeidsongevallen Werf</h4><p>Uitgebreide bescherming voor werknemers en tijdelijke medewerkers op de bouwplaats.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🔧</span>BA Aannemer</h4><p>Aansprakelijkheid voor schade aan derden door uw werken of uw personeel.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🏢</span>Vastgoedpromovering</h4><p>Bescherming voor projectontwikkelaars tijdens de bouw en verkoopfase.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🚜</span>Materieel & Machines</h4><p>All-risk voor bouwmachines, kranen, heftrucks en zwaar materiaal.</p></div>
+      </div>
+    </div>
+    <div class="cases-section">
+      <h2>Ervaringen van klanten</h2>
+      <p class="sub">Bouwers over hun samenwerking met Trybou</p>
+      <div class="cases-grid">
+        <div class="case-card"><div class="tag">Aannemer</div><p>"Professioneel, eerlijk en transparant. Geen verrassingen bij schadeclaims."</p><div class="person">— Jan D., Zaakvoerder bouwbedrijf</div></div>
+        <div class="case-card"><div class="tag">Projectontwikkelaar</div><p>"Trybou begeleidt ons van grondaankoop tot oplevering. Één dossier, één aanspreekpunt."</p><div class="person">— Marc V., Promotor</div></div>
+        <div class="case-card"><div class="tag">Elektricien</div><p>"Mijn BA en arbeidsongevallenpolis werden geoptimaliseerd. Betere dekking voor minder premie."</p><div class="person">— Kevin S., Installateur</div></div>
+      </div>
+    </div>
+    <div style="text-align:center"><button class="btn-blue" onclick="showPage('contact')">Plan uw gratis check →</button></div>
+  </div>
+</div>
+
+<!-- ==================== TRANSPORT PAGE ==================== -->
+<div id="page-transport" class="page">
+  <div class="sector-hero">
+    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1400&q=80&auto=format&fit=crop" alt="Transport"/>
+    <div class="sector-hero-content">
+      <div class="slabel"><span class="line"></span> Sectoren</div>
+      <h1>Transport & Logistiek</h1>
+      <p>CMR, goederenverzekering, wagenpark en aansprakelijkheid voor transporteurs en logistieke spelers.</p>
+    </div>
+  </div>
+  <div class="sector-body">
+    <div class="sector-intro">
+      <div class="sector-intro-text">
+        <div class="slabel"><span class="line"></span> Voor transport & logistiek</div>
+        <h2>Op de weg én in het magazijn beschermd</h2>
+        <p>Transport en logistiek zijn sectoren met hoge risico's: ongelukken, goederenschade, vertragingen en internationale aansprakelijkheid. Wij brengen alles samen in een efficiënt verzekeringsplan.</p>
+        <p>Van eenpersoonszaak tot internationale carrier — wij kennen uw dagelijkse uitdagingen en zorgen voor de juiste dekking.</p>
+        <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+          <button class="btn-blue" onclick="showPage('contact')">Analyse aanvragen →</button>
+        </div>
+      </div>
+      <div class="insurance-grid">
+        <div class="insurance-card"><h4><span class="ico">🚛</span>CMR-verzekering</h4><p>Internationale wegvervoerdersaansprakelijkheid conform het CMR-verdrag.</p></div>
+        <div class="insurance-card"><h4><span class="ico">📦</span>Goederenverzekering</h4><p>All-risk of named-perils dekking voor goederen tijdens transport.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🚗</span>Fleet Management</h4><p>BA, mini-omnium en full-omnium voor uw volledige voertuigenpark, met één overzichtelijke premie.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🏭</span>Magazijnverzekering</h4><p>Brand, inbraak en aansprakelijkheid voor opgeslagen goederen van derden.</p></div>
+        <div class="insurance-card"><h4><span class="ico">⚖️</span>Expediteur BA</h4><p>Aansprakelijkheidsdekking voor expeditiebedrijven en logistieke dienstverleners.</p></div>
+        <div class="insurance-card"><h4><span class="ico">🦺</span>Arbeidsongevallen</h4><p>Bescherming voor chauffeurs en magazijnpersoneel bij arbeidsongevallen.</p></div>
+      </div>
+    </div>
+    <div class="cases-section">
+      <h2>Ervaringen van klanten</h2>
+      <p class="sub">Transporteurs over hun samenwerking met Trybou</p>
+      <div class="cases-grid">
+        <div class="case-card"><div class="tag">Transportbedrijf</div><p>"Ze hebben onze fleet en BA-polis herbekeken. 30% bespaard op jaarpremie."</p><div class="person">— Dirk L., Transportbedrijf</div></div>
+        <div class="case-card"><div class="tag">Expediteur</div><p>"Bij een goederenschade in Duitsland stond Trybou dezelfde dag klaar. Alles vlot afgehandeld."</p><div class="person">— Luc B., Expediteur</div></div>
+        <div class="case-card"><div class="tag">Logistiek centrum</div><p>"Ons magazijn en fleet zijn nu perfect afgestemd. Geen overlappingen, geen gaten in de dekking."</p><div class="person">— An V., Operations Manager</div></div>
+      </div>
+    </div>
+    <div style="text-align:center"><button class="btn-blue" onclick="showPage('contact')">Plan uw gratis check →</button></div>
+  </div>
+</div>
 
 <!-- ==================== OVER ONS ==================== -->
 <div id="page-about" class="page">
@@ -651,7 +877,7 @@ footer a:hover{color:var(--white)}
         <div class="slabel"><span class="line"></span> Onze geschiedenis</div>
         <h2 class="stitle">Van West-Vlaanderen naar heel België</h2>
         <p>In 1948 begon het verhaal van Group Trybou als een lokaal verzekeringskantoor in het hart van West-Vlaanderen. Oprichter Leon Trybou geloofde in één principe: de ondernemer verdient een eerlijke, transparante en persoonlijke begeleiding.</p>
-        <p>Drie generaties later is dat principe nog even sterk. Wij zijn gegroeid naar drie kantoren — in Ieper, Poperinge en Houthulst — en bedienen ondernemers in heel België, maar de persoonlijke aanpak van het eerste uur is nooit verdwenen.</p>
+        <p>Drie generaties later is dat principe nog even sterk. Wij zijn gegroeid naar vier kantoren — in Ieper, Poperinge, Houthulst en Westouter — en bedienen ondernemers in heel België, maar de persoonlijke aanpak van het eerste uur is nooit verdwenen.</p>
         <p>Onze onafhankelijkheid is ons grootste troef: wij werken met meer dan acht grote verzekeringsmaatschappijen en kiezen altijd wat het best is voor u.</p>
       </div>
       <div class="about-story-img">
@@ -671,28 +897,18 @@ footer a:hover{color:var(--white)}
       <div class="slabel"><span class="line"></span> Het team</div>
       <h2 class="stitle">De mensen achter Group Trybou</h2>
       <p class="sub" style="margin-bottom:40px">Een team dat uw dossier door en door kent.</p>
-      <div class="team-grid" id="teamGrid"><!-- dynamisch gevuld via JS --></div>
-    </div>
-
-    <!-- TEAM MODAL -->
-    <div id="teamModal" class="team-modal-overlay">
-      <div class="team-modal">
-        <button class="team-modal-close" id="teamModalClose">&times;</button>
-        <div class="team-modal-photo"><img id="tmImg" src="" alt=""/></div>
-        <div class="team-modal-body">
-          <h3 id="tmName"></h3>
-          <div class="tm-role" id="tmRole"></div>
-          <p id="tmDesc"></p>
-          <div class="tm-contacts">
-            <a id="tmPhone" href="#">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-              <span id="tmPhoneText"></span>
-            </a>
-            <a id="tmEmail" href="#">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
-              <span id="tmEmailText"></span>
-            </a>
-          </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-card-img"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80&auto=format&fit=crop&crop=face" alt=""/></div>
+          <div class="team-card-info"><h3>Tom Trybou</h3><div class="role">Verzekeringsadviseur</div><p>Persoonlijk advies, rechtstreeks bij u en afgestemd op uw zaak.</p></div>
+        </div>
+        <div class="team-card">
+          <div class="team-card-img"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=80&auto=format&fit=crop&crop=face" alt=""/></div>
+          <div class="team-card-info"><h3>Bieke Trybou</h3><div class="role">Kredietadviseur</div><p>Uw aanspreekpunt voor financiering, met inzicht in uw onderneming.</p></div>
+        </div>
+        <div class="team-card">
+          <div class="team-card-img"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80&auto=format&fit=crop&crop=face" alt=""/></div>
+          <div class="team-card-info"><h3>Linde Masson</h3><div class="role">Verzekeringsadviseur focus KMO</div><p>Gespecialiseerd in kmo’s en gedreven door ondernemerszin.</p></div>
         </div>
       </div>
     </div>
@@ -705,6 +921,183 @@ footer a:hover{color:var(--white)}
         <div class="value-card"><div class="icon">🤝</div><h4>Vertrouwen</h4><p>Wij bouwen langetermijnrelaties op basis van eerlijkheid, transparantie en nakomen van beloftes.</p></div>
         <div class="value-card"><div class="icon">🎯</div><h4>Expertise</h4><p>Drie generaties kennis, continu bijgeschoold en actief in elke sector van de Belgische economie.</p></div>
         <div class="value-card"><div class="icon">❤️</div><h4>Persoonlijke aanpak</h4><p>U bent geen dossiernummer. U spreekt altijd met dezelfde adviseur die uw situatie echt kent.</p></div>
+      </div>
+    </div>
+
+    <!-- KANTOREN -->
+    <div class="offices-section">
+      <div class="slabel"><span class="line"></span> Onze kantoren</div>
+      <h2 class="stitle">Waar u ons vindt</h2>
+      <p class="sdesc">Vier kantoren in West-Vlaanderen, persoonlijk advies voor ondernemers over heel België.</p>
+      <div class="offices-grid">
+
+        <!-- Ieper -->
+        <div class="office-full-card">
+          <div class="ofc-header">
+            <div class="ofc-pin">📍</div>
+            <div>
+              <h3>Ieper <span class="ofc-badge">Hoofdkantoor</span></h3>
+              <address>Ter Waarde 63, 8900 Ieper</address>
+            </div>
+          </div>
+          <div class="ofc-contact">
+            <a href="tel:057207720">📞 057 20 77 20</a>
+            <a href="mailto:ieper@grouptrybou.be">✉️ ieper@grouptrybou.be</a>
+          </div>
+          <div class="ofc-hours">
+            <div class="ofc-hours-title">Openingsuren</div>
+            <div class="hours-axis">
+              <span class="hours-axis-tick" style="left:0%">8u</span>
+              <span class="hours-axis-tick" style="left:9.09%">9u</span>
+              <span class="hours-axis-tick" style="left:18.18%">10u</span>
+              <span class="hours-axis-tick" style="left:27.27%">11u</span>
+              <span class="hours-axis-tick" style="left:36.36%">12u</span>
+              <span class="hours-axis-tick" style="left:45.45%">13u</span>
+              <span class="hours-axis-tick" style="left:54.55%">14u</span>
+              <span class="hours-axis-tick" style="left:63.64%">15u</span>
+              <span class="hours-axis-tick" style="left:72.73%">16u</span>
+              <span class="hours-axis-tick" style="left:81.82%">17u</span>
+              <span class="hours-axis-tick" style="left:90.91%">18u</span>
+              <span class="hours-axis-tick" style="left:100%">19u</span>
+            </div>
+            <div class="ofc-day-bar"><span class="day-lbl">Ma</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div><div class="day-bar open" style="left:54.55%;width:27.27%" data-time="14u–17u"><span class="bar-label">14–17u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Di</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div><div class="day-bar open" style="left:54.55%;width:27.27%" data-time="14u–17u"><span class="bar-label">14–17u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Wo</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div><div class="day-bar open" style="left:54.55%;width:27.27%" data-time="14u–17u"><span class="bar-label">14–17u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Do</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div><div class="day-bar open" style="left:54.55%;width:27.27%" data-time="14u–17u"><span class="bar-label">14–17u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Vr</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div><div class="day-bar open" style="left:54.55%;width:18.18%" data-time="14u–16u"><span class="bar-label">14–16u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Za</span><div class="day-track"><div class="day-bar afspraak" style="left:9.09%;width:27.27%" data-time="9u–12u (op afspraak)"><span class="bar-label">9–12u</span></div></div></div>
+            <div class="hours-legend">
+              <div class="hours-legend-item"><div class="hours-legend-dot" style="background:var(--blue)"></div>Open</div>
+              <div class="hours-legend-item"><div class="hours-legend-dot" style="background:#f59e0b"></div>Op afspraak</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Poperinge -->
+        <div class="office-full-card">
+          <div class="ofc-header">
+            <div class="ofc-pin">📍</div>
+            <div>
+              <h3>Poperinge</h3>
+              <address>Ieperstraat 38, 8970 Poperinge</address>
+            </div>
+          </div>
+          <div class="ofc-contact">
+            <a href="tel:057346010">📞 057 34 60 10</a>
+            <a href="mailto:poperinge@grouptrybou.be">✉️ poperinge@grouptrybou.be</a>
+          </div>
+          <div class="ofc-hours">
+            <div class="ofc-hours-title">Openingsuren</div>
+            <div class="hours-axis">
+              <span class="hours-axis-tick" style="left:0%">8u</span>
+              <span class="hours-axis-tick" style="left:9.09%">9u</span>
+              <span class="hours-axis-tick" style="left:18.18%">10u</span>
+              <span class="hours-axis-tick" style="left:27.27%">11u</span>
+              <span class="hours-axis-tick" style="left:36.36%">12u</span>
+              <span class="hours-axis-tick" style="left:45.45%">13u</span>
+              <span class="hours-axis-tick" style="left:54.55%">14u</span>
+              <span class="hours-axis-tick" style="left:63.64%">15u</span>
+              <span class="hours-axis-tick" style="left:72.73%">16u</span>
+              <span class="hours-axis-tick" style="left:81.82%">17u</span>
+              <span class="hours-axis-tick" style="left:90.91%">18u</span>
+              <span class="hours-axis-tick" style="left:100%">19u</span>
+            </div>
+            <div class="ofc-day-bar"><span class="day-lbl">Ma</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div><div class="day-bar open" style="left:54.55%;width:27.27%" data-time="14u–17u"><span class="bar-label">14–17u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Di</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Wo</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Do</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div><div class="day-bar open" style="left:54.55%;width:27.27%" data-time="14u–17u"><span class="bar-label">14–17u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Vr</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Za</span><div class="day-track"><div class="day-bar afspraak" style="left:9.09%;width:27.27%" data-time="9u–12u (op afspraak)"><span class="bar-label">9–12u</span></div></div></div>
+            <div class="hours-legend">
+              <div class="hours-legend-item"><div class="hours-legend-dot" style="background:var(--blue)"></div>Open</div>
+              <div class="hours-legend-item"><div class="hours-legend-dot" style="background:#f59e0b"></div>Op afspraak</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Houthulst -->
+        <div class="office-full-card">
+          <div class="ofc-header">
+            <div class="ofc-pin">📍</div>
+            <div>
+              <h3>Houthulst</h3>
+              <address>Eug. de Grootelaan 22a, 8650 Houthulst</address>
+            </div>
+          </div>
+          <div class="ofc-contact">
+            <a href="tel:051703517">📞 051 70 35 17</a>
+            <a href="mailto:houthulst@grouptrybou.be">✉️ houthulst@grouptrybou.be</a>
+          </div>
+          <div class="ofc-hours">
+            <div class="ofc-hours-title">Openingsuren</div>
+            <div class="hours-axis">
+              <span class="hours-axis-tick" style="left:0%">8u</span>
+              <span class="hours-axis-tick" style="left:9.09%">9u</span>
+              <span class="hours-axis-tick" style="left:18.18%">10u</span>
+              <span class="hours-axis-tick" style="left:27.27%">11u</span>
+              <span class="hours-axis-tick" style="left:36.36%">12u</span>
+              <span class="hours-axis-tick" style="left:45.45%">13u</span>
+              <span class="hours-axis-tick" style="left:54.55%">14u</span>
+              <span class="hours-axis-tick" style="left:63.64%">15u</span>
+              <span class="hours-axis-tick" style="left:72.73%">16u</span>
+              <span class="hours-axis-tick" style="left:81.82%">17u</span>
+              <span class="hours-axis-tick" style="left:90.91%">18u</span>
+              <span class="hours-axis-tick" style="left:100%">19u</span>
+            </div>
+            <div class="ofc-day-bar"><span class="day-lbl">Ma</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div><div class="day-bar open" style="left:54.55%;width:27.27%" data-time="14u–17u"><span class="bar-label">14–17u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Di</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Wo</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Do</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div><div class="day-bar open" style="left:54.55%;width:27.27%" data-time="14u–17u"><span class="bar-label">14–17u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Vr</span><div class="day-track"><div class="day-bar open" style="left:9.09%;width:27.27%" data-time="9u–12u"><span class="bar-label">9–12u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Za</span><div class="day-track"><div class="day-bar afspraak" style="left:9.09%;width:27.27%" data-time="9u–12u (op afspraak)"><span class="bar-label">9–12u</span></div></div></div>
+            <div class="hours-legend">
+              <div class="hours-legend-item"><div class="hours-legend-dot" style="background:var(--blue)"></div>Open</div>
+              <div class="hours-legend-item"><div class="hours-legend-dot" style="background:#f59e0b"></div>Op afspraak</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Westouter -->
+        <div class="office-full-card">
+          <div class="ofc-header">
+            <div class="ofc-pin">📍</div>
+            <div>
+              <h3>Westouter</h3>
+              <address>Poperingestraat 24, 8954 Westouter</address>
+            </div>
+          </div>
+          <div class="ofc-contact">
+            <a href="tel:057446174">📞 057 44 61 74</a>
+            <a href="mailto:westouter@grouptrybou.be">✉️ westouter@grouptrybou.be</a>
+          </div>
+          <div class="ofc-hours">
+            <div class="ofc-hours-title">Openingsuren</div>
+            <div class="hours-axis">
+              <span class="hours-axis-tick" style="left:0%">8u</span>
+              <span class="hours-axis-tick" style="left:9.09%">9u</span>
+              <span class="hours-axis-tick" style="left:18.18%">10u</span>
+              <span class="hours-axis-tick" style="left:27.27%">11u</span>
+              <span class="hours-axis-tick" style="left:36.36%">12u</span>
+              <span class="hours-axis-tick" style="left:45.45%">13u</span>
+              <span class="hours-axis-tick" style="left:54.55%">14u</span>
+              <span class="hours-axis-tick" style="left:63.64%">15u</span>
+              <span class="hours-axis-tick" style="left:72.73%">16u</span>
+              <span class="hours-axis-tick" style="left:81.82%">17u</span>
+              <span class="hours-axis-tick" style="left:90.91%">18u</span>
+              <span class="hours-axis-tick" style="left:100%">19u</span>
+            </div>
+            <div class="ofc-day-bar"><span class="day-lbl">Ma</span><div class="day-track"><div class="day-bar open" style="left:4.55%;width:31.82%" data-time="8u30–12u"><span class="bar-label">8u30–12u</span></div><div class="day-bar open" style="left:45.45%;width:9.09%" data-time="13u–14u"><span class="bar-label">13u</span></div><div class="day-bar open" style="left:90.91%;width:9.09%" data-time="18u–19u"><span class="bar-label">18u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Di</span><div class="day-track"><div class="day-bar open" style="left:4.55%;width:31.82%" data-time="8u30–12u"><span class="bar-label">8u30–12u</span></div><div class="day-bar open" style="left:45.45%;width:9.09%" data-time="13u–14u"><span class="bar-label">13u</span></div><div class="day-bar open" style="left:90.91%;width:9.09%" data-time="18u–19u"><span class="bar-label">18u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Wo</span><div class="day-track"><div class="day-bar open" style="left:4.55%;width:31.82%" data-time="8u30–12u"><span class="bar-label">8u30–12u</span></div><div class="day-bar open" style="left:45.45%;width:9.09%" data-time="13u–14u"><span class="bar-label">13u</span></div><div class="day-bar open" style="left:90.91%;width:9.09%" data-time="18u–19u"><span class="bar-label">18u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Do</span><div class="day-track"><div class="day-bar open" style="left:4.55%;width:31.82%" data-time="8u30–12u"><span class="bar-label">8u30–12u</span></div><div class="day-bar open" style="left:45.45%;width:9.09%" data-time="13u–14u"><span class="bar-label">13u</span></div><div class="day-bar open" style="left:90.91%;width:9.09%" data-time="18u–19u"><span class="bar-label">18u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Vr</span><div class="day-track"><div class="day-bar open" style="left:4.55%;width:31.82%" data-time="8u30–12u"><span class="bar-label">8u30–12u</span></div><div class="day-bar open" style="left:72.73%;width:18.18%" data-time="16u–18u"><span class="bar-label">16–18u</span></div></div></div>
+            <div class="ofc-day-bar"><span class="day-lbl">Za</span><div class="day-track gesloten"></div></div>
+            <div class="hours-legend">
+              <div class="hours-legend-item"><div class="hours-legend-dot" style="background:var(--blue)"></div>Open</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -737,12 +1130,40 @@ footer a:hover{color:var(--white)}
       <div class="form-group"><label>Sector</label>
         <select>
           <option value="">Selecteer uw sector</option>
-          <option>KMO & Bedrijven</option>
-          <option>Zelfstandige</option>
-          <option>Vrij beroep</option>
-          <option>Bouw & Vastgoed</option>
-          <option>Transport & Logistiek</option>
-          <option>Andere</option>
+          <optgroup label="Handel & Diensten">
+            <option>Detailhandel & Groothandel</option>
+            <option>Horeca & Toerisme</option>
+            <option>Vrije tijd & Events</option>
+            <option>Schoonheidssector & Wellness</option>
+          </optgroup>
+          <optgroup label="Vrije beroepen & Dienstverlening">
+            <option>Advocatuur & Notariaat</option>
+            <option>Architectuur & Engineering</option>
+            <option>Boekhouding & Fiscaliteit</option>
+            <option>Gezondheidszorg & Paramedisch</option>
+            <option>IT & Technologie</option>
+            <option>Marketing, Media & Communicatie</option>
+            <option>Consultancy & Management</option>
+          </optgroup>
+          <optgroup label="Bouw & Industrie">
+            <option>Bouw & Aanneming</option>
+            <option>Vastgoed & Promotie</option>
+            <option>Industrie & Productie</option>
+            <option>Energie & Installatie</option>
+          </optgroup>
+          <optgroup label="Transport & Logistiek">
+            <option>Wegvervoer & Logistiek</option>
+            <option>Expeditie & Opslag</option>
+          </optgroup>
+          <optgroup label="Landbouw & Voeding">
+            <option>Landbouw & Tuinbouw</option>
+            <option>Voedingsindustrie</option>
+          </optgroup>
+          <optgroup label="Zelfstandigen & Privé">
+            <option>Zelfstandige in bijberoep</option>
+            <option>Privéleven & Gezin</option>
+          </optgroup>
+          <option value="andere">Andere</option>
         </select>
       </div>
       <div class="form-group"><label>Kantoorvoorkeur</label>
@@ -751,6 +1172,7 @@ footer a:hover{color:var(--white)}
           <option>Ieper</option>
           <option>Poperinge</option>
           <option>Houthulst</option>
+          <option>Westouter</option>
           <option>Online gesprek</option>
         </select>
       </div>
@@ -765,19 +1187,168 @@ footer a:hover{color:var(--white)}
       <h3 class="stitle" style="margin-bottom:28px">Bezoek ons</h3>
       <div class="office-card">
         <h4>📍 Ieper — Hoofdkantoor</h4>
-        <p>Grote Markt 12, 8900 Ieper<br>📞 057 20 77 20<br>ma–vr: 8u30–17u30</p>
+        <p>Ter Waarde 63, 8900 Ieper<br>📞 <a href="tel:057207720">057 20 77 20</a> · <a href="mailto:ieper@grouptrybou.be">ieper@grouptrybou.be</a><br>ma–do: 9u–12u &amp; 14u–17u | vr: 9u–12u &amp; 14u–16u<br>za: 9u–12u (op afspraak)</p>
       </div>
       <div class="office-card">
         <h4>📍 Poperinge</h4>
-        <p>Casselstraat 5, 8970 Poperinge<br>📞 057 34 60 10<br>ma–vr: 9u–17u</p>
+        <p>Ieperstraat 38, 8970 Poperinge<br>📞 <a href="tel:057346010">057 34 60 10</a> · <a href="mailto:poperinge@grouptrybou.be">poperinge@grouptrybou.be</a><br>ma &amp; do: 9u–12u &amp; 14u–17u | di, wo, vr: 9u–12u<br>za: 9u–12u (op afspraak)</p>
       </div>
       <div class="office-card">
         <h4>📍 Houthulst</h4>
-        <p>Kaaskerkestraat 3, 8650 Houthulst<br>📞 051 70 35 17<br>ma–vr: 9u–17u</p>
+        <p>Eug. de Grootelaan 22a, 8650 Houthulst<br>📞 <a href="tel:051703517">051 70 35 17</a> · <a href="mailto:houthulst@grouptrybou.be">houthulst@grouptrybou.be</a><br>ma &amp; do: 9u–12u &amp; 14u–17u | di, wo, vr: 9u–12u<br>za: 9u–12u (op afspraak)</p>
+      </div>
+      <div class="office-card">
+        <h4>📍 Westouter</h4>
+        <p>Poperingestraat 24, 8954 Westouter<br>📞 <a href="tel:057446174">057 44 61 74</a> · <a href="mailto:westouter@grouptrybou.be">westouter@grouptrybou.be</a><br>ma–do: 8u30–12u &amp; 13u–14u &amp; 18u–19u | vr: 8u30–12u &amp; 16u–18u</p>
       </div>
       <div style="margin-top:24px;padding:24px;background:var(--blue-pale);border-radius:var(--radius)">
         <p style="font-size:.85rem;color:var(--slate);line-height:1.7"><strong style="color:var(--ink)">FSMA-erkenning:</strong><br>FSMA 023989 A-cB<br>RPR Gent, afdeling Veurne<br><br>Group Trybou is erkend door de FSMA als verzekeringsmakelaar en -agent.</p>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PRIVACYBELEID ==================== -->
+<div id="page-privacybeleid" class="page">
+  <div class="page-hero">
+    <div class="breadcrumb"><span onclick="showPage('home')">Home</span> / Privacybeleid</div>
+    <h1>Privacybeleid</h1>
+    <p>Hoe Group Trybou omgaat met uw persoonsgegevens.</p>
+  </div>
+  <div style="max-width:860px;margin:0 auto;padding:80px 48px;font-size:.95rem;color:var(--slate);line-height:1.8">
+
+    <!-- Identificatie -->
+    <div style="background:var(--blue-ghost);border-radius:var(--radius);padding:28px 32px;margin-bottom:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px">
+      <div>
+        <p style="font-weight:700;color:var(--ink);margin-bottom:6px">Kantoor Houthulst</p>
+        <p style="font-size:.85rem">Eug. de Grootelaan 24<br>8650 Houthulst<br>RPR Gent, Veurne<br>Verzekeringsmakelaar<br>Ondernemings nr.: 0435517825</p>
+      </div>
+      <div>
+        <p style="font-weight:700;color:var(--ink);margin-bottom:6px">Kantoor Ieper</p>
+        <p style="font-size:.85rem">Ter Waarde 63<br>8900 Ieper<br>RPR Gent, Veurne<br>Verzekeringsmakelaar<br>Ondernemings nr.: 0435517825</p>
+      </div>
+      <div>
+        <p style="font-weight:700;color:var(--ink);margin-bottom:6px">Kantoor Poperinge</p>
+        <p style="font-size:.85rem">Ieperstraat 38<br>8970 Poperinge<br>RPR Gent, Veurne<br>Verzekeringsmakelaar<br>Ondernemings nr.: 0435517825</p>
+      </div>
+    </div>
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:0 0 12px">Privacy verklaring</h2>
+    <p>Group Trybou (verder "kantoor") neemt uw rechten bij gegevensverwerking ernstig. In dit beleidsdocument lichten wij toe hoe wij uw persoonsgegevens verzamelen, verwerken en gebruiken. Ze vormt het algemene beleid van het kantoor op het vlak van gegevensverwerking conform de toepasselijke wetgeving waaronder de Algemene Verordening Gegevensbescherming (GDPR).</p>
+    <p style="margin-top:12px">Als verzekeringsmakelaar vervult het kantoor mogelijk een dubbele rol op het vlak van gegevensverwerking. In dat geval zijn we zowel verwerkingsverantwoordelijke als verwerker. De rol van verwerkingsverantwoordelijke nemen wij op als we gegevens verwerken in eigen naam en voor eigen rekening. Daarnaast vervullen wij, ten behoeve van de maatschappijen, ook de rol van verwerker. In deze verklaring gaan we enkel dieper in op de verwerking van uw gegevens als verwerkingsverantwoordelijke.</p>
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:40px 0 12px">Verwerkingsverantwoordelijke</h2>
+    <p>De verantwoordelijke voor de verwerking is <strong style="color:var(--ink)">Group Trybou BVBA</strong>. Voor alle vragen omtrent ons privacy beleid kunt u met ons contact opnemen via <a href="mailto:bieke@grouptrybou.be" style="color:var(--blue)">bieke@grouptrybou.be</a>. Voor vragen die verder gaan dan een eenvoudige vraag om inlichtingen, kunnen wij u vragen zich te identificeren, zodat wij zeker zijn dat wij de gevraagde informatie en gegevens aan de juiste persoon verstrekken.</p>
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:40px 0 12px">Wanneer verzamelt en verwerkt ons kantoor gegevens?</h2>
+    <p>Het kantoor verzamelt en verwerkt gegevens over u wanneer u met ons contact opneemt met het oog op advies over verzekeringsovereenkomsten, het aanbieden of het voorstellen van verzekeringsovereenkomsten, het verrichten van voorbereidend werk met het oog op het sluiten van verzekeringsovereenkomsten en het sluiten zelf van verzekeringsovereenkomsten. Daarnaast kunt u ook op ons een beroep doen voor bijstand bij het beheer en de uitvoering van de door u gesloten verzekeringsovereenkomsten. Tot slot is het ook mogelijk dat wij gegevens over u verkrijgen via derden en deze gegevens gebruiken om u te benaderen om via onze bemiddeling een overeenkomst te sluiten.</p>
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:40px 0 12px">Welke gegevens verzamelt en verwerkt ons kantoor?</h2>
+    <p>Het kantoor verzamelt en verwerkt gegevens die u ons naar aanleiding van contact meedeelt zoals uw naam, adres, e-mailadres en professionele gegevens (bedrijfsnaam en BTW-nummer). Het betreft ook alle gegevens die noodzakelijk zijn om uw verzekeringsbehoeften in te schatten: gegevens betreffende uw woning (brandverzekering), uw financiële gegevens (beleggingsverzekeringen) en medische gegevens (gezondheidsverzekeringen). Uw gegevens worden enkel verwerkt in het kader van de verzekering waarvoor u op ons een beroep doet, tenzij u dit anders wenst.</p>
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:40px 0 12px">Voor welke doeleinden verzamelt en verwerkt ons kantoor gegevens?</h2>
+    <p style="margin-bottom:10px">De doeleinden waarvoor wij gegevens verwerken zijn van diverse aard:</p>
+    <ul style="display:flex;flex-direction:column;gap:8px;margin-left:24px">
+      <li><strong style="color:var(--ink)">Klanten:</strong> klantenbeheer, aanvaarding en beheer van verzekeringscontracten en promotie van producten en diensten van ons kantoor.</li>
+      <li><strong style="color:var(--ink)">Leveranciers:</strong> leveranciersbeheer op basis van de contractuele relatie.</li>
+      <li><strong style="color:var(--ink)">Prospecten:</strong> direct marketing op basis van gerechtvaardigd belang; per e-mail uitsluitend mits uitdrukkelijke toestemming.</li>
+      <li><strong style="color:var(--ink)">Medewerkers:</strong> personeelsbeheer en loonadministratie.</li>
+      <li><strong style="color:var(--ink)">Website:</strong> verbetering van inhoud en gebruiksgemak, en naleving van wettelijke verplichtingen.</li>
+    </ul>
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:40px 0 12px">Wat zijn de grondslagen voor de verwerking?</h2>
+    <p>In beginsel verzamelen en verwerken wij uw gegevens op basis van de contractuele relatie die wij met u hebben. Waar de verwerking niet noodzakelijk is om de contractuele relatie uit te voeren, is ze gebaseerd op onze gerechtvaardigde belangen als onderneming. Voor gezondheidsgegevens of gevoelige gegevens kunnen wij uw persoonsgegevens enkel verwerken mits uw uitdrukkelijke toestemming.</p>
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:40px 0 12px">Worden de gegevens meegedeeld aan derden?</h2>
+    <p>Uw gegevens worden hoofdzakelijk intern verwerkt. Ze moeten worden meegedeeld aan de verzekeringsmaatschappij met wie u de overeenkomst sluit. Voor bepaalde punctuele diensten doen wij een beroep op derden, steeds onder controle van ons kantoor. In bepaalde gevallen bestaat er een wettelijke verplichting om gegevens over te maken. Uw gegevens worden in beginsel niet doorgegeven naar derde landen.</p>
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:40px 0 12px">Uw rechten</h2>
+    <ul style="display:flex;flex-direction:column;gap:8px;margin-left:24px">
+      <li>U kan zich te allen tijde verzetten tegen gebruik van uw gegevens voor direct marketing via <a href="mailto:bieke@grouptrybou.be" style="color:var(--blue)">bieke@grouptrybou.be</a>.</li>
+      <li>U kan de gegevens die wij over u verwerken steeds inkijken en laten verbeteren via <a href="mailto:bieke@grouptrybou.be" style="color:var(--blue)">bieke@grouptrybou.be</a>, met bewijs van identiteit.</li>
+      <li>Indien u het niet eens bent met de manier waarop wij uw gegevens verwerken, kan u een klacht indienen bij de <strong style="color:var(--ink)">Gegevensbeschermingsautoriteit</strong>, Drukpersstraat 35, 1000 Brussel.</li>
+    </ul>
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:40px 0 12px">Wijzigingen</h2>
+    <p>Ons kantoor behoudt zich het recht voor om deze verklaring te wijzigen. Wijzigingen zullen via de website worden gemeld. <em style="font-size:.85rem">25.05.2018, versie 1</em></p>
+
+    <hr style="border:none;border-top:1px solid rgba(0,0,0,.08);margin:48px 0">
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:0 0 12px">Cookiebeleid</h2>
+
+    <h3 style="font-size:1rem;font-weight:600;color:var(--ink);margin:24px 0 8px">Wat zijn cookies?</h3>
+    <p>Cookies zijn kleine tekstbestandjes die bij het bezoeken van websites op uw computer worden bewaard. Ze slaan informatie op zoals taalvoorkeur, zodat u deze niet telkens opnieuw hoeft in te stellen.</p>
+
+    <h3 style="font-size:1rem;font-weight:600;color:var(--ink);margin:24px 0 8px">Welke cookies worden gebruikt?</h3>
+    <p style="margin-bottom:12px">Er worden 4 soorten cookies gebruikt:</p>
+    <ul style="display:flex;flex-direction:column;gap:10px;margin-left:24px">
+      <li><strong style="color:var(--ink)">Essentiële cookies</strong> — noodzakelijk voor het goed functioneren van de website; kunnen niet geweigerd worden.</li>
+      <li><strong style="color:var(--ink)">Functionele cookies</strong> — houden uw keuzes en voorkeuren bij.</li>
+      <li><strong style="color:var(--ink)">Analytische cookies (Google Analytics)</strong> — verzamelen informatie over bezoekersgedrag om de website te verbeteren. Google kan deze informatie aan derden verschaffen indien wettelijk verplicht. De informatie wordt zo veel mogelijk geanonimiseerd en opgeslagen op servers in de VS.
+        <div style="background:var(--blue-ghost);border-radius:8px;padding:14px 18px;margin-top:10px;font-size:.84rem">
+          <div style="display:grid;grid-template-columns:auto 1fr auto;gap:8px 16px;align-items:start">
+            <strong style="color:var(--ink)">_ga</strong><span>Onderscheiden van gebruikers</span><span style="white-space:nowrap">2 jaar</span>
+            <strong style="color:var(--ink)">_gid</strong><span>Onderscheiden van gebruikers</span><span style="white-space:nowrap">24 uur</span>
+            <strong style="color:var(--ink)">_gat</strong><span>Verminderen van het aantal verzoeken</span><span style="white-space:nowrap">Per sessie</span>
+          </div>
+        </div>
+      </li>
+      <li><strong style="color:var(--ink)">Sociale media</strong> — Facebook, Twitter, LinkedIn en Google+ plaatsen cookies via hun knoppen. Raadpleeg hun eigen privacyverklaringen voor meer informatie.</li>
+      <li><strong style="color:var(--ink)">Marketing cookies</strong> — volgen surfgedrag om een persoonlijker gebruiksprofiel samen te stellen.</li>
+    </ul>
+
+    <h3 style="font-size:1rem;font-weight:600;color:var(--ink);margin:24px 0 8px">Permanente vs. tijdelijke cookies</h3>
+    <p><strong style="color:var(--ink)">Permanente cookies</strong> blijven op uw computer bewaard na het sluiten van de browser. <strong style="color:var(--ink)">Tijdelijke (sessie)cookies</strong> worden verwijderd zodra u de browser afsluit.</p>
+
+    <h3 style="font-size:1rem;font-weight:600;color:var(--ink);margin:24px 0 8px">Cookie-instellingen aanpassen of verwijderen</h3>
+    <ul style="display:flex;flex-direction:column;gap:6px;margin-left:24px">
+      <li><a href="https://support.mozilla.org/nl/kb/cookies-verwijderen-gegevens-wissen-websites-opgeslagen" target="_blank" style="color:var(--blue)">Firefox</a></li>
+      <li><a href="https://support.google.com/chrome/answer/95647?hl=nl" target="_blank" style="color:var(--blue)">Chrome</a></li>
+      <li><a href="https://support.apple.com/kb/ph21411?locale=nl_NL" target="_blank" style="color:var(--blue)">Safari</a></li>
+      <li><a href="https://support.microsoft.com/nl-be/help/17442/windows-internet-explorer-delete-manage-cookies" target="_blank" style="color:var(--blue)">Internet Explorer</a></li>
+    </ul>
+
+    <div style="margin-top:48px;padding:24px;background:var(--blue-pale);border-radius:var(--radius)">
+      <p style="color:var(--ink);font-size:.88rem"><strong>Vragen over dit privacybeleid?</strong><br>Neem contact op via <a href="mailto:bieke@grouptrybou.be" style="color:var(--blue)">bieke@grouptrybou.be</a> of bel naar <a href="tel:057207720" style="color:var(--blue)">057 20 77 20</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== DISCLAIMER ==================== -->
+<div id="page-disclaimer" class="page">
+  <div class="page-hero">
+    <div class="breadcrumb"><span onclick="showPage('home')">Home</span> / Disclaimer</div>
+    <h1>Disclaimer</h1>
+    <p>Gebruiksvoorwaarden en aansprakelijkheidsbeperkingen voor deze website.</p>
+  </div>
+  <div style="max-width:860px;margin:0 auto;padding:80px 48px;font-size:.95rem;color:var(--slate);line-height:1.8">
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:0 0 12px">Algemeen</h2>
+    <p>Hoewel het onze bedoeling is om bijgewerkte en juiste informatie te verspreiden, kunnen we geen perfect resultaat garanderen. Eventuele onjuistheden die ons worden gesignaleerd, zullen we zo spoedig mogelijk verbeteren, en mogen niet beschouwd worden als rechtsgeldige documenten en kunnen onvolkomenheden van allerlei aard bevatten. De informatie wordt geleverd en weergegeven zonder enige vorm van garantie. Noch Zakenkantoor Trybou, noch de houder van deze website kunnen aansprakelijk gesteld worden voor mogelijke virussen, indien deze, ondanks de genomen voorzorgsmaatregelen op de site zouden voorkomen. Zakenkantoor Trybou wijst alle aansprakelijkheid af voor enige schade die deze virussen kunnen veroorzaken. Zakenkantoor Trybou behoudt zich uitdrukkelijk het recht om de informatie op de site op elk tijdstip te wijzigen. Noch Zakenkantoor Trybou, noch de houder van deze website kunnen verantwoordelijk worden gesteld voor de informatie op deze website en elke aansprakelijkheid voor enige schade die het gevolg is van, of samenhangt met de toegang tot of het gebruik van deze. De foutloze en/of ononderbroken werking van de site kan niet worden gegarandeerd.</p>
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:40px 0 12px">Belangrijk</h2>
+    <p>De informatie op deze website kan geenszins worden beschouwd als een aanbod tot aan- of verkoop van. Voor de prijzen die op onze website staan, geldt dat wij streven naar een zo zorgvuldig mogelijke weergave van de realiteit en de bedoelde prijzen. Fouten die daarbij ontstaan en herkenbaar zijn als programmeer- en/of typfouten, vormen nooit een aanleiding om een contract en/of overeenkomst te mogen claimen. Het gebruik van de documenten die u kunt downloaden op deze website zijn eveneens van informatieve aard.</p>
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:40px 0 12px">Links naar andere websites</h2>
+    <p>Sommige documenten op deze website bevatten verwijzingen naar of suggesties voor informatie van andere organisaties. Zakenkantoor Trybou kan niet garanderen dat betreffende externe informatie relevant, bijgewerkt en/of juist is. De op deze site vermelde partners, organisaties en Internet-adressen worden op een objectieve manier gekozen met de enige bedoeling onze site-bezoekers de meest relevante en volledige informatie te geven. Wij kunnen evenwel niet waarborgen dat de verstrekte informatie volledig, nauwkeurig en/of bijgewerkt is. De vermelding van deze partners en/of verwijzing naar producten betekent hoegenaamd niet dat deze worden aanbevolen boven andere gelijkaardige bedrijven of producten die niet op onze site worden genoemd. Aansprakelijkheid voor de inhoud van dergelijke sites wordt niet aanvaard.</p>
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:40px 0 12px">Adviezen via de website</h2>
+    <p>Indien er via de website rechtstreeks of onrechtstreeks adviezen worden gegeven voor het nemen van medische, juridische, financiële of andere beslissingen van persoonlijke en/of zakelijke aard, dan worden deze adviezen zonder vorm van garantie gegeven en zonder dat Zakenkantoor Trybou hiervoor aansprakelijk kan gesteld worden. U dient steeds een deskundige ter zake te raadplegen voor bijkomende inlichtingen omtrent het op uw situatie toegespitst advies. Het aanvragen van informatie of van een offerte door middel van de op deze website voorkomende contactformulieren geven geenszins aanleiding tot verbintenis van één der partijen.</p>
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:40px 0 12px">Intellectuele eigendomsrechten</h2>
+    <p>De teksten, tekeningen, foto's, films, beelden, data, databanken, software, benamingen, handels- en domeinnamen, merken, logo's en andere bestanddelen van deze site zijn beschermd door intellectuele rechten en behoren Zakenkantoor Trybou of derden toe. Het is verboden zonder voorafgaand schriftelijk akkoord van Zakenkantoor Trybou de op en via deze website aangeboden informatie op te slaan (anders dan noodzakelijk om de website te kunnen bekijken), te reproduceren, te wijzigen, openbaar te maken, te distribueren of te verzenden, te verkopen of over te dragen of enige rechten hierop te verlenen aan derden.</p>
+
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin:40px 0 12px">Niet-toegestaan gebruik van de website</h2>
+    <p style="margin-bottom:12px">U verbindt zich er o.m. toe:</p>
+    <ul style="display:flex;flex-direction:column;gap:8px;margin-left:24px">
+      <li>De informatie niet wederrechtelijk te gebruiken.</li>
+      <li>Geen zodanig gebruik te maken van de website waardoor de website wordt beschadigd, vervormd, onderbroken, stopgezet of anderszins minder efficiënt wordt gemaakt.</li>
+      <li>De website niet te gebruiken voor transmissie of posting van computervirussen, of voor transmissie of posting van materiaal met een lasterlijk, obsceen of bedreigend karakter.</li>
+      <li>De website niet te gebruiken op een dergelijke wijze dat er een inbreuk gepleegd wordt op de rechten van een natuurlijke persoon, rechtspersoon of vereniging, zoals onder meer, doch niet uitsluitend, de rechten van privacy en intellectuele eigendom.</li>
+    </ul>
+
+    <div style="margin-top:48px;padding:24px;background:var(--blue-pale);border-radius:var(--radius)">
+      <p style="color:var(--ink);font-size:.88rem"><strong>Vragen over deze disclaimer?</strong><br>Neem contact op via <a href="mailto:info@grouptrybou.be" style="color:var(--blue)">info@grouptrybou.be</a> of bel naar <a href="tel:057207720" style="color:var(--blue)">057 20 77 20</a>.</p>
     </div>
   </div>
 </div>
@@ -802,7 +1373,7 @@ footer a:hover{color:var(--white)}
       <ul>
         <li><a onclick="showPage('kmo')">KMO & Bedrijven</a></li>
         <li><a onclick="showPage('zelfstandigen')">Zelfstandigen</a></li>
-        <li><a onclick="showPage('vrije-beroepen')">Vrije Beroepen</a></li>
+        <li><a onclick="showPage('priveleven')">Privéleven & Gezin</a></li>
         <li><a onclick="showPage('bouw')">Bouw & Vastgoed</a></li>
         <li><a onclick="showPage('transport')">Transport & Logistiek</a></li>
       </ul>
@@ -822,13 +1393,14 @@ footer a:hover{color:var(--white)}
         <li><a href="tel:057207720">Ieper — 057 20 77 20</a></li>
         <li><a href="tel:057346010">Poperinge — 057 34 60 10</a></li>
         <li><a href="tel:051703517">Houthulst — 051 70 35 17</a></li>
+        <li><a href="tel:057446174">Westouter — 057 44 61 74</a></li>
         <li><a href="mailto:info@grouptrybou.be">info@grouptrybou.be</a></li>
       </ul>
     </div>
   </div>
   <div class="foot-bottom">
     <span>© 2026 Group Trybou. Alle rechten voorbehouden.</span>
-    <span><a href="#">Privacybeleid</a><a href="#">Disclaimer</a></span>
+    <span><a onclick="showPage('privacybeleid')" style="cursor:pointer">Privacybeleid</a><a onclick="showPage('disclaimer')" style="cursor:pointer">Disclaimer</a></span>
   </div>
 </footer>
 
@@ -973,427 +1545,6 @@ const obs = new IntersectionObserver(entries => {
   });
 }, {threshold: 0.15});
 document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-
-// ===================== TEAM DATA =====================
-// ✏️  Voeg hier teamleden toe — gewoon een object toevoegen aan de array
-const teamMembers = [
-  {
-    name: "Tom Trybou",
-    role: "Verzekeringen Trybou BV",
-    desc: "Persoonlijk verzekeringsadvies, afgestemd op uw specifieke situatie.",
-    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/20250203095100dsc09194.jpg",
-    phone: "057 224 332",
-    email: "tom@grouptrybou.be"
-  },
-  {
-    name: "Jan Decruyenaere",
-    role: "Adviseur Verzekeringen & Beleggingen",
-    desc: "Combineert verzekerings- en beleggingsexpertise voor een volledig financieel plan.",
-    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/20250203095417dsc09109.jpg",
-    phone: "057 224 346",
-    email: "jan@grouptrybou.be"
-  },
-  {
-    name: "Sander Ampe",
-    role: "Verantwoordelijke Schade",
-    desc: "Staat u bij bij schadegevallen van aangifte tot volledige afhandeling.",
-    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/20250203095558dsc09247.jpg",
-    phone: "057 224 344",
-    email: "sander@grouptrybou.be"
-  },
-  {
-    name: "Linde Masson",
-    role: "Verantwoordelijke KMO",
-    desc: "Gespecialiseerd in kmo's en gedreven door ondernemerszin.",
-    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/20250203095840dsc09202.jpg",
-    phone: "057 224 341",
-    email: "linde@grouptrybou.be"
-  },
-  {
-    name: "Ruben Callewaert",
-    role: "Verantwoordelijke Levensverzekeringen",
-    desc: "Bouwt samen met u aan een solide bescherming voor uw gezin en vermogen.",
-    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/20250203100457dsc09168.jpg",
-    phone: "057 224 348",
-    email: "ruben@grouptrybou.be"
-  },
-  {
-    name: "Femke Hoet",
-    role: "Immo & Verzekeringen",
-    desc: "Uw aanspreekpunt voor vastgoed en de bijhorende verzekeringsoplossingen.",
-    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/20250203100412dsc09311.jpg",
-    phone: "057 224 340",
-    email: "femke@grouptrybou.be"
-  },
-  {
-    name: "Sandra Jonckheere",
-    role: "Verzekeringsadviseur",
-    desc: "Luistert naar uw noden en zoekt de polis die écht bij u past.",
-    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/20250403052353dsc03626-verbeterd-nr.jpg",
-    phone: "057 224 345",
-    email: "sandra@grouptrybou.be"
-  },
-  {
-    name: "Tine Dedeurwaerder",
-    role: "Schadebeheer",
-    desc: "Snel en nauwkeurig in de opvolging van elk schadedossier.",
-    img: "https://www.grouptrybou.be/_userfiles/teammembers/300x300/202506181014112.jpg",
-    phone: "057 224 343",
-    email: "tine@grouptrybou.be"
-  },
-];
-
-function renderTeam() {
-  const grid = document.getElementById('teamGrid');
-  if (!grid) return;
-  grid.innerHTML = teamMembers.map((m, i) => `
-    <div class="team-card" data-index="${i}">
-      <div class="team-card-img"><img src="${m.img}" alt="${m.name}" loading="lazy"/></div>
-      <div class="team-card-info">
-        <h3>${m.name}</h3>
-        <div class="role">${m.role}</div>
-      </div>
-      <div class="team-card-hover">
-        <img class="th-photo" src="${m.img}" alt="${m.name}"/>
-        <p class="th-name">${m.name}</p>
-        <a href="tel:${m.phone.replace(/\s/g,'')}" onclick="event.stopPropagation()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" flex-shrink="0"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          <span>${m.phone}</span>
-        </a>
-        <a href="mailto:${m.email}" onclick="event.stopPropagation()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" flex-shrink="0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
-          <span>${m.email}</span>
-        </a>
-      </div>
-    </div>
-  `).join('');
-}
-renderTeam();
-
-// ===================== TEAM MODAL =====================
-const teamModal = document.getElementById('teamModal');
-document.getElementById('teamGrid').addEventListener('click', e => {
-  const card = e.target.closest('.team-card');
-  if (!card) return;
-  const m = teamMembers[+card.dataset.index];
-  document.getElementById('tmImg').src = m.img;
-  document.getElementById('tmImg').alt = m.name;
-  document.getElementById('tmName').textContent = m.name;
-  document.getElementById('tmRole').textContent = m.role;
-  document.getElementById('tmDesc').textContent = m.desc;
-  document.getElementById('tmPhoneText').textContent = m.phone;
-  document.getElementById('tmPhone').href = 'tel:' + m.phone.replace(/\s/g, '');
-  document.getElementById('tmEmailText').textContent = m.email;
-  document.getElementById('tmEmail').href = 'mailto:' + m.email;
-  teamModal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-});
-document.getElementById('teamModalClose').addEventListener('click', closeTeamModal);
-teamModal.addEventListener('click', e => { if (e.target === teamModal) closeTeamModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTeamModal(); });
-function closeTeamModal() {
-  teamModal.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-// ===================== SECTOR DATA =====================
-// ✏️  Voeg hier sectoren toe — een object toevoegen volstaat
-// Elke sector krijgt automatisch een eigen pagina + kaart op het overzicht
-const sectors = [
-  {
-    id: "kmo",
-    icon: "🏢",
-    title: "KMO & Bedrijven",
-    subtitle: "Volledig verzekeringspakket voor uw onderneming.",
-    heroDesc: "Een volledig en maatgericht verzekeringspakket voor uw onderneming — van brand tot BA en alles ertussen.",
-    img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&auto=format&fit=crop",
-    heroImg: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1400&q=80&auto=format&fit=crop",
-    introTitle: "Bescherming die meegroeit met uw onderneming",
-    introText: ["Als KMO draagt u dagelijks risico's: brand in uw pand, schade aan klanten, een ziek werknemer... Wij analyseren die risico's grondig en bouwen een polis die écht past bij uw activiteit.", "Met meer dan 75 jaar ervaring in het Belgische KMO-landschap kennen wij elke sector van binnenuit. Geen standaardpakket, maar een dossier op maat."],
-    coverages: [
-      {ico:"🔥",title:"Brandverzekering",desc:"Bescherming van uw gebouw, inboedel en machines tegen brand, storm en waterschade."},
-      {ico:"🛡️",title:"BA Onderneming",desc:"Lichamelijke en materiële schade aan derden door uw activiteiten of producten."},
-      {ico:"👷",title:"Arbeidsongevallen",desc:"Wettelijk verplicht voor elke werkgever. Wij regelen de volledige aangifte bij schade."},
-      {ico:"🚗",title:"Wagenparkbeheer",desc:"BA, omnium en bestuurdersverzekering voor uw volledige voertuigenpark."},
-      {ico:"👥",title:"Groepsverzekering",desc:"Pensioenopbouw en overlijdensdekking als aantrekkelijk werkgeversvoordeel."},
-      {ico:"💻",title:"Cyberverzekering",desc:"Bescherming bij datalekken, ransomware en andere digitale dreigingen."},
-    ],
-    cases: [
-      {tag:"Productiebedrijf",quote:"Na een ernstige machinebreuk was alles binnen 10 dagen geregeld. Trybou volgde elke stap op.",person:"Thomas V., Zaakvoerder"},
-      {tag:"Horecabedrijf",quote:"Onze brandpolis was onderverzekerd. Trybou ontdekte dit bij de jaarlijkse check en paste aan vóór het fout ging.",person:"Marie K., Uitbater"},
-      {tag:"Distributeur",quote:"Fleet van 24 voertuigen volledig beheerd. Eén aanspreekpunt, 30% kostenbesparing.",person:"Dirk L., CEO"},
-    ]
-  },
-  {
-    id: "zelfstandigen",
-    icon: "💼",
-    title: "Zelfstandigen",
-    subtitle: "Inkomensbescherming en pensioenopbouw voor de zelfstandige.",
-    heroDesc: "Inkomensbescherming, pensioenopbouw en aansprakelijkheid — alles wat een zelfstandige nodig heeft.",
-    img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&q=80&auto=format&fit=crop",
-    heroImg: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1400&q=80&auto=format&fit=crop",
-    introTitle: "Uw inkomen, uw pensioen, uw toekomst",
-    introText: ["Als zelfstandige heeft u geen vangnet van een werkgever. Wat als u ziek valt? Wat als een klant u aansprakelijk stelt? Wij helpen u elk risico in kaart brengen en de juiste bescherming uitbouwen.", "Van VAPZ tot beroepsaansprakelijkheid — wij spreken uw taal en denken mee over uw volledige financiële bescherming."],
-    coverages: [
-      {ico:"💰",title:"Gewaarborgd Inkomen",desc:"Maandelijkse uitkering bij arbeidsongeschiktheid door ziekte of accident."},
-      {ico:"🏦",title:"VAPZ / IPT",desc:"Vrij aanvullend pensioen voor zelfstandigen — fiscaal optimaal opgebouwd."},
-      {ico:"⚖️",title:"Beroepsaansprakelijkheid",desc:"Bescherming bij fouten in uw dienstverlening of professionele nalatigheid."},
-      {ico:"🏥",title:"Hospitalisatieverzekering",desc:"Terugbetaling van ziekenhuiskosten ver boven het niveau van de mutualiteit."},
-      {ico:"🏠",title:"Polis Privéleven",desc:"Brand, familiale BA en rechtsbijstand voor uw privésituatie."},
-      {ico:"🔐",title:"Arbeidsongevallen",desc:"Optionele arbeidsongevallendekking voor de zelfstandige zelf."},
-    ],
-    cases: [
-      {tag:"Vrije beroepen",quote:"Mijn VAPZ en IPT werden volledig geoptimaliseerd. Ik bespaar op belastingen én bouw pensioen op.",person:"Nadia K., Architect"},
-      {tag:"Consultant",quote:"Drie maanden ziek. Dankzij mijn gewaarborgd inkomen kon ik herstellen zonder financiële stress.",person:"Pieter D., IT-consultant"},
-      {tag:"Handelaar",quote:"Eindelijk iemand die alles in één overzicht bracht: privé én professioneel.",person:"Sofie M., Handelaar"},
-    ]
-  },
-  {
-    id: "vrije-beroepen",
-    icon: "⚖️",
-    title: "Vrije Beroepen",
-    subtitle: "Beroepsaansprakelijkheid en bescherming op maat.",
-    heroDesc: "Specifieke dekkingen voor artsen, advocaten, architecten, accountants en andere vrije beroepen.",
-    img: "https://images.unsplash.com/photo-1507679799987-c73b1e23ad6c?w=600&q=80&auto=format&fit=crop",
-    heroImg: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1400&q=80&auto=format&fit=crop",
-    introTitle: "Specialistische bescherming voor uw professie",
-    introText: ["Vrije beroepen hebben bijzondere verantwoordelijkheden. Een kleine fout in uw advies of handeling kan grote financiële gevolgen hebben voor uw klant — en voor u. Wij zorgen voor dekkingen die écht aansluiten op de risico's van uw professie.", "Onze specialisten kennen de specifieke noden van artsen, notarissen, architecten, advocaten en vele andere vrije beroepen."],
-    coverages: [
-      {ico:"⚕️",title:"Medische BA",desc:"Beroepsaansprakelijkheid voor artsen, tandartsen, kinesisten en andere zorgverstrekkers."},
-      {ico:"🏛️",title:"Advocaten BA",desc:"Dekking voor fouten in het kader van juridische bijstand en adviesverlening."},
-      {ico:"📐",title:"Architecten BA",desc:"Tienjarige aansprakelijkheid en burgerrechtelijke BA voor architecten."},
-      {ico:"📊",title:"Accountants BA",desc:"Bescherming bij fouten in boekhoudkundig of fiscaal advies."},
-      {ico:"💰",title:"VAPZ / IPT",desc:"Pensioenopbouw specifiek afgestemd op het statuut van het vrij beroep."},
-      {ico:"🏥",title:"Hospitalisatie",desc:"Uitgebreide hospitalisatiedekking voor uzelf en uw medewerkers."},
-    ],
-    cases: [
-      {tag:"Architect",quote:"Als architect is het fijn om een vast aanspreekpunt te hebben dat mijn specifieke aansprakelijkheidsrisico's kent.",person:"Nadia K., Architect"},
-      {tag:"Accountant",quote:"Mijn BA-polis werd volledig herbekeken. Betere dekking, lagere premie. Trybou deed wat mijn vorige makelaar nooit deed.",person:"Jan P., Accountant"},
-      {tag:"Huisarts",quote:"Snel, correct en transparant. Bij een klacht van een patiënt stond Trybou meteen klaar om alles op te volgen.",person:"Dr. S. Vermeersch"},
-    ]
-  },
-  {
-    id: "bouw",
-    icon: "🏗️",
-    title: "Bouw & Vastgoed",
-    subtitle: "ABR, aansprakelijkheid en werfverzekeringen.",
-    heroDesc: "ABR, tienjarige aansprakelijkheid, werfverzekeringen en BA voor aannemers en promotoren.",
-    img: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80&auto=format&fit=crop",
-    heroImg: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&q=80&auto=format&fit=crop",
-    introTitle: "Bescherming op elke bouwplaats",
-    introText: ["De bouwsector draagt enorme risico's: schade aan derden, constructiefouten, arbeidsongevallen op de werf... Wij begrijpen de complexiteit van uw activiteiten en zorgen voor een sluitend verzekeringsplan.", "Van kleine aannemers tot grote projectontwikkelaars — wij bieden op maat gemaakte oplossingen voor élke bouwer."],
-    coverages: [
-      {ico:"🏗️",title:"ABR — Alle Bouwplaatsrisico's",desc:"Dekking voor schade aan het werk in uitvoering, materialen en machines op de werf."},
-      {ico:"⏱️",title:"Tienjarige Aansprakelijkheid",desc:"Wettelijk verplicht voor aannemers en architecten op constructieve elementen."},
-      {ico:"🦺",title:"Arbeidsongevallen Werf",desc:"Uitgebreide bescherming voor werknemers en tijdelijke medewerkers op de bouwplaats."},
-      {ico:"🔧",title:"BA Aannemer",desc:"Aansprakelijkheid voor schade aan derden door uw werken of uw personeel."},
-      {ico:"🏢",title:"Vastgoedpromovering",desc:"Bescherming voor projectontwikkelaars tijdens de bouw en verkoopfase."},
-      {ico:"🚜",title:"Materieel & Machines",desc:"All-risk voor bouwmachines, kranen, heftrucks en zwaar materiaal."},
-    ],
-    cases: [
-      {tag:"Aannemer",quote:"Professioneel, eerlijk en transparant. Geen verrassingen bij schadeclaims.",person:"Jan D., Zaakvoerder bouwbedrijf"},
-      {tag:"Projectontwikkelaar",quote:"Trybou begeleidt ons van grondaankoop tot oplevering. Één dossier, één aanspreekpunt.",person:"Marc V., Promotor"},
-      {tag:"Elektricien",quote:"Mijn BA en arbeidsongevallenpolis werden geoptimaliseerd. Betere dekking voor minder premie.",person:"Kevin S., Installateur"},
-    ]
-  },
-  {
-    id: "transport",
-    icon: "🚛",
-    title: "Transport & Logistiek",
-    subtitle: "CMR, goederenverzekering en wagenpark.",
-    heroDesc: "CMR, goederenverzekering, wagenpark en aansprakelijkheid voor transporteurs en logistieke spelers.",
-    img: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80&auto=format&fit=crop",
-    heroImg: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1400&q=80&auto=format&fit=crop",
-    introTitle: "Op de weg én in het magazijn beschermd",
-    introText: ["Transport en logistiek zijn sectoren met hoge risico's: ongelukken, goederenschade, vertragingen en internationale aansprakelijkheid. Wij brengen alles samen in een efficiënt verzekeringsplan.", "Van eenpersoonszaak tot internationale carrier — wij kennen uw dagelijkse uitdagingen en zorgen voor de juiste dekking."],
-    coverages: [
-      {ico:"🚛",title:"CMR-verzekering",desc:"Internationale wegvervoerdersaansprakelijkheid conform het CMR-verdrag."},
-      {ico:"📦",title:"Goederenverzekering",desc:"All-risk of named-perils dekking voor goederen tijdens transport."},
-      {ico:"🚗",title:"Fleet Management",desc:"BA, mini-omnium en full-omnium voor uw volledige voertuigenpark, met één overzichtelijke premie."},
-      {ico:"🏭",title:"Magazijnverzekering",desc:"Brand, inbraak en aansprakelijkheid voor opgeslagen goederen van derden."},
-      {ico:"⚖️",title:"Expediteur BA",desc:"Aansprakelijkheidsdekking voor expeditiebedrijven en logistieke dienstverleners."},
-      {ico:"🦺",title:"Arbeidsongevallen",desc:"Bescherming voor chauffeurs en magazijnpersoneel bij arbeidsongevallen."},
-    ],
-    cases: [
-      {tag:"Transportbedrijf",quote:"Ze hebben onze fleet en BA-polis herbekeken. 30% bespaard op jaarpremie.",person:"Dirk L., Transportbedrijf"},
-      {tag:"Expediteur",quote:"Bij een goederenschade in Duitsland stond Trybou dezelfde dag klaar. Alles vlot afgehandeld.",person:"Luc B., Expediteur"},
-      {tag:"Logistiek centrum",quote:"Ons magazijn en fleet zijn nu perfect afgestemd. Geen overlappingen, geen gaten in de dekking.",person:"An V., Operations Manager"},
-    ]
-  },
-  // ✏️ NIEUWE SECTOR TOEVOEGEN — kopieer onderstaand blok en pas aan:
-  // {
-  //   id: "horeca",                      // unieke ID (geen spaties, geen accenten)
-  //   icon: "🍽️",
-  //   title: "Horeca",
-  //   subtitle: "Korte omschrijving voor de kaart.",
-  //   heroDesc: "Langere beschrijving voor de hero-sectie van de pagina.",
-  //   img: "URL_kaartfoto",              // afbeelding op sectorenkaart (600px breed)
-  //   heroImg: "URL_heroimago",          // afbeelding bovenaan de sectorpagina (1400px breed)
-  //   introTitle: "Titel in de introsectie",
-  //   introText: ["Paragraaf 1.", "Paragraaf 2."],
-  //   coverages: [
-  //     {ico:"🔥", title:"Verzekeringsnaam", desc:"Omschrijving."},
-  //     // ... max 6 coverages
-  //   ],
-  //   cases: [
-  //     {tag:"Bedrijfstype", quote:"Citaat van klant.", person:"Naam, Functie"},
-  //     // ... max 3 cases
-  //   ]
-  // },
-];
-
-// ===================== SECTOR PAGES RENDERER =====================
-function renderSectorPages() {
-  // Remove old static sector pages
-  ['kmo','zelfstandigen','vrije-beroepen','bouw','transport'].forEach(id => {
-    const old = document.getElementById('page-' + id);
-    if (old) old.remove();
-  });
-
-  sectors.forEach(s => {
-    const div = document.createElement('div');
-    div.id = 'page-' + s.id;
-    div.className = 'page';
-    div.innerHTML = `
-      <div class="sector-hero">
-        <img src="${s.heroImg}" alt="${s.title}"/>
-        <div class="sector-hero-content">
-          <div class="slabel"><span class="line"></span> Sectoren</div>
-          <h1>${s.title}</h1>
-          <p>${s.heroDesc}</p>
-        </div>
-      </div>
-      <div class="sector-body">
-        <div class="sector-intro">
-          <div class="sector-intro-text">
-            <div class="slabel"><span class="line"></span> Voor uw sector</div>
-            <h2>${s.introTitle}</h2>
-            ${s.introText.map(t => `<p>${t}</p>`).join('')}
-            <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
-              <button class="btn-blue" onclick="showPage('contact')">Gratis verzekeringscheck →</button>
-              <button class="btn-outline" onclick="showPage('sectoren')">Alle sectoren</button>
-            </div>
-          </div>
-          <div class="insurance-grid">
-            ${s.coverages.map(c => `
-              <div class="insurance-card">
-                <h4><span class="ico">${c.ico}</span>${c.title}</h4>
-                <p>${c.desc}</p>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-        <div class="cases-section">
-          <h2>Ervaringen van klanten</h2>
-          <p class="sub">Wat ondernemers zeggen over onze aanpak</p>
-          <div class="cases-grid">
-            ${s.cases.map(c => `
-              <div class="case-card">
-                <div class="tag">${c.tag}</div>
-                <p>"${c.quote}"</p>
-                <div class="person">— ${c.person}</div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-        <div style="text-align:center"><button class="btn-blue" onclick="showPage('contact')">Plan uw gratis check →</button></div>
-      </div>
-    `;
-    // Insert before footer
-    const footer = document.getElementById('siteFooter');
-    document.body.insertBefore(div, footer);
-  });
-}
-
-// ===================== SECTOR OVERVIEW RENDERER =====================
-function renderSectorOverviews() {
-  // Update home page sector cards
-  const homeMain = document.querySelector('#sectoren-home .sectors-main');
-  const homeSub = document.querySelector('#sectoren-home .sectors-sub');
-  if (homeMain && homeSub) {
-    const mainSectors = sectors.slice(0, 3);
-    const subSectors = sectors.slice(3);
-    homeMain.innerHTML = mainSectors.map((s, i) => `
-      <a class="sector-card main fade-up d${i+1}" onclick="showPage('${s.id}')" style="text-decoration:none;cursor:pointer">
-        <img src="${s.img}" alt="${s.title}" />
-        <div class="sector-content">
-          <div class="sector-icon">${s.icon}</div>
-          <h3>${s.title}</h3>
-          <p>${s.subtitle}</p>
-          <div class="sector-arrow">Ontdek meer →</div>
-        </div>
-      </a>
-    `).join('');
-    // Sub sectors — wrap in grid or show if any
-    if (subSectors.length > 0) {
-      homeSub.style.gridTemplateColumns = subSectors.length === 1 ? '1fr' : 'repeat(2,1fr)';
-      homeSub.innerHTML = subSectors.map((s, i) => `
-        <a class="sector-card sub fade-up d${i+4}" onclick="showPage('${s.id}')" style="text-decoration:none;cursor:pointer">
-          <img src="${s.img}" alt="${s.title}" />
-          <div class="sector-content">
-            <div class="sector-icon">${s.icon}</div>
-            <h3>${s.title}</h3>
-            <p>${s.subtitle}</p>
-            <div class="sector-arrow">Ontdek meer →</div>
-          </div>
-        </a>
-      `).join('');
-    } else {
-      homeSub.style.display = 'none';
-    }
-  }
-
-  // Update sectoren overview page
-  const overviewMain = document.querySelector('#page-sectoren [style*="grid-template-columns:repeat(3"]');
-  const overviewSub = document.querySelector('#page-sectoren [style*="grid-template-columns:1fr 1fr"]');
-  if (overviewMain) {
-    overviewMain.innerHTML = sectors.slice(0, 3).map(s => `
-      <div onclick="showPage('${s.id}')" class="sector-card main" style="cursor:pointer">
-        <img src="${s.img}" alt="${s.title}"/>
-        <div class="sector-content"><div class="sector-icon">${s.icon}</div><h3>${s.title}</h3><p>${s.subtitle}</p><div class="sector-arrow">Ontdek meer →</div></div>
-      </div>
-    `).join('');
-  }
-  if (overviewSub) {
-    const subs = sectors.slice(3);
-    overviewSub.style.gridTemplateColumns = subs.length <= 2 ? 'repeat(2,1fr)' : 'repeat(3,1fr)';
-    overviewSub.innerHTML = subs.map(s => `
-      <div onclick="showPage('${s.id}')" class="sector-card sub" style="cursor:pointer">
-        <img src="${s.img}" alt="${s.title}"/>
-        <div class="sector-content"><div class="sector-icon">${s.icon}</div><h3>${s.title}</h3><p>${s.subtitle}</p><div class="sector-arrow">Ontdek meer →</div></div>
-      </div>
-    `).join('');
-  }
-
-  // Update footer sector links
-  const footerSectorList = document.querySelector('footer .foot-inner > div:nth-child(2) ul');
-  if (footerSectorList) {
-    footerSectorList.innerHTML = sectors.map(s =>
-      `<li><a onclick="showPage('${s.id}')">${s.title}</a></li>`
-    ).join('');
-  }
-
-  // Update contact form sector dropdown
-  const sectorSelect = document.querySelector('#page-contact select');
-  if (sectorSelect) {
-    const extras = ['<option value="">Selecteer uw sector</option>'];
-    sectors.forEach(s => extras.push(`<option>${s.title}</option>`));
-    extras.push('<option>Andere</option>');
-    sectorSelect.innerHTML = extras.join('');
-  }
-}
-
-// Boot
-renderSectorPages();
-renderSectorOverviews();
-
-// Re-observe fade-up elements after dynamic render
-setTimeout(() => {
-  document.querySelectorAll('.fade-up').forEach(el => {
-    el.style.animationPlayState = 'paused';
-    obs.observe(el);
-  });
-}, 100);
 
 // ===================== CONTACT FORM =====================
 function submitForm() {
