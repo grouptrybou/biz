@@ -6,7 +6,7 @@
 <title>Group Trybou | Voor elke onderneming die groots durft te dromen</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;cursor:none!important}
 :root{
   --blue:#0a539d;--blue-dark:#073d75;--blue-light:#1a6cbd;
   --blue-pale:#eaf1f8;--blue-ghost:#f5f8fc;
@@ -17,6 +17,12 @@
 }
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;overflow-x:hidden}
+
+/* CUSTOM CURSOR */
+.c-dot{display:none}
+.c-ring{position:fixed;top:0;left:0;width:20px;height:20px;border:1.5px solid #fff;border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);mix-blend-mode:difference;background:transparent;transition:width .25s cubic-bezier(.25,.46,.45,.94),height .25s cubic-bezier(.25,.46,.45,.94),background .2s,opacity .25s}
+body.cur-hover .c-ring{background:#fff}
+body.cur-click .c-ring{width:14px;height:14px}
 
 /* PAGE SYSTEM */
 .page{display:none;min-height:100vh}
@@ -380,14 +386,31 @@ footer a:hover{color:var(--white)}
 .about-story-img{border-radius:var(--radius-lg);overflow:hidden;height:440px}
 .about-story-img img{width:100%;height:100%;object-fit:cover}
 .timeline{margin-bottom:80px}
-.timeline h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:40px;text-align:center}
-.timeline-items{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;position:relative}
-.timeline-items::before{content:'';position:absolute;top:28px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--blue-light),var(--blue))}
-.timeline-item{text-align:center;padding-top:56px;position:relative}
-.timeline-dot{width:16px;height:16px;background:var(--blue);border-radius:50%;position:absolute;top:21px;left:50%;transform:translateX(-50%);border:3px solid var(--cream)}
-.timeline-item h4{font-size:.82rem;font-weight:600;color:var(--blue);margin-bottom:6px}
-.timeline-item p{font-size:.8rem;color:var(--muted);line-height:1.5}
-.timeline-year{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+.timeline>h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:6px;text-align:center}
+.tl-hint{text-align:center;font-size:.76rem;color:var(--muted);margin-bottom:32px;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:8px}
+.tl-hint::before,.tl-hint::after{content:'';display:inline-block;width:28px;height:1px;background:var(--muted);opacity:.5}
+.timeline-wrap{position:relative}
+.timeline-wrap::before,.timeline-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:3;pointer-events:none}
+.timeline-wrap::before{left:0;background:linear-gradient(to right,var(--cream),transparent)}
+.timeline-wrap::after{right:0;background:linear-gradient(to left,var(--cream),transparent)}
+.timeline-scroll{overflow-x:auto;overflow-y:hidden;cursor:grab;-webkit-overflow-scrolling:touch;scrollbar-width:none;user-select:none;-webkit-user-select:none}
+.timeline-scroll:active{cursor:grabbing}
+.timeline-scroll::-webkit-scrollbar{display:none}
+.timeline-track{display:flex;position:relative;padding:0 72px;min-width:max-content;height:420px;align-items:stretch}
+.timeline-track::before{content:'';position:absolute;top:50%;left:72px;right:72px;height:2px;transform:translateY(-50%);background:linear-gradient(90deg,rgba(10,83,157,.1),var(--blue) 5%,var(--blue) 95%,rgba(10,83,157,.1))}
+.tl-node{width:210px;flex-shrink:0;position:relative;display:flex;flex-direction:column;align-items:center}
+.tl-dot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:16px;height:16px;background:var(--blue);border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--blue);z-index:2;transition:transform .25s,box-shadow .25s}
+.tl-node:hover .tl-dot{transform:translate(-50%,-50%) scale(1.55);box-shadow:0 0 0 2px var(--blue),0 0 0 5px rgba(10,83,157,.15)}
+.tl-stem{position:absolute;left:calc(50% - .5px);width:1px;background:var(--blue);opacity:.2}
+.tl-node:nth-child(odd) .tl-stem{top:50%;height:20px}
+.tl-node:nth-child(even) .tl-stem{bottom:50%;height:20px}
+.tl-card{position:absolute;width:178px;left:50%;transform:translateX(-50%);background:#fff;border-radius:14px;box-shadow:0 3px 16px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.06);padding:16px 18px;transition:box-shadow .25s,transform .25s}
+.tl-node:hover .tl-card{box-shadow:0 6px 24px rgba(10,83,157,.13);transform:translateX(-50%) translateY(-2px)}
+.tl-node:nth-child(odd) .tl-card{top:calc(50% + 24px)}
+.tl-node:nth-child(even) .tl-card{bottom:calc(50% + 24px)}
+.tl-year{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--blue);margin-bottom:5px}
+.tl-title{font-size:.8rem;font-weight:600;color:var(--ink);margin-bottom:5px;line-height:1.3}
+.tl-desc{font-size:.73rem;color:var(--muted);line-height:1.55}
 .team-section h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:8px}
 .team-section .sub{color:var(--slate);margin-bottom:40px}
 /* TEAM SLIDER */
@@ -489,8 +512,7 @@ footer a:hover{color:var(--white)}
   .foot-inner{grid-template-columns:1fr 1fr}.fan-container{height:400px}.fan-card{width:240px;height:320px}
   .sector-intro{grid-template-columns:1fr}.about-story{grid-template-columns:1fr}
   .about-story-img{height:320px}.team-grid{grid-template-columns:repeat(3,1fr)}
-  .contact-body{grid-template-columns:1fr}.timeline-items{grid-template-columns:1fr 1fr;gap:32px}
-  .timeline-items::before{display:none}.timeline-item{padding-top:0}.timeline-dot{display:none}
+  .contact-body{grid-template-columns:1fr}
   .cases-grid{grid-template-columns:1fr 1fr}.values-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:640px){
@@ -504,13 +526,15 @@ footer a:hover{color:var(--white)}
   .cta-bar{margin:0 20px 60px}.sector-body,.about-body,.contact-body{padding:40px 20px}
   .contact-body{grid-template-columns:1fr}.cases-grid{grid-template-columns:1fr}
   .insurance-grid{grid-template-columns:1fr}.values-grid{grid-template-columns:1fr}
-  .team-grid{grid-template-columns:1fr}.timeline-items{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr}
   .sector-hero-content,.contact-hero,.page-hero,.about-hero-content{padding-left:20px;padding-right:20px}
   .cases-section{padding:32px 24px}.form-row{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
+<div class="c-dot" id="cDot"></div>
+<div class="c-ring" id="cRing"></div>
 
 <!-- TOPBAR -->
 <div class="topbar" id="topbar">
@@ -1058,9 +1082,111 @@ footer a:hover{color:var(--white)}
 
     <div class="timeline">
       <h2 data-lang="about-timeline-h2">Onze mijlpalen</h2>
-      <div class="timeline-items">
-        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">1948</div><h4 data-lang="about-tl1-title">Oprichting</h4><p data-lang="about-tl1-desc">André Trybou opent het eerste kantoor in Houthulst</p></div>
-        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">Nu</div><h4 data-lang="about-tl2-title">Group Trybou</h4><p data-lang="about-tl2-desc">75+ jaar expertise, 100% onafhankelijk</p></div>
+      <p class="tl-hint">sleep of swipe om te scrollen</p>
+      <div class="timeline-wrap">
+      <div class="timeline-scroll" id="tlScroll">
+        <div class="timeline-track">
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div class="tl-stem"></div>
+            <div class="tl-card">
+              <div class="tl-year">1948</div>
+              <div class="tl-title" data-lang="tl-1948-t">Oprichting</div>
+              <div class="tl-desc" data-lang="tl-1948-d">André Trybou richt de spaarkas op — de basis van wat Group Trybou zal worden.</div>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div class="tl-stem"></div>
+            <div class="tl-card">
+              <div class="tl-year">1989</div>
+              <div class="tl-title" data-lang="tl-1989-t">Tweede generatie</div>
+              <div class="tl-desc" data-lang="tl-1989-d">Zoon Bart Trybou neemt het kantoor over en bouwt verder aan de groei.</div>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div class="tl-stem"></div>
+            <div class="tl-card">
+              <div class="tl-year">2014</div>
+              <div class="tl-title" data-lang="tl-2014-t">Derde generatie</div>
+              <div class="tl-desc" data-lang="tl-2014-d">Thijs Trybou start bij Immo Trybou als eerste van de derde generatie.</div>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div class="tl-stem"></div>
+            <div class="tl-card">
+              <div class="tl-year">2015</div>
+              <div class="tl-title" data-lang="tl-2015-t">Verzekeringen Trybou</div>
+              <div class="tl-desc" data-lang="tl-2015-d">Tom Trybou vervoegt de groep bij Verzekeringen Trybou.</div>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div class="tl-stem"></div>
+            <div class="tl-card">
+              <div class="tl-year">2017</div>
+              <div class="tl-title" data-lang="tl-2017a-t">Opening kantoor Ieper</div>
+              <div class="tl-desc" data-lang="tl-2017a-d">Overname van kantoren in Vlamertinge, Brielen, Ieper en Poelkapelle.</div>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div class="tl-stem"></div>
+            <div class="tl-card">
+              <div class="tl-year">2017</div>
+              <div class="tl-title" data-lang="tl-2017b-t">Finance Trybou</div>
+              <div class="tl-desc" data-lang="tl-2017b-d">Bieke Trybou start bij Finance Trybou en versterkt de financiële tak.</div>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div class="tl-stem"></div>
+            <div class="tl-card">
+              <div class="tl-year">2019</div>
+              <div class="tl-title" data-lang="tl-2019-t">Kantoor Poperinge</div>
+              <div class="tl-desc" data-lang="tl-2019-d">Opening van een nieuw kantoor in Poperinge, dichter bij de klant in de regio.</div>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div class="tl-stem"></div>
+            <div class="tl-card">
+              <div class="tl-year">2021</div>
+              <div class="tl-title" data-lang="tl-2021-t">Overnames</div>
+              <div class="tl-desc" data-lang="tl-2021-d">Overname bankgedeelte kantoor Hardeman en integratie van kantoor Hoornaert.</div>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div class="tl-stem"></div>
+            <div class="tl-card">
+              <div class="tl-year">2022</div>
+              <div class="tl-title" data-lang="tl-2022-t">Verhuis naar Ter Waarde</div>
+              <div class="tl-desc" data-lang="tl-2022-d">Het kantoor Ieper verhuist naar een nieuwe, moderne locatie aan Ter Waarde.</div>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div class="tl-stem"></div>
+            <div class="tl-card">
+              <div class="tl-year">2025</div>
+              <div class="tl-title" data-lang="tl-2025-t">Nieuwe overnames</div>
+              <div class="tl-desc" data-lang="tl-2025-d">Overname van kantoor Schollaert en kantoor Prinzie — verdere groei van het netwerk.</div>
+            </div>
+          </div>
+          <div class="tl-node">
+            <div class="tl-dot"></div>
+            <div class="tl-stem"></div>
+            <div class="tl-card">
+              <div class="tl-year">2026</div>
+              <div class="tl-title" data-lang="tl-2026-t">Hoornaert</div>
+              <div class="tl-desc" data-lang="tl-2026-d">Start samenwerking met Verzekeringen Hoornaert — een nieuwe stap in de groepsgroei.</div>
+            </div>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
 
@@ -2521,6 +2647,61 @@ document.addEventListener('DOMContentLoaded', function() {
     track.style.transition = 'none';
     renderPos(false);
   });
+})();
+
+// ===================== CUSTOM CURSOR =====================
+(function(){
+  var dot = document.getElementById('cDot');
+  var ring = document.getElementById('cRing');
+  if (!dot || !ring || window.matchMedia('(pointer:coarse)').matches) return;
+  var mx = 0, my = 0, rx = 0, ry = 0, visible = false;
+  document.addEventListener('mousemove', function(e){
+    mx = e.clientX; my = e.clientY;
+    if (!visible) { visible = true; ring.style.opacity = ''; }
+  });
+  (function loop(){
+    rx += (mx - rx) * 0.35;
+    ry += (my - ry) * 0.35;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(loop);
+  })();
+  var HOVER = 'a,button,[onclick],label,select,input,textarea,.nav-cta,.faq-item,.sector-card,.step,.value-card,.team-card,.ofc-card,.tl-node,.lang-btn,.case-card';
+  document.addEventListener('mouseover', function(e){
+    document.body.classList.toggle('cur-hover', !!e.target.closest(HOVER));
+  });
+  document.addEventListener('mousedown', function(){ document.body.classList.add('cur-click'); });
+  document.addEventListener('mouseup',   function(){ document.body.classList.remove('cur-click'); });
+  document.addEventListener('mouseleave', function(){ dot.style.opacity='0'; ring.style.opacity='0'; visible=false; });
+  dot.style.opacity = '0'; ring.style.opacity = '0';
+})();
+
+// ===================== TIMELINE DRAG SCROLL =====================
+(function(){
+  var el = document.getElementById('tlScroll');
+  if (!el) return;
+  var down = false, startX, scrollLeft;
+  el.addEventListener('mousedown', function(e){ down=true; startX=e.pageX-el.offsetLeft; scrollLeft=el.scrollLeft; });
+  el.addEventListener('mouseleave', function(){ down=false; });
+  el.addEventListener('mouseup', function(){ down=false; });
+  el.addEventListener('mousemove', function(e){ if(!down) return; e.preventDefault(); var x=e.pageX-el.offsetLeft; el.scrollLeft=scrollLeft-(x-startX); });
+  var targetScroll = el.scrollLeft, rafId;
+  function animateScroll() {
+    var diff = targetScroll - el.scrollLeft;
+    if (Math.abs(diff) < 0.5) { el.scrollLeft = targetScroll; return; }
+    el.scrollLeft += diff * 0.12;
+    rafId = requestAnimationFrame(animateScroll);
+  }
+  el.addEventListener('wheel', function(e){
+    var delta = e.deltaY + e.deltaX;
+    var atStart = targetScroll <= 0 && delta < 0;
+    var atEnd = targetScroll >= el.scrollWidth - el.clientWidth && delta > 0;
+    if (atStart || atEnd) return;
+    e.preventDefault();
+    cancelAnimationFrame(rafId);
+    targetScroll = Math.max(0, Math.min(el.scrollWidth - el.clientWidth, targetScroll + delta));
+    rafId = requestAnimationFrame(animateScroll);
+  }, { passive: false });
 })();
 
 // ===================== PAGE ROUTING =====================
