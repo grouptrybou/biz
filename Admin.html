@@ -1444,6 +1444,20 @@ function renderAanvragen() {
         </div>
         ${a.bericht ? `<div style="margin-top:8px;font-size:.78rem;color:var(--slate);line-height:1.5;white-space:pre-wrap;border-top:1px solid #f0f0f0;padding-top:8px;">${esc(a.bericht)}</div>` : ''}
         ${quizTags ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;">${quizTags}</div>` : ''}
+        <div style="margin-top:10px;border-top:1px solid #f0f0f0;padding-top:10px;">
+          <button onclick="toggleNote('${esc(a.id)}')" style="background:none;border:none;cursor:pointer;font-size:.78rem;color:var(--slate);padding:0;display:flex;align-items:center;gap:4px;font-family:inherit;">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            ${a.notes ? `<span style="color:var(--blue);font-weight:600;">Notitie</span>` : 'Notitie toevoegen'}
+          </button>
+          <div id="note-wrap-${esc(a.id)}" style="display:none;margin-top:8px;">
+            ${a.notes ? `<div id="note-display-${esc(a.id)}" style="font-size:.78rem;color:var(--slate);white-space:pre-wrap;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:8px 10px;margin-bottom:6px;">${esc(a.notes)}</div>` : ''}
+            <textarea id="note-input-${esc(a.id)}" placeholder="Voeg een interne notitie toe…" style="width:100%;padding:8px 10px;border:1.5px solid #e5e7eb;border-radius:8px;font-family:inherit;font-size:.78rem;color:var(--ink);resize:vertical;min-height:70px;outline:none;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='#e5e7eb'">${a.notes ? esc(a.notes) : ''}</textarea>
+            <div style="display:flex;gap:6px;margin-top:6px;">
+              <button class="btn btn-primary btn-sm" onclick="saveNote('${esc(a.id)}')">Opslaan</button>
+              ${a.notes ? `<button class="btn btn-danger btn-sm" onclick="deleteNote('${esc(a.id)}')">Verwijder notitie</button>` : ''}
+            </div>
+          </div>
+        </div>
         <div class="kb-card-actions">
           ${col !== 'nieuw'        ? `<button class="btn btn-outline btn-sm" onclick="moveAanvraag('${esc(a.id)}','nieuw')">← Nieuw</button>` : ''}
           ${col !== 'behandeling'  ? `<button class="btn btn-outline btn-sm" onclick="moveAanvraag('${esc(a.id)}','behandeling')">In behandeling</button>` : ''}
@@ -1490,6 +1504,45 @@ function deleteAanvraag(id) {
     allAanvragen = allAanvragen.filter(a => a.id !== id);
     renderAanvragen();
   }).catch(() => {});
+}
+
+function toggleNote(id) {
+  const wrap = document.getElementById('note-wrap-' + id);
+  if (!wrap) return;
+  const open = wrap.style.display !== 'none';
+  wrap.style.display = open ? 'none' : 'block';
+  if (!open) {
+    const inp = document.getElementById('note-input-' + id);
+    if (inp) inp.focus();
+  }
+}
+
+function saveNote(id) {
+  const inp = document.getElementById('note-input-' + id);
+  if (!inp) return;
+  const notes = inp.value.trim();
+  const item = allAanvragen.find(a => a.id === id);
+  if (!item) return;
+  item.notes = notes;
+  db.collection('aanvragen').doc(id).update({ notes }).then(() => {
+    showToast('Notitie opgeslagen ✓');
+    renderAanvragen();
+    // reopen note panel after re-render
+    setTimeout(() => {
+      const wrap = document.getElementById('note-wrap-' + id);
+      if (wrap) wrap.style.display = 'block';
+    }, 0);
+  }).catch(() => showToast('Fout bij opslaan'));
+}
+
+function deleteNote(id) {
+  const item = allAanvragen.find(a => a.id === id);
+  if (!item) return;
+  item.notes = '';
+  db.collection('aanvragen').doc(id).update({ notes: '' }).then(() => {
+    showToast('Notitie verwijderd');
+    renderAanvragen();
+  }).catch(() => showToast('Fout'));
 }
 
 // ── HELPERS ──
