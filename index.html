@@ -43,7 +43,8 @@ body.has-banner nav.scrolled,body.has-banner nav.solid{top:44px}
 
 /* PAGE SYSTEM */
 .page{display:none;min-height:100vh}
-.page.active{display:block}
+.page.active{display:block;animation:pageFadeIn .38s cubic-bezier(.4,0,.2,1)}
+@keyframes pageFadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* NAV */
 .topbar{position:fixed;top:0;left:0;right:0;z-index:101;background:rgba(0,0,0,.28);backdrop-filter:blur(8px);color:rgba(255,255,255,.7);font-size:.78rem;padding:7px 48px;display:flex;justify-content:space-between;align-items:center;transition:all .4s}
