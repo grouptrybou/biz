@@ -685,6 +685,17 @@ footer a:hover{color:var(--white)}
   .cases-section{padding:32px 24px}.form-row{grid-template-columns:1fr}
 }
 </style>
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // ── EMAILJS CONFIGURATIE ──
+  // Vervang de drie waarden hieronder met jouw eigen EmailJS-gegevens:
+  var EMAILJS_PUBLIC_KEY  = '0vtD7Zd_hTMRfPGYK';    // Account → General → Public Key
+  var EMAILJS_SERVICE_ID  = 'service_m4suljs';    // Email Services → jouw service-ID
+  var EMAILJS_TEMPLATE_ID = 'template_84xsp27';   // Email Templates → jouw template-ID
+
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+</script>
 </head>
 <body>
 
@@ -2050,6 +2061,7 @@ footer a:hover{color:var(--white)}
           <option>Houthulst</option>
           <option>Westouter</option>
           <option data-lang="form-office-online">Online gesprek</option>
+          <option data-lang="form-office-onsite">Bij de klant / in het bedrijf</option>
         </select>
       </div>
       <div class="form-group"><label data-lang="form-message">Uw vraag of opmerking</label><textarea id="form-input-message" placeholder="Beschrijf kort uw situatie of vraag..."></textarea></div>
@@ -2523,7 +2535,7 @@ var translations = {
     'form-firstname': 'Voornaam *', 'form-lastname': 'Achternaam *',
     'form-email': 'E-mailadres *', 'form-phone': 'Telefoonnummer',
     'form-sector': 'Sector', 'form-sector-placeholder': 'Selecteer uw sector',
-    'form-office': 'Kantoorvoorkeur', 'form-office-none': 'Geen voorkeur', 'form-office-online': 'Online gesprek',
+    'form-office': 'Kantoorvoorkeur', 'form-office-none': 'Geen voorkeur', 'form-office-online': 'Online gesprek', 'form-office-onsite': 'Bij de klant / in het bedrijf',
     'form-message': 'Uw vraag of opmerking',
     'form-submit': 'Verstuur aanvraag →',
     'form-success': 'Bedankt! We nemen zo snel mogelijk contact met u op.',
@@ -2780,7 +2792,7 @@ var translations = {
     'form-firstname': 'First name *', 'form-lastname': 'Last name *',
     'form-email': 'Email address *', 'form-phone': 'Phone number',
     'form-sector': 'Sector', 'form-sector-placeholder': 'Select your sector',
-    'form-office': 'Office preference', 'form-office-none': 'No preference', 'form-office-online': 'Online meeting',
+    'form-office': 'Office preference', 'form-office-none': 'No preference', 'form-office-online': 'Online meeting', 'form-office-onsite': 'At the client\'s location',
     'form-message': 'Your question or comment',
     'form-submit': 'Send request →',
     'form-success': 'Thank you! We will get back to you as soon as possible.',
@@ -3037,7 +3049,7 @@ var translations = {
     'form-firstname': 'Prénom *', 'form-lastname': 'Nom *',
     'form-email': 'Adresse e-mail *', 'form-phone': 'Numéro de téléphone',
     'form-sector': 'Secteur', 'form-sector-placeholder': 'Sélectionnez votre secteur',
-    'form-office': 'Préférence d\'agence', 'form-office-none': 'Pas de préférence', 'form-office-online': 'Réunion en ligne',
+    'form-office': 'Préférence d\'agence', 'form-office-none': 'Pas de préférence', 'form-office-online': 'Réunion en ligne', 'form-office-onsite': 'Chez le client / en entreprise',
     'form-message': 'Votre question ou commentaire',
     'form-submit': 'Envoyer la demande →',
     'form-success': 'Merci ! Nous vous contacterons dans les plus brefs délais.',
@@ -3708,8 +3720,31 @@ function submitForm() {
     if (btn) { btn.disabled = false; btn.setAttribute('data-lang','form-submit'); btn.textContent = 'Verstuur aanvraag →'; }
   }
 
+  // Stuur e-mailmelding via EmailJS (enkel als geconfigureerd)
+  function stuurMailNotificatie() {
+    if (typeof emailjs === 'undefined') return;
+    var datum = new Date(data.datum).toLocaleString('nl-BE', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    var quiz = data.quiz || {};
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      voornaam:         data.voornaam,
+      achternaam:       data.achternaam,
+      email:            data.email,
+      telefoon:         data.telefoon        || '—',
+      sector:           data.sector          || '—',
+      kantoor:          data.kantoor         || '—',
+      bericht:          data.bericht         || '—',
+      datum:            datum,
+      quiz_profiel:     quiz.profiel         || '—',
+      quiz_timing:      quiz.timing          || '—',
+      quiz_aanleiding:  quiz.aanleiding      || '—'
+    }).catch(function(){});
+  }
+
   try {
-    firebase.firestore().collection('aanvragen').add(data).then(onSuccess).catch(onSuccess);
+    firebase.firestore().collection('aanvragen').add(data).then(function() {
+      stuurMailNotificatie();
+      onSuccess();
+    }).catch(onSuccess);
   } catch(e) {
     onSuccess();
   }
