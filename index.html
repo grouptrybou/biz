@@ -1631,7 +1631,7 @@ footer a:hover{color:var(--white)}
       <div class="jobs-bar">
         <div class="jobs-bar-header">
           <div class="tc-photo-sm"><img src="https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20240515013933resida-jpg_high-84.jpg" alt=""/></div>
-          <div><h5>Werken bij Trybou?</h5><div class="tc-sub">Spontane sollicitatie welkom</div></div>
+          <div><h5 data-lang="about-jobs-title">Werken bij Trybou?</h5><div class="tc-sub" data-lang="about-jobs-sub">Spontane sollicitatie welkom</div></div>
           <div class="tc-contacts">
             <a href="tel:+3257207720">+32 57 20 77 20</a>
             <a href="mailto:jobs@grouptrybou.be">jobs@grouptrybou.be</a>
@@ -1639,22 +1639,22 @@ footer a:hover{color:var(--white)}
         </div>
         <div class="jobs-bar-boxes">
           <div class="job-box job-box-vacancy">
-            <span class="badge">Sales</span>
-            <h5>Salespersoon KMO-verzekeringen</h5>
-            <p>Je bouwt actief een portefeuille op bij KMO's in West-Vlaanderen en bent het eerste aanspreekpunt voor nieuwe klanten.</p>
-            <a class="apply" href="mailto:jobs@grouptrybou.be">Solliciteer →</a>
+            <span class="badge" data-lang="jobs-badge-sales">Sales</span>
+            <h5 data-lang="jobs-title-sales">Salespersoon KMO-verzekeringen</h5>
+            <p data-lang="jobs-desc-sales">Je bouwt actief een portefeuille op bij KMO's in West-Vlaanderen en bent het eerste aanspreekpunt voor nieuwe klanten.</p>
+            <a class="apply" href="mailto:jobs@grouptrybou.be" data-lang="jobs-apply">Solliciteer →</a>
           </div>
           <div class="job-box job-box-vacancy">
-            <span class="badge">Advies</span>
-            <h5>Verzekeringsadviseur KMO</h5>
-            <p>Je begeleidt ondernemers bij het samenstellen van hun verzekeringsportefeuille en beheert bestaande dossiers zelfstandig.</p>
-            <a class="apply" href="mailto:jobs@grouptrybou.be">Solliciteer →</a>
+            <span class="badge" data-lang="jobs-badge-advies">Advies</span>
+            <h5 data-lang="jobs-title-advies">Verzekeringsadviseur KMO</h5>
+            <p data-lang="jobs-desc-advies">Je begeleidt ondernemers bij het samenstellen van hun verzekeringsportefeuille en beheert bestaande dossiers zelfstandig.</p>
+            <a class="apply" href="mailto:jobs@grouptrybou.be" data-lang="jobs-apply">Solliciteer →</a>
           </div>
           <div class="job-box job-box-takeover">
-            <span class="badge">Verzekeringsmakelaars</span>
-            <h5>Met uw kantoor aansluiten bij Group Trybou?</h5>
-            <p>Bent u een onafhankelijk verzekeringskantoor en overweegt u aansluiting bij, of overname door een grotere groep? Wij bespreken de mogelijkheden graag vertrouwelijk.</p>
-            <a class="apply" href="mailto:tom@grouptrybou.be">Vertrouwelijk contact opnemen →</a>
+            <span class="badge" data-lang="jobs-badge-takeover">Verzekeringsmakelaars</span>
+            <h5 data-lang="jobs-title-takeover">Met uw kantoor aansluiten bij Group Trybou?</h5>
+            <p data-lang="jobs-desc-takeover">Bent u een onafhankelijk verzekeringskantoor en overweegt u aansluiting bij, of overname door een grotere groep? Wij bespreken de mogelijkheden graag vertrouwelijk.</p>
+            <a class="apply" href="mailto:tom@grouptrybou.be" data-lang="jobs-apply-takeover">Vertrouwelijk contact opnemen →</a>
           </div>
         </div>
       </div>
@@ -1899,33 +1899,33 @@ footer a:hover{color:var(--white)}
           <div style="text-align:center;margin-bottom:16px">
             <span class="quiz-privacy-badge">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              100% discreet — uw huidige makelaar wordt niet op de hoogte gebracht
+              <span data-lang="quiz-privacy-text">100% discreet — uw huidige makelaar wordt niet op de hoogte gebracht</span>
             </span>
           </div>
-          <div class="quiz-label">Gratis verzekeringscheck</div>
-          <h2 class="quiz-intro-title">Bent u optimaal beschermd?<br>Ontdek het in 3 vragen.</h2>
-          <p class="quiz-intro-sub">Beantwoord 3 korte vragen en wij tonen u meteen waar mogelijke risico's of besparingen zitten. Volledig vrijblijvend en anoniem.</p>
-          <button class="quiz-start-btn" onclick="quizStart()">Start de check →</button>
+          <div class="quiz-label" data-lang="quiz-label-intro">Gratis verzekeringscheck</div>
+          <h2 class="quiz-intro-title" data-lang="quiz-intro-title">Bent u optimaal beschermd?<br>Ontdek het in 3 vragen.</h2>
+          <p class="quiz-intro-sub" data-lang="quiz-intro-sub">Beantwoord 3 korte vragen en wij tonen u meteen waar mogelijke risico's of besparingen zitten. Volledig vrijblijvend en anoniem.</p>
+          <button class="quiz-start-btn" onclick="quizStart()" data-lang="quiz-start-btn">Start de check →</button>
         </div>
       </div>
 
       <!-- STAP 1: Profiel -->
       <div class="quiz-step" id="qstep-1">
         <div class="quiz-progress" id="quiz-prog-1"></div>
-        <div class="quiz-label">Stap 1 van 4</div>
-        <h2 class="quiz-question">Wie bent u?</h2>
+        <div class="quiz-label" data-lang="quiz-step1-label">Stap 1 van 4</div>
+        <h2 class="quiz-question" data-lang="quiz-step1-q">Wie bent u?</h2>
         <div class="quiz-options">
           <div class="quiz-option" onclick="quizAnswer(1,'kmo',this)">
             <div class="quiz-option-icon">🏢</div>
-            <div><div class="quiz-option-text">KMO of vennootschap</div><div class="quiz-option-sub">Bedrijf met personeel, gebouwen of voertuigen</div></div>
+            <div><div class="quiz-option-text" data-lang="quiz-opt-kmo-t">KMO of vennootschap</div><div class="quiz-option-sub" data-lang="quiz-opt-kmo-s">Bedrijf met personeel, gebouwen of voertuigen</div></div>
           </div>
           <div class="quiz-option" onclick="quizAnswer(1,'zelfstandige',this)">
             <div class="quiz-option-icon">💼</div>
-            <div><div class="quiz-option-text">Zelfstandige</div><div class="quiz-option-sub">Eenmanszaak, vrij beroep of bijberoep</div></div>
+            <div><div class="quiz-option-text" data-lang="quiz-opt-zelf-t">Zelfstandige</div><div class="quiz-option-sub" data-lang="quiz-opt-zelf-s">Eenmanszaak, vrij beroep of bijberoep</div></div>
           </div>
           <div class="quiz-option" onclick="quizAnswer(1,'prive',this)">
             <div class="quiz-option-icon">🏠</div>
-            <div><div class="quiz-option-text">Privépersoon</div><div class="quiz-option-sub">Gezin, woning en voertuigen</div></div>
+            <div><div class="quiz-option-text" data-lang="quiz-opt-priv-t">Privépersoon</div><div class="quiz-option-sub" data-lang="quiz-opt-priv-s">Gezin, woning en voertuigen</div></div>
           </div>
         </div>
       </div>
@@ -1933,24 +1933,24 @@ footer a:hover{color:var(--white)}
       <!-- STAP 2: Tijdstip laatste check -->
       <div class="quiz-step" id="qstep-2">
         <div class="quiz-progress" id="quiz-prog-2"></div>
-        <div class="quiz-label">Stap 2 van 4</div>
-        <h2 class="quiz-question">Wanneer werd uw verzekeringsdossier voor het laatst grondig nagekeken?</h2>
+        <div class="quiz-label" data-lang="quiz-step2-label">Stap 2 van 4</div>
+        <h2 class="quiz-question" data-lang="quiz-step2-q">Wanneer werd uw verzekeringsdossier voor het laatst grondig nagekeken?</h2>
         <div class="quiz-options">
           <div class="quiz-option" onclick="quizAnswer(2,'recent',this)">
             <div class="quiz-option-icon">✅</div>
-            <div><div class="quiz-option-text">Minder dan 1 jaar geleden</div><div class="quiz-option-sub">Recentelijk bekeken of herzien</div></div>
+            <div><div class="quiz-option-text" data-lang="quiz-opt-recent-t">Minder dan 1 jaar geleden</div><div class="quiz-option-sub" data-lang="quiz-opt-recent-s">Recentelijk bekeken of herzien</div></div>
           </div>
           <div class="quiz-option" onclick="quizAnswer(2,'medium',this)">
             <div class="quiz-option-icon">⏳</div>
-            <div><div class="quiz-option-text">1 tot 3 jaar geleden</div><div class="quiz-option-sub">Al een tijdje niet meer nagekeken</div></div>
+            <div><div class="quiz-option-text" data-lang="quiz-opt-medium-t">1 tot 3 jaar geleden</div><div class="quiz-option-sub" data-lang="quiz-opt-medium-s">Al een tijdje niet meer nagekeken</div></div>
           </div>
           <div class="quiz-option" onclick="quizAnswer(2,'oud',this)">
             <div class="quiz-option-icon">⚠️</div>
-            <div><div class="quiz-option-text">Meer dan 3 jaar geleden</div><div class="quiz-option-sub">Al een hele tijd niet meer</div></div>
+            <div><div class="quiz-option-text" data-lang="quiz-opt-oud-t">Meer dan 3 jaar geleden</div><div class="quiz-option-sub" data-lang="quiz-opt-oud-s">Al een hele tijd niet meer</div></div>
           </div>
           <div class="quiz-option" onclick="quizAnswer(2,'nooit',this)">
             <div class="quiz-option-icon">❓</div>
-            <div><div class="quiz-option-text">Nooit / Weet niet</div><div class="quiz-option-sub">Ik heb het nooit laten nakijken</div></div>
+            <div><div class="quiz-option-text" data-lang="quiz-opt-nooit-t">Nooit / Weet niet</div><div class="quiz-option-sub" data-lang="quiz-opt-nooit-s">Ik heb het nooit laten nakijken</div></div>
           </div>
         </div>
       </div>
@@ -1958,28 +1958,28 @@ footer a:hover{color:var(--white)}
       <!-- STAP 3: Bezorgdheid -->
       <div class="quiz-step" id="qstep-3">
         <div class="quiz-progress" id="quiz-prog-3"></div>
-        <div class="quiz-label">Stap 3 van 4</div>
-        <h2 class="quiz-question">Wat is de aanleiding voor uw check?</h2>
+        <div class="quiz-label" data-lang="quiz-step3-label">Stap 3 van 4</div>
+        <h2 class="quiz-question" data-lang="quiz-step3-q">Wat is de aanleiding voor uw check?</h2>
         <div class="quiz-options">
           <div class="quiz-option" onclick="quizAnswer(3,'besparen',this)">
             <div class="quiz-option-icon">💰</div>
-            <div><div class="quiz-option-text">Ik wil besparen op mijn premies</div><div class="quiz-option-sub">Ik vermoed dat ik te veel betaal</div></div>
+            <div><div class="quiz-option-text" data-lang="quiz-opt-besparen-t">Ik wil besparen op mijn premies</div><div class="quiz-option-sub" data-lang="quiz-opt-besparen-s">Ik vermoed dat ik te veel betaal</div></div>
           </div>
           <div class="quiz-option" onclick="quizAnswer(3,'situatie',this)">
             <div class="quiz-option-icon">🔄</div>
-            <div><div class="quiz-option-text">Mijn situatie is veranderd</div><div class="quiz-option-sub">Verhuis, uitbreiding, nieuw voertuig, nieuwe activiteit…</div></div>
+            <div><div class="quiz-option-text" data-lang="quiz-opt-situatie-t">Mijn situatie is veranderd</div><div class="quiz-option-sub" data-lang="quiz-opt-situatie-s">Verhuis, uitbreiding, nieuw voertuig, nieuwe activiteit…</div></div>
           </div>
           <div class="quiz-option" onclick="quizAnswer(3,'dekking',this)">
             <div class="quiz-option-icon">🛡️</div>
-            <div><div class="quiz-option-text">Ik twijfel of ik wel goed gedekt ben</div><div class="quiz-option-sub">Ik wil zeker zijn dat er geen gaten in mijn dossier zitten</div></div>
+            <div><div class="quiz-option-text" data-lang="quiz-opt-dekking-t">Ik twijfel of ik wel goed gedekt ben</div><div class="quiz-option-sub" data-lang="quiz-opt-dekking-s">Ik wil zeker zijn dat er geen gaten in mijn dossier zitten</div></div>
           </div>
           <div class="quiz-option" onclick="quizAnswer(3,'contract',this)">
             <div class="quiz-option-icon">📋</div>
-            <div><div class="quiz-option-text">Mijn contract loopt binnenkort af</div><div class="quiz-option-sub">Goed moment om alternatieven te vergelijken</div></div>
+            <div><div class="quiz-option-text" data-lang="quiz-opt-contract-t">Mijn contract loopt binnenkort af</div><div class="quiz-option-sub" data-lang="quiz-opt-contract-s">Goed moment om alternatieven te vergelijken</div></div>
           </div>
           <div class="quiz-option" onclick="quizAnswer(3,'opinie',this)">
             <div class="quiz-option-icon">💬</div>
-            <div><div class="quiz-option-text">Ik wil gewoon een tweede mening</div><div class="quiz-option-sub">Vrijblijvend advies van een onafhankelijke makelaar</div></div>
+            <div><div class="quiz-option-text" data-lang="quiz-opt-opinie-t">Ik wil gewoon een tweede mening</div><div class="quiz-option-sub" data-lang="quiz-opt-opinie-s">Vrijblijvend advies van een onafhankelijke makelaar</div></div>
           </div>
         </div>
       </div>
@@ -1987,16 +1987,16 @@ footer a:hover{color:var(--white)}
       <!-- STAP 4: Gegevens -->
       <div class="quiz-step" id="qstep-4">
         <div class="quiz-progress" id="quiz-prog-4"></div>
-        <div class="quiz-label">Bijna klaar</div>
-        <h2 class="quiz-question">Op welk adres mogen wij u contacteren?</h2>
+        <div class="quiz-label" data-lang="quiz-step4-label">Bijna klaar</div>
+        <h2 class="quiz-question" data-lang="quiz-step4-q">Op welk adres mogen wij u contacteren?</h2>
         <div class="quiz-form-row">
-          <div class="quiz-form-group"><label>Voornaam *</label><input id="quiz-input-firstname" type="text" placeholder="Jan" autocomplete="given-name"/></div>
-          <div class="quiz-form-group"><label>Achternaam *</label><input id="quiz-input-lastname" type="text" placeholder="Janssen" autocomplete="family-name"/></div>
+          <div class="quiz-form-group"><label data-lang="quiz-label-firstname">Voornaam *</label><input id="quiz-input-firstname" type="text" placeholder="Jan" autocomplete="given-name"/></div>
+          <div class="quiz-form-group"><label data-lang="quiz-label-lastname">Achternaam *</label><input id="quiz-input-lastname" type="text" placeholder="Janssen" autocomplete="family-name"/></div>
         </div>
-        <div class="quiz-form-group"><label>E-mailadres *</label><input id="quiz-input-email" type="email" placeholder="jan@bedrijf.be" autocomplete="email"/></div>
-        <div class="quiz-form-group"><label>Telefoonnummer</label><input id="quiz-input-phone" type="tel" placeholder="0470 00 00 00" autocomplete="tel"/></div>
-        <p class="quiz-form-note">* Verplicht veld. Uw gegevens worden enkel gebruikt om u te contacteren en nooit gedeeld met uw huidige makelaar.</p>
-        <button class="quiz-start-btn" onclick="quizSubmitGegevens()" style="width:100%">Bekijk mijn resultaat →</button>
+        <div class="quiz-form-group"><label data-lang="quiz-label-email">E-mailadres *</label><input id="quiz-input-email" type="email" placeholder="jan@bedrijf.be" autocomplete="email"/></div>
+        <div class="quiz-form-group"><label data-lang="quiz-label-phone">Telefoonnummer</label><input id="quiz-input-phone" type="tel" placeholder="0470 00 00 00" autocomplete="tel"/></div>
+        <p class="quiz-form-note" data-lang="quiz-form-note">* Verplicht veld. Uw gegevens worden enkel gebruikt om u te contacteren en nooit gedeeld met uw huidige makelaar.</p>
+        <button class="quiz-start-btn" onclick="quizSubmitGegevens()" style="width:100%" data-lang="quiz-submit-btn">Bekijk mijn resultaat →</button>
       </div>
 
       <!-- STAP 5: Resultaat -->
@@ -2019,40 +2019,40 @@ footer a:hover{color:var(--white)}
       <div class="form-group"><label data-lang="form-sector">Sector</label>
         <select id="form-input-sector">
           <option value="" data-lang="form-sector-placeholder">Selecteer uw sector</option>
-          <optgroup label="Handel & Diensten">
-            <option>Detailhandel & Groothandel</option>
-            <option>Horeca & Toerisme</option>
-            <option>Vrije tijd & Events</option>
-            <option>Schoonheidssector & Wellness</option>
+          <optgroup label="Handel & Diensten" data-lang="sector-grp-handel">
+            <option data-lang="sector-opt-detail">Detailhandel & Groothandel</option>
+            <option data-lang="sector-opt-horeca">Horeca & Toerisme</option>
+            <option data-lang="sector-opt-vrij-t">Vrije tijd & Events</option>
+            <option data-lang="sector-opt-schoon">Schoonheidssector & Wellness</option>
           </optgroup>
-          <optgroup label="Vrije beroepen & Dienstverlening">
-            <option>Advocatuur & Notariaat</option>
-            <option>Architectuur & Engineering</option>
-            <option>Boekhouding & Fiscaliteit</option>
-            <option>Gezondheidszorg & Paramedisch</option>
-            <option>IT & Technologie</option>
-            <option>Marketing, Media & Communicatie</option>
-            <option>Consultancy & Management</option>
+          <optgroup label="Vrije beroepen & Dienstverlening" data-lang="sector-grp-vrij">
+            <option data-lang="sector-opt-advoc">Advocatuur & Notariaat</option>
+            <option data-lang="sector-opt-arch">Architectuur & Engineering</option>
+            <option data-lang="sector-opt-boek">Boekhouding & Fiscaliteit</option>
+            <option data-lang="sector-opt-gezond">Gezondheidszorg & Paramedisch</option>
+            <option data-lang="sector-opt-it">IT & Technologie</option>
+            <option data-lang="sector-opt-mark">Marketing, Media & Communicatie</option>
+            <option data-lang="sector-opt-cons">Consultancy & Management</option>
           </optgroup>
-          <optgroup label="Bouw & Industrie">
-            <option>Bouw & Aanneming</option>
-            <option>Vastgoed & Promotie</option>
-            <option>Industrie & Productie</option>
-            <option>Energie & Installatie</option>
+          <optgroup label="Bouw & Industrie" data-lang="sector-grp-bouw">
+            <option data-lang="sector-opt-bouw-a">Bouw & Aanneming</option>
+            <option data-lang="sector-opt-vast">Vastgoed & Promotie</option>
+            <option data-lang="sector-opt-ind">Industrie & Productie</option>
+            <option data-lang="sector-opt-en">Energie & Installatie</option>
           </optgroup>
-          <optgroup label="Transport & Logistiek">
-            <option>Wegvervoer & Logistiek</option>
-            <option>Expeditie & Opslag</option>
+          <optgroup label="Transport & Logistiek" data-lang="sector-grp-trans">
+            <option data-lang="sector-opt-weg">Wegvervoer & Logistiek</option>
+            <option data-lang="sector-opt-exp">Expeditie & Opslag</option>
           </optgroup>
-          <optgroup label="Landbouw & Voeding">
-            <option>Landbouw & Tuinbouw</option>
-            <option>Voedingsindustrie</option>
+          <optgroup label="Landbouw & Voeding" data-lang="sector-grp-landb">
+            <option data-lang="sector-opt-landb-a">Landbouw & Tuinbouw</option>
+            <option data-lang="sector-opt-voed">Voedingsindustrie</option>
           </optgroup>
-          <optgroup label="Zelfstandigen & Privé">
-            <option>Zelfstandige in bijberoep</option>
-            <option>Privéleven & Gezin</option>
+          <optgroup label="Zelfstandigen & Privé" data-lang="sector-grp-zelfpriv">
+            <option data-lang="sector-opt-bij">Zelfstandige in bijberoep</option>
+            <option data-lang="sector-opt-priv-l">Privéleven & Gezin</option>
           </optgroup>
-          <option value="andere">Andere</option>
+          <option value="andere" data-lang="sector-opt-andere">Andere</option>
         </select>
       </div>
       <div class="form-group"><label data-lang="form-office">Kantoorvoorkeur</label>
@@ -2548,6 +2548,91 @@ var translations = {
     'contact-houthulst-info': 'Eug. de Grootelaan 22a, 8650 Houthulst<br><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <a href="tel:051703517">051 70 35 17</a> · <a href="mailto:houthulst@grouptrybou.be">houthulst@grouptrybou.be</a><br>ma & do: 9u–12u & 14u–17u | di, wo, vr: 9u–12u<br>za: 9u–12u (op afspraak)',
     'contact-westouter-info': 'Poperingestraat 24, 8954 Westouter<br><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <a href="tel:057446174">057 44 61 74</a> · <a href="mailto:westouter@grouptrybou.be">westouter@grouptrybou.be</a><br>ma–do: 8u30–12u & 13u–14u & 18u–19u | vr: 8u30–12u & 16u–18u',
     'contact-fsma': '<strong style="color:var(--ink)">FSMA-erkenning:</strong><br>FSMA 023989 A-cB<br>RPR Gent, afdeling Veurne<br><br>Group Trybou is erkend door de FSMA als verzekeringsmakelaar en -agent.',
+    // Quiz
+    'quiz-privacy-text': '100% discreet — uw huidige makelaar wordt niet op de hoogte gebracht',
+    'quiz-label-intro': 'Gratis verzekeringscheck',
+    'quiz-intro-title': 'Bent u optimaal beschermd?<br>Ontdek het in 3 vragen.',
+    'quiz-intro-sub': "Beantwoord 3 korte vragen en wij tonen u meteen waar mogelijke risico's of besparingen zitten. Volledig vrijblijvend en anoniem.",
+    'quiz-start-btn': 'Start de check →',
+    'quiz-step1-label': 'Stap 1 van 4',
+    'quiz-step1-q': 'Wie bent u?',
+    'quiz-opt-kmo-t': 'KMO of vennootschap',
+    'quiz-opt-kmo-s': 'Bedrijf met personeel, gebouwen of voertuigen',
+    'quiz-opt-zelf-t': 'Zelfstandige',
+    'quiz-opt-zelf-s': 'Eenmanszaak, vrij beroep of bijberoep',
+    'quiz-opt-priv-t': 'Privépersoon',
+    'quiz-opt-priv-s': 'Gezin, woning en voertuigen',
+    'quiz-step2-label': 'Stap 2 van 4',
+    'quiz-step2-q': 'Wanneer werd uw verzekeringsdossier voor het laatst grondig nagekeken?',
+    'quiz-opt-recent-t': 'Minder dan 1 jaar geleden',
+    'quiz-opt-recent-s': 'Recentelijk bekeken of herzien',
+    'quiz-opt-medium-t': '1 tot 3 jaar geleden',
+    'quiz-opt-medium-s': 'Al een tijdje niet meer nagekeken',
+    'quiz-opt-oud-t': 'Meer dan 3 jaar geleden',
+    'quiz-opt-oud-s': 'Al een hele tijd niet meer',
+    'quiz-opt-nooit-t': 'Nooit / Weet niet',
+    'quiz-opt-nooit-s': 'Ik heb het nooit laten nakijken',
+    'quiz-step3-label': 'Stap 3 van 4',
+    'quiz-step3-q': 'Wat is de aanleiding voor uw check?',
+    'quiz-opt-besparen-t': 'Ik wil besparen op mijn premies',
+    'quiz-opt-besparen-s': 'Ik vermoed dat ik te veel betaal',
+    'quiz-opt-situatie-t': 'Mijn situatie is veranderd',
+    'quiz-opt-situatie-s': 'Verhuis, uitbreiding, nieuw voertuig, nieuwe activiteit…',
+    'quiz-opt-dekking-t': 'Ik twijfel of ik wel goed gedekt ben',
+    'quiz-opt-dekking-s': 'Ik wil zeker zijn dat er geen gaten in mijn dossier zitten',
+    'quiz-opt-contract-t': 'Mijn contract loopt binnenkort af',
+    'quiz-opt-contract-s': 'Goed moment om alternatieven te vergelijken',
+    'quiz-opt-opinie-t': 'Ik wil gewoon een tweede mening',
+    'quiz-opt-opinie-s': 'Vrijblijvend advies van een onafhankelijke makelaar',
+    'quiz-step4-label': 'Bijna klaar',
+    'quiz-step4-q': 'Op welk adres mogen wij u contacteren?',
+    'quiz-label-firstname': 'Voornaam *',
+    'quiz-label-lastname': 'Achternaam *',
+    'quiz-label-email': 'E-mailadres *',
+    'quiz-label-phone': 'Telefoonnummer',
+    'quiz-form-note': '* Verplicht veld. Uw gegevens worden enkel gebruikt om u te contacteren en nooit gedeeld met uw huidige makelaar.',
+    'quiz-submit-btn': 'Bekijk mijn resultaat →',
+    // Jobs bar
+    'jobs-badge-sales': 'Sales',
+    'jobs-title-sales': 'Salespersoon KMO-verzekeringen',
+    'jobs-desc-sales': "Je bouwt actief een portefeuille op bij KMO's in West-Vlaanderen en bent het eerste aanspreekpunt voor nieuwe klanten.",
+    'jobs-apply': 'Solliciteer →',
+    'jobs-badge-advies': 'Advies',
+    'jobs-title-advies': 'Verzekeringsadviseur KMO',
+    'jobs-desc-advies': 'Je begeleidt ondernemers bij het samenstellen van hun verzekeringsportefeuille en beheert bestaande dossiers zelfstandig.',
+    'jobs-badge-takeover': 'Verzekeringsmakelaars',
+    'jobs-title-takeover': 'Met uw kantoor aansluiten bij Group Trybou?',
+    'jobs-desc-takeover': 'Bent u een onafhankelijk verzekeringskantoor en overweegt u aansluiting bij, of overname door een grotere groep? Wij bespreken de mogelijkheden graag vertrouwelijk.',
+    'jobs-apply-takeover': 'Vertrouwelijk contact opnemen →',
+    // Sector dropdown
+    'sector-grp-handel': 'Handel & Diensten',
+    'sector-grp-vrij': 'Vrije beroepen & Dienstverlening',
+    'sector-grp-bouw': 'Bouw & Industrie',
+    'sector-grp-trans': 'Transport & Logistiek',
+    'sector-grp-landb': 'Landbouw & Voeding',
+    'sector-grp-zelfpriv': 'Zelfstandigen & Privé',
+    'sector-opt-detail': 'Detailhandel & Groothandel',
+    'sector-opt-horeca': 'Horeca & Toerisme',
+    'sector-opt-vrij-t': 'Vrije tijd & Events',
+    'sector-opt-schoon': 'Schoonheidssector & Wellness',
+    'sector-opt-advoc': 'Advocatuur & Notariaat',
+    'sector-opt-arch': 'Architectuur & Engineering',
+    'sector-opt-boek': 'Boekhouding & Fiscaliteit',
+    'sector-opt-gezond': 'Gezondheidszorg & Paramedisch',
+    'sector-opt-it': 'IT & Technologie',
+    'sector-opt-mark': 'Marketing, Media & Communicatie',
+    'sector-opt-cons': 'Consultancy & Management',
+    'sector-opt-bouw-a': 'Bouw & Aanneming',
+    'sector-opt-vast': 'Vastgoed & Promotie',
+    'sector-opt-ind': 'Industrie & Productie',
+    'sector-opt-en': 'Energie & Installatie',
+    'sector-opt-weg': 'Wegvervoer & Logistiek',
+    'sector-opt-exp': 'Expeditie & Opslag',
+    'sector-opt-landb-a': 'Landbouw & Tuinbouw',
+    'sector-opt-voed': 'Voedingsindustrie',
+    'sector-opt-bij': 'Zelfstandige in bijberoep',
+    'sector-opt-priv-l': 'Privéleven & Gezin',
+    'sector-opt-andere': 'Andere',
   },
   en: {
     // Navigation
@@ -2805,6 +2890,91 @@ var translations = {
     'contact-houthulst-info': 'Eug. de Grootelaan 22a, 8650 Houthulst<br><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <a href="tel:051703517">051 70 35 17</a> · <a href="mailto:houthulst@grouptrybou.be">houthulst@grouptrybou.be</a><br>Mon & Thu: 9–12h & 14–17h | Tue, Wed, Fri: 9–12h<br>Sat: 9–12h (by appointment)',
     'contact-westouter-info': 'Poperingestraat 24, 8954 Westouter<br><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <a href="tel:057446174">057 44 61 74</a> · <a href="mailto:westouter@grouptrybou.be">westouter@grouptrybou.be</a><br>Mon–Thu: 8:30–12h & 13–14h & 18–19h | Fri: 8:30–12h & 16–18h',
     'contact-fsma': '<strong style="color:var(--ink)">FSMA recognition:</strong><br>FSMA 023989 A-cB<br>RPR Ghent, division Veurne<br><br>Group Trybou is recognised by the FSMA as an insurance broker and agent.',
+    // Quiz
+    'quiz-privacy-text': '100% discreet — your current broker will not be informed',
+    'quiz-label-intro': 'Free insurance check',
+    'quiz-intro-title': 'Are you optimally protected?<br>Find out in 3 questions.',
+    'quiz-intro-sub': 'Answer 3 short questions and we will immediately show you where potential risks or savings lie. Completely non-binding and anonymous.',
+    'quiz-start-btn': 'Start the check →',
+    'quiz-step1-label': 'Step 1 of 4',
+    'quiz-step1-q': 'Who are you?',
+    'quiz-opt-kmo-t': 'SME or company',
+    'quiz-opt-kmo-s': 'Business with staff, buildings or vehicles',
+    'quiz-opt-zelf-t': 'Self-employed',
+    'quiz-opt-zelf-s': 'Sole trader, freelancer or side job',
+    'quiz-opt-priv-t': 'Private individual',
+    'quiz-opt-priv-s': 'Family, home and vehicles',
+    'quiz-step2-label': 'Step 2 of 4',
+    'quiz-step2-q': 'When was your insurance file last thoroughly reviewed?',
+    'quiz-opt-recent-t': 'Less than 1 year ago',
+    'quiz-opt-recent-s': 'Recently reviewed or revised',
+    'quiz-opt-medium-t': '1 to 3 years ago',
+    'quiz-opt-medium-s': 'Not checked for a while',
+    'quiz-opt-oud-t': 'More than 3 years ago',
+    'quiz-opt-oud-s': 'Not checked for a long time',
+    'quiz-opt-nooit-t': 'Never / Don\'t know',
+    'quiz-opt-nooit-s': 'I have never had it checked',
+    'quiz-step3-label': 'Step 3 of 4',
+    'quiz-step3-q': 'What is the reason for your check?',
+    'quiz-opt-besparen-t': 'I want to save on my premiums',
+    'quiz-opt-besparen-s': 'I suspect I am paying too much',
+    'quiz-opt-situatie-t': 'My situation has changed',
+    'quiz-opt-situatie-s': 'Moved, expanded, new vehicle, new activity…',
+    'quiz-opt-dekking-t': 'I doubt whether I am well covered',
+    'quiz-opt-dekking-s': 'I want to make sure there are no gaps in my file',
+    'quiz-opt-contract-t': 'My contract is expiring soon',
+    'quiz-opt-contract-s': 'Good time to compare alternatives',
+    'quiz-opt-opinie-t': 'I just want a second opinion',
+    'quiz-opt-opinie-s': 'Non-binding advice from an independent broker',
+    'quiz-step4-label': 'Almost done',
+    'quiz-step4-q': 'How can we contact you?',
+    'quiz-label-firstname': 'First name *',
+    'quiz-label-lastname': 'Last name *',
+    'quiz-label-email': 'Email address *',
+    'quiz-label-phone': 'Phone number',
+    'quiz-form-note': '* Required field. Your details are only used to contact you and will never be shared with your current broker.',
+    'quiz-submit-btn': 'View my result →',
+    // Jobs bar
+    'jobs-badge-sales': 'Sales',
+    'jobs-title-sales': 'SME Insurance Salesperson',
+    'jobs-desc-sales': 'You actively build a portfolio with SMEs in West Flanders and are the first point of contact for new clients.',
+    'jobs-apply': 'Apply →',
+    'jobs-badge-advies': 'Advisory',
+    'jobs-title-advies': 'SME Insurance Advisor',
+    'jobs-desc-advies': 'You guide entrepreneurs in composing their insurance portfolio and independently manage existing files.',
+    'jobs-badge-takeover': 'Insurance brokers',
+    'jobs-title-takeover': 'Join Group Trybou with your office?',
+    'jobs-desc-takeover': 'Are you an independent insurance firm considering joining or being acquired by a larger group? We would be happy to discuss the possibilities confidentially.',
+    'jobs-apply-takeover': 'Contact us confidentially →',
+    // Sector dropdown
+    'sector-grp-handel': 'Trade & Services',
+    'sector-grp-vrij': 'Liberal professions & Services',
+    'sector-grp-bouw': 'Construction & Industry',
+    'sector-grp-trans': 'Transport & Logistics',
+    'sector-grp-landb': 'Agriculture & Food',
+    'sector-grp-zelfpriv': 'Self-employed & Private',
+    'sector-opt-detail': 'Retail & Wholesale',
+    'sector-opt-horeca': 'Hospitality & Tourism',
+    'sector-opt-vrij-t': 'Leisure & Events',
+    'sector-opt-schoon': 'Beauty & Wellness',
+    'sector-opt-advoc': 'Law & Notary',
+    'sector-opt-arch': 'Architecture & Engineering',
+    'sector-opt-boek': 'Accounting & Tax',
+    'sector-opt-gezond': 'Healthcare & Paramedical',
+    'sector-opt-it': 'IT & Technology',
+    'sector-opt-mark': 'Marketing, Media & Communications',
+    'sector-opt-cons': 'Consultancy & Management',
+    'sector-opt-bouw-a': 'Construction & Contracting',
+    'sector-opt-vast': 'Real Estate & Development',
+    'sector-opt-ind': 'Industry & Production',
+    'sector-opt-en': 'Energy & Installation',
+    'sector-opt-weg': 'Road Transport & Logistics',
+    'sector-opt-exp': 'Freight Forwarding & Storage',
+    'sector-opt-landb-a': 'Agriculture & Horticulture',
+    'sector-opt-voed': 'Food Industry',
+    'sector-opt-bij': 'Self-employed as a side job',
+    'sector-opt-priv-l': 'Private life & Family',
+    'sector-opt-andere': 'Other',
   },
   fr: {
     // Navigation
@@ -3062,6 +3232,91 @@ var translations = {
     'contact-houthulst-info': 'Eug. de Grootelaan 22a, 8650 Houthulst<br><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <a href="tel:051703517">051 70 35 17</a> · <a href="mailto:houthulst@grouptrybou.be">houthulst@grouptrybou.be</a><br>Lu & Je : 9h–12h & 14h–17h | Ma, Me, Ve : 9h–12h<br>Sa : 9h–12h (sur rendez-vous)',
     'contact-westouter-info': 'Poperingestraat 24, 8954 Westouter<br><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <a href="tel:057446174">057 44 61 74</a> · <a href="mailto:westouter@grouptrybou.be">westouter@grouptrybou.be</a><br>Lu–Je : 8h30–12h & 13h–14h & 18h–19h | Ve : 8h30–12h & 16h–18h',
     'contact-fsma': '<strong style="color:var(--ink)">Agrément FSMA :</strong><br>FSMA 023989 A-cB<br>RPR Gand, division Furnes<br><br>Group Trybou est agréé par la FSMA en tant que courtier et agent d\'assurance.',
+    // Quiz
+    'quiz-privacy-text': '100% discret — votre courtier actuel ne sera pas informé',
+    'quiz-label-intro': 'Check assurance gratuit',
+    'quiz-intro-title': 'Êtes-vous optimalement protégé ?<br>Découvrez-le en 3 questions.',
+    'quiz-intro-sub': "Répondez à 3 courtes questions et nous vous montrons immédiatement où se trouvent les risques ou économies potentiels. Entièrement sans engagement et anonyme.",
+    'quiz-start-btn': 'Démarrer le check →',
+    'quiz-step1-label': 'Étape 1 sur 4',
+    'quiz-step1-q': 'Qui êtes-vous ?',
+    'quiz-opt-kmo-t': 'PME ou société',
+    'quiz-opt-kmo-s': 'Entreprise avec personnel, bâtiments ou véhicules',
+    'quiz-opt-zelf-t': 'Indépendant',
+    'quiz-opt-zelf-s': 'Entreprise individuelle, profession libérale ou activité complémentaire',
+    'quiz-opt-priv-t': 'Particulier',
+    'quiz-opt-priv-s': 'Famille, habitation et véhicules',
+    'quiz-step2-label': 'Étape 2 sur 4',
+    'quiz-step2-q': 'Quand votre dossier d\'assurance a-t-il été examiné en profondeur pour la dernière fois ?',
+    'quiz-opt-recent-t': 'Il y a moins d\'1 an',
+    'quiz-opt-recent-s': 'Récemment examiné ou révisé',
+    'quiz-opt-medium-t': 'Il y a 1 à 3 ans',
+    'quiz-opt-medium-s': 'Pas vérifié depuis un certain temps',
+    'quiz-opt-oud-t': 'Il y a plus de 3 ans',
+    'quiz-opt-oud-s': 'Pas vérifié depuis longtemps',
+    'quiz-opt-nooit-t': 'Jamais / Je ne sais pas',
+    'quiz-opt-nooit-s': 'Je ne l\'ai jamais fait vérifier',
+    'quiz-step3-label': 'Étape 3 sur 4',
+    'quiz-step3-q': 'Quelle est la raison de votre check ?',
+    'quiz-opt-besparen-t': 'Je veux économiser sur mes primes',
+    'quiz-opt-besparen-s': 'Je pense que je paie trop',
+    'quiz-opt-situatie-t': 'Ma situation a changé',
+    'quiz-opt-situatie-s': 'Déménagement, expansion, nouveau véhicule, nouvelle activité…',
+    'quiz-opt-dekking-t': 'Je doute d\'être bien couvert',
+    'quiz-opt-dekking-s': 'Je veux m\'assurer qu\'il n\'y a pas de lacunes dans mon dossier',
+    'quiz-opt-contract-t': 'Mon contrat expire bientôt',
+    'quiz-opt-contract-s': 'Bon moment pour comparer des alternatives',
+    'quiz-opt-opinie-t': 'Je veux simplement un deuxième avis',
+    'quiz-opt-opinie-s': 'Conseil sans engagement d\'un courtier indépendant',
+    'quiz-step4-label': 'Presque terminé',
+    'quiz-step4-q': 'À quelle adresse pouvons-nous vous contacter ?',
+    'quiz-label-firstname': 'Prénom *',
+    'quiz-label-lastname': 'Nom *',
+    'quiz-label-email': 'Adresse e-mail *',
+    'quiz-label-phone': 'Numéro de téléphone',
+    'quiz-form-note': '* Champ obligatoire. Vos données ne sont utilisées que pour vous contacter et ne seront jamais partagées avec votre courtier actuel.',
+    'quiz-submit-btn': 'Voir mon résultat →',
+    // Jobs bar
+    'jobs-badge-sales': 'Ventes',
+    'jobs-title-sales': 'Commercial assurances PME',
+    'jobs-desc-sales': 'Vous construisez activement un portefeuille auprès des PME en Flandre occidentale et êtes le premier point de contact pour les nouveaux clients.',
+    'jobs-apply': 'Postuler →',
+    'jobs-badge-advies': 'Conseil',
+    'jobs-title-advies': 'Conseiller en assurances PME',
+    'jobs-desc-advies': 'Vous accompagnez les entrepreneurs dans la composition de leur portefeuille d\'assurances et gérez de manière autonome les dossiers existants.',
+    'jobs-badge-takeover': 'Courtiers d\'assurance',
+    'jobs-title-takeover': 'Rejoindre Group Trybou avec votre cabinet ?',
+    'jobs-desc-takeover': 'Êtes-vous un cabinet d\'assurance indépendant et envisagez-vous de rejoindre ou d\'être repris par un groupe plus important ? Nous discutons volontiers des possibilités en toute confidentialité.',
+    'jobs-apply-takeover': 'Prise de contact confidentielle →',
+    // Sector dropdown
+    'sector-grp-handel': 'Commerce & Services',
+    'sector-grp-vrij': 'Professions libérales & Services',
+    'sector-grp-bouw': 'Construction & Industrie',
+    'sector-grp-trans': 'Transport & Logistique',
+    'sector-grp-landb': 'Agriculture & Alimentation',
+    'sector-grp-zelfpriv': 'Indépendants & Privé',
+    'sector-opt-detail': 'Commerce de détail & de gros',
+    'sector-opt-horeca': 'Horeca & Tourisme',
+    'sector-opt-vrij-t': 'Loisirs & Événements',
+    'sector-opt-schoon': 'Beauté & Bien-être',
+    'sector-opt-advoc': 'Droit & Notariat',
+    'sector-opt-arch': 'Architecture & Ingénierie',
+    'sector-opt-boek': 'Comptabilité & Fiscalité',
+    'sector-opt-gezond': 'Santé & Paramédical',
+    'sector-opt-it': 'IT & Technologie',
+    'sector-opt-mark': 'Marketing, Médias & Communication',
+    'sector-opt-cons': 'Conseil & Management',
+    'sector-opt-bouw-a': 'Construction & Entreprise générale',
+    'sector-opt-vast': 'Immobilier & Promotion',
+    'sector-opt-ind': 'Industrie & Production',
+    'sector-opt-en': 'Énergie & Installation',
+    'sector-opt-weg': 'Transport routier & Logistique',
+    'sector-opt-exp': 'Expédition & Stockage',
+    'sector-opt-landb-a': 'Agriculture & Horticulture',
+    'sector-opt-voed': 'Industrie alimentaire',
+    'sector-opt-bij': 'Indépendant à titre complémentaire',
+    'sector-opt-priv-l': 'Vie privée & Famille',
+    'sector-opt-andere': 'Autre',
   }
 };
 
@@ -3077,7 +3332,11 @@ function switchLanguage(lang) {
   document.querySelectorAll('[data-lang]').forEach(el => {
     const key = el.getAttribute('data-lang');
     if (translations[lang][key] !== undefined) {
-      el.innerHTML = translations[lang][key];
+      if (el.tagName === 'OPTGROUP') {
+        el.label = translations[lang][key];
+      } else {
+        el.innerHTML = translations[lang][key];
+      }
     }
   });
 
@@ -3566,6 +3825,7 @@ function quizShowResult() {
   var profile = quizAnswers[1];
   var timing  = quizAnswers[2];
   var concern = quizAnswers[3];
+  var lang = currentLang || 'nl';
 
   var urgency = (timing === 'oud' || timing === 'nooit') ? 'high' :
                  timing === 'medium' ? 'medium' : 'low';
@@ -3573,63 +3833,107 @@ function quizShowResult() {
   var emojiMap  = { high:'⚠️', medium:'🔍', low:'✅' };
   var colorMap  = { high:'#fff3cd', medium:'#e8f0fb', low:'#d4edda' };
   var titleMap  = {
-    high:   'Aandacht vereist — uw dossier verdient een frisse blik.',
-    medium: 'Ruimte voor optimalisatie — de markt heeft niet stilgestaan.',
-    low:    'Goede start — een tweede mening brengt vaak een verrassing.'
+    nl: { high:'Aandacht vereist — uw dossier verdient een frisse blik.', medium:'Ruimte voor optimalisatie — de markt heeft niet stilgestaan.', low:'Goede start — een tweede mening brengt vaak een verrassing.' },
+    en: { high:'Attention required — your file deserves a fresh look.', medium:'Room for optimisation — the market has not stood still.', low:'Good start — a second opinion often brings a surprise.' },
+    fr: { high:'Attention requise — votre dossier mérite un regard neuf.', medium:"Marge d'optimisation — le marché n'a pas attendu.", low:'Bon départ — un deuxième avis réserve souvent des surprises.' }
   };
   var bodyMap = {
-    high:   'In meer dan 3 jaar veranderen risico\'s, premiesniveaus en uw persoonlijke situatie aanzienlijk. Er is een reële kans dat u onvoldoende gedekt bent of te veel betaalt.',
-    medium: 'Tussen 1 en 3 jaar kunnen premies sterk schommelen en nieuwe risico\'s ontstaan. Een check kost niets en legt eventuele lacunes meteen bloot.',
-    low:    'U bent recent nagekeken, maar de verzekeringsmarkt evolueert snel. Een onafhankelijke second opinion is altijd de moeite waard.'
+    nl: {
+      high:   'In meer dan 3 jaar veranderen risico\'s, premiesniveaus en uw persoonlijke situatie aanzienlijk. Er is een reële kans dat u onvoldoende gedekt bent of te veel betaalt.',
+      medium: 'Tussen 1 en 3 jaar kunnen premies sterk schommelen en nieuwe risico\'s ontstaan. Een check kost niets en legt eventuele lacunes meteen bloot.',
+      low:    'U bent recent nagekeken, maar de verzekeringsmarkt evolueert snel. Een onafhankelijke second opinion is altijd de moeite waard.'
+    },
+    en: {
+      high:   'Over 3 years, risks, premium levels and your personal situation change considerably. There is a real chance you are underinsured or overpaying.',
+      medium: 'In 1 to 3 years premiums can fluctuate strongly and new risks arise. A check costs nothing and immediately exposes any gaps.',
+      low:    'You have been recently reviewed, but the insurance market evolves quickly. An independent second opinion is always worthwhile.'
+    },
+    fr: {
+      high:   'En plus de 3 ans, les risques, les niveaux de primes et votre situation personnelle évoluent considérablement. Il est fort probable que vous soyez sous-assuré ou que vous payiez trop.',
+      medium: 'En 1 à 3 ans, les primes peuvent fortement fluctuer et de nouveaux risques apparaître. Un check ne coûte rien et révèle immédiatement les lacunes éventuelles.',
+      low:    "Vous avez été récemment examiné, mais le marché de l'assurance évolue vite. Un second avis indépendant vaut toujours la peine."
+    }
   };
   var sectorHint = {
-    kmo:          'Als KMO hebt u recht op een geconsolideerde pakketpolis — vaak aanzienlijk goedkoper dan losse polissen.',
-    zelfstandige: 'Als zelfstandige bent u persoonlijk aansprakelijk. Een VAPZ en gewaarborgd inkomen zijn essentieel.',
-    prive:        'Een gezinspolis bundelt woning, aansprakelijkheid en rechtsbijstand — en scheelt u tot 20% op jaarbasis.'
+    nl: {
+      kmo:          'Als KMO hebt u recht op een geconsolideerde pakketpolis — vaak aanzienlijk goedkoper dan losse polissen.',
+      zelfstandige: 'Als zelfstandige bent u persoonlijk aansprakelijk. Een VAPZ en gewaarborgd inkomen zijn essentieel.',
+      prive:        'Een gezinspolis bundelt woning, aansprakelijkheid en rechtsbijstand — en scheelt u tot 20% op jaarbasis.'
+    },
+    en: {
+      kmo:          'As an SME you are entitled to a consolidated package policy — often considerably cheaper than separate policies.',
+      zelfstandige: 'As a self-employed person you are personally liable. Pension savings and guaranteed income are essential.',
+      prive:        'A family policy bundles home, liability and legal assistance — saving you up to 20% annually.'
+    },
+    fr: {
+      kmo:          "En tant que PME, vous avez droit à une police-package consolidée — souvent nettement moins chère que des polices séparées.",
+      zelfstandige: "En tant qu'indépendant, vous êtes personnellement responsable. Une PLCI et un revenu garanti sont essentiels.",
+      prive:        "Une police familiale regroupe habitation, responsabilité et assistance juridique — et vous fait économiser jusqu'à 20 % par an."
+    }
   };
   var concernItems = {
-    besparen: [
-      'Premies kunnen sterk verschillen per maatschappij voor identieke dekking.',
-      'Wij vergelijken objectief bij meerdere verzekeraars — zonder bindend engagement.'
-    ],
-    situatie: [
-      'Een gewijzigde situatie vraagt altijd om een herziening van uw dossier.',
-      'Onderverzekering of lacunes ontstaan vaak net na een wijziging.'
-    ],
-    dekking: [
-      'Een grondige analyse legt blinde vlekken en overlappingen bloot.',
-      'Wij controleren elk onderdeel van uw dossier op volledigheid en correctheid.'
-    ],
-    contract: [
-      'Contractverlenging is het ideale moment om tarieven en voorwaarden te vergelijken.',
-      'Overstappen bij vervaldag is zonder kosten of sancties mogelijk.'
-    ],
-    opinie: [
-      'Als onafhankelijk makelaar werken wij voor u, niet voor de verzekeraar.',
-      'Geen verkooppraatje — enkel objectief advies op basis van uw dossier.'
-    ]
+    nl: {
+      besparen: ['Premies kunnen sterk verschillen per maatschappij voor identieke dekking.', 'Wij vergelijken objectief bij meerdere verzekeraars — zonder bindend engagement.'],
+      situatie: ['Een gewijzigde situatie vraagt altijd om een herziening van uw dossier.', 'Onderverzekering of lacunes ontstaan vaak net na een wijziging.'],
+      dekking:  ['Een grondige analyse legt blinde vlekken en overlappingen bloot.', 'Wij controleren elk onderdeel van uw dossier op volledigheid en correctheid.'],
+      contract: ['Contractverlenging is het ideale moment om tarieven en voorwaarden te vergelijken.', 'Overstappen bij vervaldag is zonder kosten of sancties mogelijk.'],
+      opinie:   ['Als onafhankelijk makelaar werken wij voor u, niet voor de verzekeraar.', 'Geen verkooppraatje — enkel objectief advies op basis van uw dossier.']
+    },
+    en: {
+      besparen: ['Premiums can vary widely between insurers for identical coverage.', 'We compare objectively across multiple insurers — without any commitment.'],
+      situatie: ['A changed situation always calls for a review of your file.', 'Under-insurance or gaps often arise right after a change.'],
+      dekking:  ['A thorough analysis reveals blind spots and overlaps.', 'We check every part of your file for completeness and accuracy.'],
+      contract: ['Contract renewal is the ideal moment to compare rates and terms.', 'Switching at the expiry date is possible without costs or penalties.'],
+      opinie:   ['As an independent broker we work for you, not for the insurer.', 'No sales pitch — only objective advice based on your file.']
+    },
+    fr: {
+      besparen: ['Les primes peuvent varier fortement selon les compagnies pour une couverture identique.', 'Nous comparons objectivement auprès de plusieurs assureurs — sans engagement contraignant.'],
+      situatie: ['Une situation modifiée nécessite toujours une révision de votre dossier.', 'Sous-assurance ou lacunes surviennent souvent juste après un changement.'],
+      dekking:  ['Une analyse approfondie révèle les angles morts et les chevauchements.', "Nous vérifions chaque partie de votre dossier pour l'exhaustivité et l'exactitude."],
+      contract: ["Le renouvellement de contrat est le moment idéal pour comparer tarifs et conditions.", "Changer à la date d'échéance est possible sans frais ni sanctions."],
+      opinie:   ["En tant que courtier indépendant, nous travaillons pour vous, pas pour l'assureur.", 'Pas d\'argumentaire commercial — uniquement un conseil objectif basé sur votre dossier.']
+    }
+  };
+  var lockText = {
+    nl: 'Uw huidige makelaar wordt <u>niet</u> op de hoogte gebracht van deze check.',
+    en: 'Your current broker will <u>not</u> be informed of this check.',
+    fr: 'Votre courtier actuel ne sera <u>pas</u> informé de ce check.'
+  };
+  var ctaPlan = {
+    nl: 'Plan mijn gratis check →',
+    en: 'Schedule my free check →',
+    fr: 'Planifier mon check gratuit →'
+  };
+  var ctaRestart = {
+    nl: 'Opnieuw starten',
+    en: 'Start again',
+    fr: 'Recommencer'
   };
 
-  var items = concernItems[concern] || concernItems['alles'];
+  var t = titleMap[lang] || titleMap.nl;
+  var b = bodyMap[lang] || bodyMap.nl;
+  var s = sectorHint[lang] || sectorHint.nl;
+  var c = concernItems[lang] || concernItems.nl;
+  var items = (c[concern] || []);
   var checkSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
   var lockSvg  = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
 
   var html =
     '<div class="quiz-result-score">' +
       '<div class="quiz-result-emoji" style="background:' + colorMap[urgency] + '">' + emojiMap[urgency] + '</div>' +
-      '<div class="quiz-result-title">' + titleMap[urgency] + '</div>' +
+      '<div class="quiz-result-title">' + t[urgency] + '</div>' +
     '</div>' +
-    '<p class="quiz-result-body">' + bodyMap[urgency] + (sectorHint[profile] ? '<br><br>' + sectorHint[profile] : '') + '</p>' +
+    '<p class="quiz-result-body">' + b[urgency] + (s[profile] ? '<br><br>' + s[profile] : '') + '</p>' +
     '<div class="quiz-result-items">' +
       items.map(function(i){ return '<div class="quiz-result-item">' + checkSvg + '<span>' + i + '</span></div>'; }).join('') +
     '</div>' +
     '<div style="background:var(--blue-pale);border-radius:10px;padding:13px 18px;display:flex;align-items:center;gap:10px;margin-bottom:24px">' +
       lockSvg +
-      '<span style="font-size:.8rem;color:var(--blue);font-weight:600">Uw huidige makelaar wordt <u>niet</u> op de hoogte gebracht van deze check.</span>' +
+      '<span style="font-size:.8rem;color:var(--blue);font-weight:600">' + (lockText[lang] || lockText.nl) + '</span>' +
     '</div>' +
     '<div class="quiz-cta-row" id="quiz-cta-row">' +
-      '<button class="quiz-cta-btn" onclick="quizAutoSubmit(this)">Plan mijn gratis check →</button>' +
-      '<button class="quiz-restart" onclick="quizReset()">Opnieuw starten</button>' +
+      '<button class="quiz-cta-btn" onclick="quizAutoSubmit(this)">' + (ctaPlan[lang] || ctaPlan.nl) + '</button>' +
+      '<button class="quiz-restart" onclick="quizReset()">' + (ctaRestart[lang] || ctaRestart.nl) + '</button>' +
     '</div>';
 
   document.getElementById('quiz-result-content').innerHTML = html;
@@ -3670,7 +3974,8 @@ function quizAutoSubmit(btn) {
   var timingLabels  = { recent: 'Minder dan 1 jaar', medium: '1–3 jaar', oud: 'Meer dan 3 jaar', nooit: 'Nooit / Weet niet' };
   var concernLabels = { besparen: 'Wil besparen', situatie: 'Situatie gewijzigd', dekking: 'Twijfelt over dekking', contract: 'Contract loopt af', opinie: 'Tweede mening' };
 
-  if (btn) { btn.disabled = true; btn.textContent = 'Versturen…'; }
+  var sendingText = { nl: 'Versturen…', en: 'Sending…', fr: 'Envoi…' };
+  if (btn) { btn.disabled = true; btn.textContent = sendingText[currentLang] || sendingText.nl; }
 
   var data = {
     voornaam:   (quizAnswers.firstname || '').trim(),
@@ -3689,10 +3994,15 @@ function quizAutoSubmit(btn) {
     }
   };
 
+  var successText = {
+    nl: '✓ Aanvraag ontvangen — we contacteren u zo snel mogelijk!',
+    en: '✓ Request received — we will contact you as soon as possible!',
+    fr: '✓ Demande reçue — nous vous contacterons dans les plus brefs délais !'
+  };
   function onSuccess() {
     var row = document.getElementById('quiz-cta-row');
     if (row) {
-      row.innerHTML = '<div style="background:#d4edda;border-radius:10px;padding:16px 20px;text-align:center;color:#155724;font-weight:600">✓ Aanvraag ontvangen — we contacteren u zo snel mogelijk!</div>';
+      row.innerHTML = '<div style="background:#d4edda;border-radius:10px;padding:16px 20px;text-align:center;color:#155724;font-weight:600">' + (successText[currentLang] || successText.nl) + '</div>';
     }
   }
 
