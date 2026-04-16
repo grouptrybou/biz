@@ -1,0 +1,2764 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Group Trybou CMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<style>
+  :root {
+    --blue: #0a539d;
+    --blue-dark: #073d75;
+    --blue-deep: #071e3d;
+    --cream: #faf9f7;
+    --ink: #111827;
+    --slate: #4b5563;
+    --radius: 16px;
+    --sidebar-w: 240px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── SETUP BANNER ── */
+  #setup-banner {
+    background: linear-gradient(135deg, #fff7ed, #fef3c7);
+    border: 1.5px solid #f59e0b;
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin: 32px auto;
+    max-width: 680px;
+    box-shadow: 0 4px 24px rgba(245,158,11,0.12);
+  }
+
+  #setup-banner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: #92400e;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #setup-banner ol {
+    padding-left: 20px;
+    color: #78350f;
+    font-size: 0.92rem;
+    line-height: 2;
+  }
+
+  #setup-banner ol li strong {
+    color: #92400e;
+  }
+
+  /* ── LOGIN ── */
+  #login-screen {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #071e3d 0%, #0a539d 60%, #073d75 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .login-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 48px 40px 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+  }
+
+  .login-logo {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.8rem;
+    color: var(--blue);
+    text-align: center;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .login-sub {
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--slate);
+    margin-bottom: 36px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--slate);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.93rem;
+    color: var(--ink);
+    background: #fff;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--blue);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 90px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 22px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s, transform 0.1s;
+  }
+
+  .btn:active { transform: scale(0.98); }
+
+  .btn-primary {
+    background: var(--blue);
+    color: #fff;
+    width: 100%;
+    justify-content: center;
+    padding: 13px;
+    font-size: 0.97rem;
+  }
+
+  .btn-primary:hover { background: var(--blue-dark); }
+
+  .btn-sm {
+    padding: 7px 14px;
+    font-size: 0.82rem;
+    border-radius: 8px;
+    width: auto;
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--blue);
+    color: var(--blue);
+  }
+
+  .btn-outline:hover { background: #e8f0fb; }
+
+  .btn-danger {
+    background: #fee2e2;
+    color: #b91c1c;
+  }
+
+  .btn-danger:hover { background: #fecaca; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--slate);
+    border: 1.5px solid #e5e7eb;
+  }
+
+  .btn-ghost:hover { background: #f3f4f6; }
+
+  #login-error {
+    color: #dc2626;
+    font-size: 0.84rem;
+    text-align: center;
+    margin-top: 12px;
+    min-height: 20px;
+  }
+
+  /* ── DASHBOARD ── */
+  #dashboard {
+    display: none;
+    min-height: 100vh;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: var(--blue-deep);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    transition: transform 0.28s ease;
+  }
+
+  .sidebar-logo {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .sidebar-logo-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .sidebar-logo-badge {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 16px 0;
+    overflow-y: auto;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.18s;
+    user-select: none;
+  }
+
+  .nav-item:hover {
+    background: rgba(255,255,255,0.07);
+    color: #fff;
+  }
+
+  .nav-item.active {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    border-left-color: #fff;
+  }
+
+  .nav-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    opacity: 0.8;
+  }
+
+  .nav-item.active .nav-icon, .nav-item:hover .nav-icon { opacity: 1; }
+
+  .sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .btn-logout {
+    width: 100%;
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    color: rgba(255,255,255,0.65);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.87rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.18s;
+  }
+
+  .btn-logout:hover {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+  }
+
+  /* MAIN */
+  .main {
+    margin-left: var(--sidebar-w);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .topbar {
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .topbar-brand {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--slate);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .topbar-sep {
+    color: #d1d5db;
+    font-size: 1rem;
+  }
+
+  #topbar-tab-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .btn-visit {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 9px;
+    background: var(--cream);
+    border: 1.5px solid #e5e7eb;
+    color: var(--slate);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.18s;
+  }
+
+  .btn-visit:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+    background: #e8f0fb;
+  }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    color: var(--ink);
+  }
+
+  /* CONTENT */
+  .content {
+    padding: 32px;
+    flex: 1;
+  }
+
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* VACATURE CARDS */
+  .vacature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .vacature-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 22px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: box-shadow 0.18s;
+  }
+
+  .vacature-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  .vacature-card.inactive {
+    opacity: 0.55;
+  }
+
+  .vacature-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .vacature-badge {
+    display: inline-block;
+    background: #e0ecfa;
+    color: var(--blue);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-bottom: 6px;
+  }
+
+  .vacature-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 5px;
+  }
+
+  .vacature-desc {
+    font-size: 0.87rem;
+    color: var(--slate);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 480px;
+  }
+
+  .vacature-email {
+    font-size: 0.78rem;
+    color: #9ca3af;
+    margin-top: 4px;
+  }
+
+  .vacature-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  /* TOGGLE */
+  .toggle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .toggle-label {
+    font-size: 0.78rem;
+    color: var(--slate);
+    white-space: nowrap;
+  }
+
+  .toggle {
+    position: relative;
+    width: 36px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .toggle input {
+    opacity: 0;
+    width: 0; height: 0;
+  }
+
+  .toggle-slider {
+    position: absolute;
+    inset: 0;
+    background: #d1d5db;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 14px; height: 14px;
+    top: 3px; left: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  .toggle input:checked + .toggle-slider {
+    background: var(--blue);
+  }
+
+  .toggle input:checked + .toggle-slider::before {
+    transform: translateX(16px);
+  }
+
+  /* ADD FORM */
+  #add-form-wrap {
+    display: none;
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+  }
+
+  #add-form-wrap.open { display: block; }
+
+  .add-form-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 18px;
+    color: var(--ink);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* HERO TAB */
+  .hero-form {
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+    max-width: 680px;
+  }
+
+  .form-note {
+    font-size: 0.82rem;
+    color: var(--slate);
+    background: #f0f7ff;
+    border: 1px solid #cce0fa;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 20px;
+  }
+
+  /* SECTORS TAB */
+  .sectors-form {
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+    max-width: 520px;
+  }
+
+  .sector-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .sector-row:last-of-type { border-bottom: none; }
+
+  .sector-name {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  /* SETTINGS TAB */
+  .settings-form {
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+    max-width: 440px;
+  }
+
+  .settings-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+
+  .settings-info {
+    font-size: 0.88rem;
+    color: var(--slate);
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .settings-email {
+    font-size: 0.88rem;
+    color: var(--slate);
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .settings-email strong {
+    color: var(--ink);
+    display: block;
+    margin-bottom: 2px;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* TOAST */
+  #toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: #1a2e1a;
+    color: #86efac;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.25s, transform 0.25s;
+    pointer-events: none;
+  }
+
+  #toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* OVERLAY */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 90;
+  }
+
+  /* CHECKBOX styled */
+  .check-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .check-group input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--blue);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .check-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  /* LOADING */
+  .loading-state {
+    color: var(--slate);
+    font-size: 0.9rem;
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #e5e7eb;
+    border-top-color: var(--blue);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* MEDEWERKERS */
+  .medewerker-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+  .medewerker-card {
+    background: #fff; border-radius: 12px; padding: 18px 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+    display: flex; align-items: center; gap: 16px; transition: box-shadow 0.18s;
+  }
+  .medewerker-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+  .medewerker-card.inactive { opacity: 0.55; }
+  .member-avatar {
+    width: 48px; height: 48px; border-radius: 50%; background: #e8f0fb;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; flex-shrink: 0; overflow: hidden;
+  }
+  .member-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .member-name { font-weight: 600; font-size: 1rem; color: var(--ink); margin-bottom: 3px; }
+  .member-role { font-size: 0.84rem; color: var(--slate); }
+
+  /* FAQ */
+  .faq-card {
+    background: #fff; border-radius: 12px; padding: 18px 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+    display: flex; align-items: flex-start; gap: 14px; transition: box-shadow 0.18s;
+  }
+  .faq-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+  .faq-card.inactive { opacity: 0.55; }
+  .faq-body { flex: 1; min-width: 0; }
+  .faq-question { font-weight: 600; font-size: 0.97rem; color: var(--ink); margin-bottom: 5px; }
+  .faq-answer { font-size: 0.85rem; color: var(--slate); display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  /* SECTOR CARDS */
+  .sector-card {
+    background: #fff; border-radius: 12px; padding: 16px 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+    display: flex; align-items: center; gap: 14px; transition: box-shadow 0.18s;
+  }
+  .sector-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+  .sector-card.inactive { opacity: 0.55; }
+  .sector-icon-preview {
+    width: 38px; height: 38px; display: flex; align-items: center;
+    justify-content: center; font-size: 1.3rem; background: #f0f7ff;
+    border-radius: 8px; flex-shrink: 0;
+  }
+  .sector-card-body { flex: 1; min-width: 0; }
+  .sector-card-label { font-weight: 600; font-size: 0.97rem; color: var(--ink); margin-bottom: 2px; }
+  .sector-card-desc { font-size: 0.83rem; color: var(--slate); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-overlay.open {
+      display: block;
+    }
+
+    .main {
+      margin-left: 0;
+    }
+
+    .hamburger {
+      display: flex;
+    }
+
+    .content {
+      padding: 20px 16px;
+    }
+
+    .topbar {
+      padding: 0 16px;
+    }
+
+    .vacature-card {
+      flex-direction: column;
+    }
+
+    .vacature-actions {
+      justify-content: flex-start;
+    }
+  }
+</style>
+</head>
+<body>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAtwAXkGxxOzOIvoNKSmo5__vK7IUasUu8",
+    authDomain: "trybou-biz.firebaseapp.com",
+    projectId: "trybou-biz",
+    storageBucket: "trybou-biz.firebasestorage.app",
+    messagingSenderId: "903288045605",
+    appId: "1:903288045605:web:5bf10a1ac5941583aebfcc",
+    measurementId: "G-KR4WF61E3Q"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">Group Trybou</div>
+    <div class="login-sub">CMS Beheer</div>
+    <div class="form-group">
+      <label>E-mailadres</label>
+      <input type="email" id="login-email" autocomplete="email" placeholder="uw@email.be">
+    </div>
+    <div class="form-group">
+      <label>Wachtwoord</label>
+      <input type="password" id="login-pass" autocomplete="current-password" placeholder="••••••••">
+    </div>
+    <button class="btn btn-primary" onclick="doLogin()">Aanmelden</button>
+    <div id="login-error"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-text">Group Trybou</div>
+      <div class="sidebar-logo-badge">CMS Beheer</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" data-tab="vacatures" onclick="switchTab('vacatures', this)">
+        <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+        Vacatures
+      </div>
+      <div class="nav-item" data-tab="hero" onclick="switchTab('hero', this)">
+        <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 0 0 1 1h3m10-11l2 2m-2-2v10a1 1 0 0 1-1 1h-3m-6 0a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1m-6 0h6"/></svg>
+        Hero tekst
+      </div>
+      <div class="nav-item" data-tab="medewerkers" onclick="switchTab('medewerkers', this)">
+        <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Medewerkers
+      </div>
+      <div class="nav-item" data-tab="faq" onclick="switchTab('faq', this)">
+        <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        FAQ
+      </div>
+      <div class="nav-item" data-tab="tijdslijn" onclick="switchTab('tijdslijn', this)">
+        <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><circle cx="6" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="12" r="2"/></svg>
+        Tijdslijn
+      </div>
+      <div class="nav-item" data-tab="beoordelingen" onclick="switchTab('beoordelingen', this)">
+        <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Beoordelingen
+      </div>
+      <div class="nav-item" data-tab="banner" onclick="switchTab('banner', this)">
+        <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0 1 18 14.158V11a6 6 0 0 0-5-5.917V4a1 1 0 0 0-2 0v1.083A6 6 0 0 0 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 0 1-6 0v-1m6 0H9"/></svg>
+        Banner
+      </div>
+      <div class="nav-item" data-tab="aanvragen" onclick="switchTab('aanvragen', this)">
+        <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Aanvragen <span id="aanvragen-badge" style="display:none;background:#dc3545;color:#fff;border-radius:100px;font-size:.68rem;font-weight:700;padding:1px 7px;margin-left:4px;"></span>
+      </div>
+      <div class="nav-item" data-tab="instellingen" onclick="switchTab('instellingen', this)">
+        <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Instellingen
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn-logout" onclick="doLogout()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Uitloggen
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" onclick="openSidebar()" aria-label="Menu">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <span class="topbar-brand">Group Trybou CMS</span>
+        <span class="topbar-sep">›</span>
+        <span id="topbar-tab-title">Vacatures</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button id="btn-undo" class="btn-visit" onclick="doUndo()" disabled title="Ongedaan maken (Ctrl+Z)" style="opacity:.35;cursor:not-allowed;">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+          Ongedaan maken
+        </button>
+        <a href="websiteeditV3.html" target="_blank" class="btn-visit">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Bekijk website
+        </a>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- TAB: VACATURES -->
+      <div id="tab-vacatures" class="tab-pane active">
+        <div class="section-header">
+          <h1 class="section-title">Vacatures</h1>
+          <button class="btn btn-primary btn-sm" onclick="toggleAddForm()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nieuwe vacature
+          </button>
+        </div>
+
+        <div id="add-form-wrap">
+          <div class="add-form-title">Nieuwe vacature</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Badge / Categorie</label>
+              <input type="text" id="new-badge" placeholder="bijv. Sales">
+            </div>
+            <div class="form-group">
+              <label>E-mailadres</label>
+              <input type="email" id="new-email" placeholder="jobs@grouptrybou.be">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Functietitel</label>
+            <input type="text" id="new-title" placeholder="Functietitel">
+          </div>
+          <div class="form-group">
+            <label>Omschrijving</label>
+            <textarea id="new-desc" placeholder="Korte omschrijving van de functie..."></textarea>
+          </div>
+          <div class="check-group" style="margin-bottom:4px;">
+            <input type="checkbox" id="new-active" checked>
+            <label for="new-active">Actief publiceren</label>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary btn-sm" onclick="saveNewVacature()">Opslaan</button>
+            <button class="btn btn-ghost btn-sm" onclick="toggleAddForm()">Annuleren</button>
+          </div>
+        </div>
+
+        <div class="vacature-list" id="vacature-list">
+          <div class="loading-state"><div class="spinner"></div> Laden...</div>
+        </div>
+      </div>
+
+      <!-- TAB: HERO -->
+      <div id="tab-hero" class="tab-pane">
+        <div class="section-header">
+          <h1 class="section-title">Hero tekst</h1>
+        </div>
+        <div class="hero-form">
+          <div class="form-note">Wijzigingen zijn zichtbaar na herladen van de website.</div>
+          <div style="font-size:0.8rem;font-weight:600;color:var(--slate);letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">🇧🇪 Nederlands</div>
+          <div class="form-group">
+            <label>Hero titel (h1)</label>
+            <input type="text" id="hero-title" placeholder="Uw vertrouwde verzekeringsmakelaar">
+          </div>
+          <div class="form-group">
+            <label>Hero ondertitel (p)</label>
+            <textarea id="hero-subtitle" placeholder="Al meer dan 20 jaar staat Group Trybou naast u..."></textarea>
+          </div>
+          <details style="margin:14px 0 6px;">
+            <summary style="font-weight:600;font-size:0.88rem;cursor:pointer;color:var(--blue);padding:6px 0;">🇬🇧 Engels <span style="font-weight:400;color:#9ca3af;">(laat leeg = NL tekst)</span></summary>
+            <div style="margin-top:10px;">
+              <div class="form-group"><label>Titel EN</label><input type="text" id="hero-title-en" placeholder="Your trusted insurance broker"></div>
+              <div class="form-group"><label>Ondertitel EN</label><textarea id="hero-subtitle-en" placeholder="For more than 20 years..."></textarea></div>
+            </div>
+          </details>
+          <details style="margin:6px 0 14px;">
+            <summary style="font-weight:600;font-size:0.88rem;cursor:pointer;color:var(--blue);padding:6px 0;">🇫🇷 Frans <span style="font-weight:400;color:#9ca3af;">(laat leeg = NL tekst)</span></summary>
+            <div style="margin-top:10px;">
+              <div class="form-group"><label>Titel FR</label><input type="text" id="hero-title-fr" placeholder="Votre courtier d'assurance de confiance"></div>
+              <div class="form-group"><label>Ondertitel FR</label><textarea id="hero-subtitle-fr" placeholder="Depuis plus de 20 ans..."></textarea></div>
+            </div>
+          </details>
+          <button class="btn btn-primary btn-sm" onclick="saveHero()" style="margin-top:4px;">Opslaan</button>
+        </div>
+      </div>
+
+      <!-- TAB: MEDEWERKERS -->
+      <div id="tab-medewerkers" class="tab-pane">
+        <div class="section-header">
+          <h1 class="section-title">Medewerkers</h1>
+          <button class="btn btn-primary btn-sm" onclick="toggleAddMedewerkerForm()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nieuwe medewerker
+          </button>
+        </div>
+        <div id="add-medewerker-form-wrap" style="display:none;background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.05);margin-bottom:24px;">
+          <div class="add-form-title">Nieuwe medewerker</div>
+          <div class="form-row">
+            <div class="form-group"><label>Naam</label><input type="text" id="new-member-name" placeholder="Voornaam Achternaam"></div>
+            <div class="form-group"><label>Functie (NL)</label><input type="text" id="new-member-role" placeholder="bijv. Verzekeringsadviseur"></div>
+          </div>
+          <details style="margin:6px 0;"><summary style="font-weight:600;font-size:0.85rem;cursor:pointer;color:var(--blue);padding:4px 0;">🇬🇧 Engels <span style="font-weight:400;color:#9ca3af;">(optioneel)</span></summary><div style="margin-top:8px;"><div class="form-group"><label>Functie EN</label><input type="text" id="new-member-role-en" placeholder="e.g. Insurance Advisor"></div></div></details>
+          <details style="margin:6px 0 10px;"><summary style="font-weight:600;font-size:0.85rem;cursor:pointer;color:var(--blue);padding:4px 0;">🇫🇷 Frans <span style="font-weight:400;color:#9ca3af;">(optioneel)</span></summary><div style="margin-top:8px;"><div class="form-group"><label>Functie FR</label><input type="text" id="new-member-role-fr" placeholder="ex. Conseiller en Assurances"></div></div></details>
+          <div class="form-group"><label>Foto URL <span style="font-weight:400;color:#9ca3af;">(optioneel)</span></label><input type="url" id="new-member-photo" placeholder="https://..."></div>
+          <div class="form-group"><label>Bio <span style="font-weight:400;color:#9ca3af;">(optioneel)</span></label><textarea id="new-member-bio" placeholder="Korte bio..."></textarea></div>
+          <div class="check-group" style="margin-bottom:4px;"><input type="checkbox" id="new-member-visible" checked><label for="new-member-visible">Zichtbaar op website</label></div>
+          <div class="form-actions">
+            <button class="btn btn-primary btn-sm" onclick="saveNewMedewerker()">Opslaan</button>
+            <button class="btn btn-ghost btn-sm" onclick="toggleAddMedewerkerForm()">Annuleren</button>
+          </div>
+        </div>
+        <div class="medewerker-list" id="medewerker-list">
+          <div class="loading-state"><div class="spinner"></div> Laden...</div>
+        </div>
+      </div>
+
+      <!-- TAB: FAQ -->
+      <div id="tab-faq" class="tab-pane">
+        <div class="section-header">
+          <h1 class="section-title">FAQ</h1>
+          <button class="btn btn-primary btn-sm" onclick="toggleAddFaqForm()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nieuwe vraag
+          </button>
+        </div>
+        <div id="add-faq-form-wrap" style="display:none;background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.05);margin-bottom:24px;">
+          <div class="add-form-title">Nieuwe FAQ-vraag</div>
+          <div style="font-size:0.78rem;font-weight:600;color:var(--slate);letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">🇧🇪 Nederlands</div>
+          <div class="form-group"><label>Vraag</label><input type="text" id="new-faq-q" placeholder="Veel gestelde vraag..."></div>
+          <div class="form-group"><label>Antwoord</label><textarea id="new-faq-a" placeholder="Antwoord op de vraag..." style="min-height:90px;"></textarea></div>
+          <details style="margin:10px 0 6px;"><summary style="font-weight:600;font-size:0.85rem;cursor:pointer;color:var(--blue);padding:4px 0;">🇬🇧 Engels <span style="font-weight:400;color:#9ca3af;">(optioneel)</span></summary><div style="margin-top:8px;"><div class="form-group"><label>Vraag EN</label><input type="text" id="new-faq-q-en" placeholder="English question..."></div><div class="form-group"><label>Antwoord EN</label><textarea id="new-faq-a-en" placeholder="English answer..." style="min-height:70px;"></textarea></div></div></details>
+          <details style="margin:6px 0 10px;"><summary style="font-weight:600;font-size:0.85rem;cursor:pointer;color:var(--blue);padding:4px 0;">🇫🇷 Frans <span style="font-weight:400;color:#9ca3af;">(optioneel)</span></summary><div style="margin-top:8px;"><div class="form-group"><label>Vraag FR</label><input type="text" id="new-faq-q-fr" placeholder="Question en français..."></div><div class="form-group"><label>Antwoord FR</label><textarea id="new-faq-a-fr" placeholder="Réponse en français..." style="min-height:70px;"></textarea></div></div></details>
+          <div class="check-group" style="margin-bottom:4px;"><input type="checkbox" id="new-faq-active" checked><label for="new-faq-active">Actief publiceren</label></div>
+          <div class="form-actions">
+            <button class="btn btn-primary btn-sm" onclick="saveNewFaq()">Opslaan</button>
+            <button class="btn btn-ghost btn-sm" onclick="toggleAddFaqForm()">Annuleren</button>
+          </div>
+        </div>
+        <div class="vacature-list" id="faq-list">
+          <div class="loading-state"><div class="spinner"></div> Laden...</div>
+        </div>
+      </div>
+
+      <!-- TAB: TIJDSLIJN -->
+      <div id="tab-tijdslijn" class="tab-pane">
+        <div class="section-header">
+          <h1 class="section-title">Tijdslijn</h1>
+          <button class="btn btn-primary btn-sm" onclick="toggleAddTijdslijnForm()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nieuwe stap
+          </button>
+        </div>
+        <div id="add-tijdslijn-form-wrap" style="display:none;background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.05);margin-bottom:24px;">
+          <div class="add-form-title">Nieuwe tijdslijn-stap</div>
+          <div style="font-size:0.78rem;font-weight:600;color:var(--slate);letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">🇧🇪 Nederlands</div>
+          <div class="form-row">
+            <div class="form-group"><label>Jaar</label><input type="text" id="new-tl-year" placeholder="bijv. 2025"></div>
+            <div class="form-group"><label>Titel (NL)</label><input type="text" id="new-tl-title" placeholder="bijv. Nieuwe overname"></div>
+          </div>
+          <div class="form-group"><label>Beschrijving (NL)</label><textarea id="new-tl-desc" placeholder="Korte beschrijving..." style="min-height:70px;"></textarea></div>
+          <details style="margin:10px 0 6px;"><summary style="font-weight:600;font-size:0.85rem;cursor:pointer;color:var(--blue);padding:4px 0;">🇬🇧 Engels <span style="font-weight:400;color:#9ca3af;">(optioneel)</span></summary><div style="margin-top:8px;"><div class="form-group"><label>Titel EN</label><input type="text" id="new-tl-title-en" placeholder="English title..."></div><div class="form-group"><label>Beschrijving EN</label><textarea id="new-tl-desc-en" placeholder="English description..." style="min-height:60px;"></textarea></div></div></details>
+          <details style="margin:6px 0 10px;"><summary style="font-weight:600;font-size:0.85rem;cursor:pointer;color:var(--blue);padding:4px 0;">🇫🇷 Frans <span style="font-weight:400;color:#9ca3af;">(optioneel)</span></summary><div style="margin-top:8px;"><div class="form-group"><label>Titel FR</label><input type="text" id="new-tl-title-fr" placeholder="Titre en français..."></div><div class="form-group"><label>Beschrijving FR</label><textarea id="new-tl-desc-fr" placeholder="Description en français..." style="min-height:60px;"></textarea></div></div></details>
+          <div class="form-actions">
+            <button class="btn btn-primary btn-sm" onclick="saveNewTijdslijn()">Opslaan</button>
+            <button class="btn btn-ghost btn-sm" onclick="toggleAddTijdslijnForm()">Annuleren</button>
+          </div>
+        </div>
+        <div class="vacature-list" id="tijdslijn-list">
+          <div class="loading-state"><div class="spinner"></div> Laden...</div>
+        </div>
+      </div>
+
+      <!-- TAB: INSTELLINGEN -->
+      <div id="tab-beoordelingen" class="tab-pane">
+        <div class="section-header">
+          <h1 class="section-title">Beoordelingen</h1>
+          <button class="btn btn-primary btn-sm" onclick="toggleAddReviewForm()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nieuwe beoordeling
+          </button>
+        </div>
+        <div id="add-review-form-wrap" style="display:none;background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.05);margin-bottom:24px;">
+          <div class="add-form-title">Nieuwe beoordeling</div>
+          <div class="form-row">
+            <div class="form-group"><label>Naam</label><input type="text" id="new-rv-author" placeholder="bv. Thomas V."></div>
+            <div class="form-group"><label>Functie / Bedrijf</label><input type="text" id="new-rv-role" placeholder="bv. Zaakvoerder productiebedrijf"></div>
+          </div>
+          <div class="form-group"><label>Citaat (NL)</label><textarea id="new-rv-quote" style="min-height:70px;" placeholder="Wat zegt de klant..."></textarea></div>
+          <details style="margin:-4px 0 12px;"><summary style="font-weight:600;font-size:0.85rem;cursor:pointer;color:var(--blue);padding:4px 0;">🇬🇧 Engels / 🇫🇷 Frans</summary><div style="margin-top:10px;display:grid;gap:12px;">
+            <div class="form-row">
+              <div class="form-group"><label>Functie EN</label><input type="text" id="new-rv-role-en" placeholder="e.g. Managing director"></div>
+              <div class="form-group"><label>Functie FR</label><input type="text" id="new-rv-role-fr" placeholder="ex. Gérant d'entreprise"></div>
+            </div>
+            <div class="form-group"><label>Citaat EN</label><textarea id="new-rv-quote-en" style="min-height:60px;" placeholder="What the client says..."></textarea></div>
+            <div class="form-group"><label>Citaat FR</label><textarea id="new-rv-quote-fr" style="min-height:60px;" placeholder="Ce que dit le client..."></textarea></div>
+          </div></details>
+          <div class="form-group">
+            <label>Score</label>
+            <div style="display:flex;gap:4px;font-size:1.5rem;cursor:pointer;margin-top:4px;" id="new-rv-star-sel">
+              <span onclick="pickStar('new-rv',1)">★</span><span onclick="pickStar('new-rv',2)">★</span><span onclick="pickStar('new-rv',3)">★</span><span onclick="pickStar('new-rv',4)">★</span><span onclick="pickStar('new-rv',5)">★</span>
+            </div>
+            <input type="hidden" id="new-rv-stars" value="5">
+          </div>
+          <div class="form-group">
+            <label>Foto <span style="font-weight:400;color:var(--slate);font-size:0.78rem;">(verhouding 7:10 aanbevolen)</span></label>
+            <div style="display:flex;gap:10px;align-items:center;margin-top:4px;">
+              <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('new-rv-file').click()">Foto uploaden & bijsnijden</button>
+              <input type="file" id="new-rv-file" accept="image/*" style="display:none" onchange="openCropModal(this.files[0],'new-rv')">
+              <img id="new-rv-preview" style="display:none;width:42px;height:57px;object-fit:cover;border-radius:6px;border:1px solid #e5e7eb;">
+            </div>
+            <input type="hidden" id="new-rv-img">
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary btn-sm" onclick="saveNewReview()">Opslaan</button>
+            <button class="btn btn-ghost btn-sm" onclick="toggleAddReviewForm()">Annuleren</button>
+          </div>
+        </div>
+        <div class="vacature-list" id="reviews-list"></div>
+      </div>
+
+      <div id="tab-banner" class="tab-pane">
+        <div class="section-header">
+          <h1 class="section-title">Banner</h1>
+        </div>
+        <div class="settings-form">
+          <div class="settings-title">Sluitingsbanner</div>
+          <div style="margin-bottom:18px;">
+            <div class="toggle-wrap" style="margin-bottom:6px;">
+              <span style="font-size:0.88rem;font-weight:500;color:var(--ink);">Banner tonen op de website</span>
+              <label class="toggle" style="margin-left:10px;">
+                <input type="checkbox" id="banner-active">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <p style="font-size:0.78rem;color:var(--slate);margin:0;">Schakel in om de banner zichtbaar te maken voor bezoekers.</p>
+          </div>
+          <div class="form-group" style="margin-bottom:14px;">
+            <label>Bericht (NL)</label>
+            <input type="text" id="banner-msg-nl" placeholder="bv. Wij zijn gesloten op 1 mei">
+          </div>
+          <div class="form-group" style="margin-bottom:14px;">
+            <label>Bericht (EN)</label>
+            <input type="text" id="banner-msg-en" placeholder="e.g. We are closed on May 1st">
+          </div>
+          <div class="form-group" style="margin-bottom:20px;">
+            <label>Bericht (FR)</label>
+            <input type="text" id="banner-msg-fr" placeholder="ex. Nous sommes fermés le 1er mai">
+          </div>
+          <button class="btn btn-primary" onclick="saveBanner()" style="width:100%;justify-content:center;">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Opslaan
+          </button>
+        </div>
+      </div>
+
+      <div id="tab-aanvragen" class="tab-pane">
+        <div class="section-header">
+          <h1 class="section-title">Aanvragen</h1>
+          <div style="display:flex;gap:8px;align-items:center">
+            <select id="aanvragen-filter" onchange="renderAanvragen()" style="padding:7px 12px;border:1.5px solid rgba(0,0,0,.1);border-radius:8px;font-family:inherit;font-size:.85rem;background:#fff;color:var(--ink)">
+              <option value="all">Alle aanvragen</option>
+              <option value="ongelezen">Ongelezen</option>
+              <option value="gelezen">Gelezen</option>
+            </select>
+          </div>
+        </div>
+        <div id="aanvragen-list" style="display:grid;gap:14px;"></div>
+        <div id="aanvragen-empty" style="display:none;text-align:center;padding:60px 0;color:var(--muted)">
+          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 12px;display:block;opacity:.4"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Geen aanvragen gevonden
+        </div>
+      </div>
+
+      <div id="tab-instellingen" class="tab-pane">
+        <div class="section-header">
+          <h1 class="section-title">Instellingen</h1>
+        </div>
+        <div class="settings-form">
+          <div class="settings-title">Account</div>
+          <div class="settings-email">
+            <strong>Ingelogd als</strong>
+            <span id="settings-email-display">—</span>
+          </div>
+          <div class="settings-title">Wachtwoord wijzigen</div>
+          <div class="settings-info">
+            Wachtwoord wijzigen via Firebase Console:<br>
+            <a href="https://console.firebase.google.com" target="_blank" style="color:var(--blue);font-weight:600;">console.firebase.google.com</a><br>
+            → Authentication → Users → bewerk uw gebruiker
+          </div>
+          <button class="btn btn-danger btn-sm" onclick="doLogout()" style="width:100%;justify-content:center;">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Uitloggen
+          </button>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /dashboard -->
+
+<div id="toast">Opgeslagen ✓</div>
+
+<!-- CROP MODAL -->
+<div id="crop-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.65);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;padding:24px;width:340px;max-width:92vw;box-shadow:0 20px 60px rgba(0,0,0,.25);">
+    <div style="font-weight:600;font-size:1rem;margin-bottom:16px;color:var(--ink);">Foto bijsnijden <span style="font-weight:400;font-size:0.78rem;color:var(--slate);">— sleep om te verschuiven</span></div>
+    <div id="crop-viewport" style="width:280px;height:380px;overflow:hidden;position:relative;cursor:move;margin:0 auto;border-radius:10px;background:#f3f4f6;user-select:none;touch-action:none;border:2px solid #e5e7eb;">
+      <img id="crop-img" style="position:absolute;pointer-events:none;user-select:none;max-width:none;">
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:14px;">
+      <button class="btn btn-outline btn-sm" onclick="adjustZoom(-0.15)" style="font-size:1rem;min-width:40px;">−</button>
+      <span style="font-size:0.78rem;color:var(--slate);align-self:center;min-width:60px;text-align:center;" id="crop-zoom-label">100%</span>
+      <button class="btn btn-outline btn-sm" onclick="adjustZoom(0.15)" style="font-size:1rem;min-width:40px;">+</button>
+    </div>
+    <div class="form-actions" style="margin-top:14px;">
+      <button class="btn btn-primary btn-sm" onclick="confirmCrop()">Bevestigen</button>
+      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('crop-modal').style.display='none'">Annuleren</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== FIREBASE CONFIG =====
+// Ga naar https://console.firebase.google.com, maak een project aan,
+// en kopieer uw configuratie hieronder:
+const firebaseConfig = {
+  apiKey: "AIzaSyAtwAXkGxxOzOIvoNKSmo5__vK7IUasUu8",
+  authDomain: "trybou-biz.firebaseapp.com",
+  projectId: "trybou-biz",
+  storageBucket: "trybou-biz.firebasestorage.app",
+  messagingSenderId: "903288045605",
+  appId: "1:903288045605:web:5bf10a1ac5941583aebfcc",
+  measurementId: "G-KR4WF61E3Q"
+};
+// ===========================
+
+// ── CONFIG CHECK ──
+const IS_CONFIGURED = firebaseConfig.apiKey !== "UW_API_KEY";
+
+if (!IS_CONFIGURED) {
+  // Show setup instructions on login screen
+  const setupDiv = document.createElement('div');
+  setupDiv.id = 'setup-banner';
+  setupDiv.innerHTML = `
+    <h2>⚙️ Firebase Setup vereist</h2>
+    <ol>
+      <li><strong>Stap 1:</strong> Ga naar <a href="https://console.firebase.google.com" target="_blank" style="color:#92400e;font-weight:600;">console.firebase.google.com</a></li>
+      <li><strong>Stap 2:</strong> Maak een nieuw project aan</li>
+      <li><strong>Stap 3:</strong> Activeer Firestore Database (in testmodus)</li>
+      <li><strong>Stap 4:</strong> Activeer Authentication → E-mail/wachtwoord</li>
+      <li><strong>Stap 5:</strong> Maak een gebruiker aan met uw e-mailadres</li>
+      <li><strong>Stap 6:</strong> Kopieer uw Firebase config in admin.html (bovenaan het script)</li>
+    </ol>
+  `;
+  document.getElementById('login-screen').appendChild(setupDiv);
+}
+
+// ── FIREBASE INIT ──
+let db = null;
+let auth = null;
+
+if (IS_CONFIGURED) {
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.firestore();
+  auth = firebase.auth();
+}
+
+// ── CONSTANTS ──
+const SECTORS = [
+  { key: 'Bouw & Vastgoed',     label: 'Bouw & Vastgoed' },
+  { key: 'Transport & Logistiek', label: 'Transport & Logistiek' },
+  { key: 'Landbouw',            label: 'Landbouw' },
+  { key: 'Dienstensector',      label: 'Dienstensector' },
+  { key: 'Andere sector?',      label: 'Andere sector?' }
+];
+
+const TAB_TITLES = {
+  vacatures: 'Vacatures',
+  hero: 'Hero tekst',
+  medewerkers: 'Medewerkers',
+  faq: 'FAQ',
+  tijdslijn: 'Tijdslijn',
+  beoordelingen: 'Beoordelingen',
+  banner: 'Banner',
+  aanvragen: 'Aanvragen',
+  instellingen: 'Instellingen'
+};
+
+// ── AANVRAGEN ──
+let allAanvragen = [];
+
+function loadAanvragen() {
+  db.collection('aanvragen').orderBy('datum', 'desc').get().then(snap => {
+    allAanvragen = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const ongelezen = allAanvragen.filter(a => !a.gelezen).length;
+    const badge = document.getElementById('aanvragen-badge');
+    if (badge) {
+      if (ongelezen > 0) { badge.textContent = ongelezen; badge.style.display = 'inline'; }
+      else { badge.style.display = 'none'; }
+    }
+    renderAanvragen();
+  }).catch(() => {});
+}
+
+function renderAanvragen() {
+  const filter = (document.getElementById('aanvragen-filter') || {}).value || 'all';
+  const list = document.getElementById('aanvragen-list');
+  const empty = document.getElementById('aanvragen-empty');
+  if (!list) return;
+
+  const filtered = allAanvragen.filter(a => {
+    if (filter === 'ongelezen') return !a.gelezen;
+    if (filter === 'gelezen')   return  a.gelezen;
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    list.innerHTML = ''; empty.style.display = 'block'; return;
+  }
+  empty.style.display = 'none';
+
+  list.innerHTML = filtered.map(a => {
+    const datum = a.datum ? new Date(a.datum).toLocaleString('nl-BE', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '—';
+    const naam  = [a.voornaam, a.achternaam].filter(Boolean).join(' ') || '(geen naam)';
+    const quizHtml = a.quiz ? `
+      <div style="margin-top:10px;padding:10px 14px;background:var(--blue-ghost);border-radius:8px;font-size:.8rem;color:var(--slate);display:flex;gap:16px;flex-wrap:wrap">
+        ${a.quiz.profiel    ? `<span><strong>Profiel:</strong> ${a.quiz.profiel}</span>` : ''}
+        ${a.quiz.timing     ? `<span><strong>Laatste check:</strong> ${a.quiz.timing}</span>` : ''}
+        ${a.quiz.aanleiding ? `<span><strong>Aanleiding:</strong> ${a.quiz.aanleiding}</span>` : ''}
+      </div>` : '';
+    return `
+      <div style="background:#fff;border-radius:14px;padding:22px 26px;box-shadow:0 2px 12px rgba(0,0,0,.06);border-left:4px solid ${a.gelezen ? 'transparent' : 'var(--blue)'}">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <div>
+            <div style="font-weight:700;font-size:.97rem;color:var(--ink)">${esc(naam)}</div>
+            <div style="font-size:.82rem;color:var(--muted);margin-top:2px">${datum}</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            ${!a.gelezen ? `<button class="btn btn-outline btn-sm" onclick="markGelezen('${a.id}')">Markeer gelezen</button>` : `<span style="font-size:.78rem;color:var(--muted);font-style:italic">Gelezen</span>`}
+            <button class="btn btn-danger btn-sm" onclick="deleteAanvraag('${a.id}')">Verwijder</button>
+          </div>
+        </div>
+        <div style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px 20px;font-size:.83rem;color:var(--slate)">
+          ${a.email    ? `<div><strong>E-mail:</strong> <a href="mailto:${esc(a.email)}" style="color:var(--blue)">${esc(a.email)}</a></div>` : ''}
+          ${a.telefoon ? `<div><strong>Tel:</strong> <a href="tel:${esc(a.telefoon)}">${esc(a.telefoon)}</a></div>` : ''}
+          ${a.sector   ? `<div><strong>Sector:</strong> ${esc(a.sector)}</div>` : ''}
+          ${a.kantoor  ? `<div><strong>Kantoor:</strong> ${esc(a.kantoor)}</div>` : ''}
+        </div>
+        ${a.bericht ? `<div style="margin-top:10px;font-size:.85rem;color:var(--slate);line-height:1.6;white-space:pre-wrap">${esc(a.bericht)}</div>` : ''}
+        ${quizHtml}
+      </div>`;
+  }).join('');
+}
+
+function markGelezen(id) {
+  db.collection('aanvragen').doc(id).update({ gelezen: true }).then(() => {
+    const item = allAanvragen.find(a => a.id === id);
+    if (item) item.gelezen = true;
+    loadAanvragen();
+  }).catch(() => {});
+}
+
+function deleteAanvraag(id) {
+  if (!confirm('Aanvraag verwijderen?')) return;
+  db.collection('aanvragen').doc(id).delete().then(() => {
+    allAanvragen = allAanvragen.filter(a => a.id !== id);
+    renderAanvragen();
+  }).catch(() => {});
+}
+
+// ── HELPERS ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg || 'Opgeslagen ✓';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── AUTH ──
+function doLogin() {
+  if (!IS_CONFIGURED) {
+    document.getElementById('login-error').textContent = 'Firebase is nog niet geconfigureerd. Zie de instructies hieronder.';
+    return;
+  }
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-error');
+  errEl.textContent = '';
+
+  auth.signInWithEmailAndPassword(email, pass)
+    .then(() => {
+      // handled by onAuthStateChanged
+    })
+    .catch(() => {
+      errEl.textContent = 'Ongeldig e-mailadres of wachtwoord.';
+      document.getElementById('login-pass').value = '';
+    });
+}
+
+document.getElementById('login-pass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+
+function doLogout() {
+  if (auth) auth.signOut();
+}
+
+// ── AUTH STATE ──
+if (IS_CONFIGURED) {
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'flex';
+      document.getElementById('settings-email-display').textContent = user.email;
+      initDashboard();
+    } else {
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('login-screen').style.display = 'flex';
+      document.getElementById('login-pass').value = '';
+      document.getElementById('login-error').textContent = '';
+    }
+  });
+}
+
+// ── INIT ──
+function initDashboard() {
+  loadVacatures();
+  loadHero();
+  loadSectors();
+  loadMedewerkers();
+  loadFaq();
+  loadTimeline();
+  loadReviews();
+  loadBanner();
+  loadAanvragen();
+}
+
+// ── SIDEBAR ──
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-overlay').classList.add('open');
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+// ── TABS ──
+function switchTab(tabId, el) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+  el.classList.add('active');
+  document.getElementById('topbar-tab-title').textContent = TAB_TITLES[tabId] || tabId;
+  closeSidebar();
+}
+
+// ── UNDO ──
+let undoStack = [];
+let heroData = { title: '', subtitle: '' };
+let sectorsList = [];
+let medewerkers = [];
+let faqList = [];
+let timeline = [];
+let reviews = [];
+let bannerData = {};
+
+function pushUndo() {
+  undoStack.push({
+    vacatures: JSON.parse(JSON.stringify(vacatures)),
+    hero: Object.assign({}, heroData),
+    sectors: JSON.parse(JSON.stringify(sectorsList)),
+    medewerkers: JSON.parse(JSON.stringify(medewerkers)),
+    faq: JSON.parse(JSON.stringify(faqList)),
+    timeline: JSON.parse(JSON.stringify(timeline)),
+    reviews: JSON.parse(JSON.stringify(reviews))
+  });
+  if (undoStack.length > 20) undoStack.shift();
+  updateUndoBtn();
+}
+
+function updateUndoBtn() {
+  const btn = document.getElementById('btn-undo');
+  if (!btn) return;
+  btn.disabled = undoStack.length === 0;
+  btn.style.opacity = undoStack.length === 0 ? '.35' : '1';
+  btn.style.cursor = undoStack.length === 0 ? 'not-allowed' : 'pointer';
+}
+
+function doUndo() {
+  if (undoStack.length === 0) return;
+  const state = undoStack.pop();
+  vacatures = state.vacatures;
+  heroData = state.hero;
+  sectorsList = state.sectors;
+  medewerkers = state.medewerkers;
+  faqList = state.faq;
+  timeline = state.timeline || timeline;
+  reviews = state.reviews || reviews;
+  Promise.all([
+    db.collection('content').doc('vacatures').set({ list: vacatures }),
+    db.collection('content').doc('hero').set(heroData),
+    db.collection('content').doc('sectors').set({ list: sectorsList }),
+    db.collection('content').doc('medewerkers').set({ list: medewerkers }),
+    db.collection('content').doc('faq').set({ list: faqList }),
+    db.collection('content').doc('timeline').set({ list: timeline }),
+    db.collection('content').doc('reviews').set({ list: reviews })
+  ]).then(() => {
+    renderVacatures();
+    document.getElementById('hero-title').value = heroData.title || '';
+    document.getElementById('hero-subtitle').value = heroData.subtitle || '';
+    renderSectorCards();
+    renderMedewerkers();
+    renderFaq();
+    renderTimeline();
+    renderReviews();
+    showToast('Ongedaan gemaakt ↩');
+    updateUndoBtn();
+  }).catch(() => showToast('Fout bij ongedaan maken'));
+}
+
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+    const a = document.activeElement;
+    if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA')) return;
+    e.preventDefault();
+    doUndo();
+  }
+});
+
+// ── VACATURES ──
+let vacatures = [];
+
+function loadVacatures() {
+  db.collection('content').doc('vacatures').get()
+    .then(doc => {
+      vacatures = doc.exists ? (doc.data().list || []) : [];
+      renderVacatures();
+    })
+    .catch(() => {
+      vacatures = [];
+      renderVacatures();
+    });
+}
+
+function saveVacaturesToFirestore() {
+  return db.collection('content').doc('vacatures').set({ list: vacatures });
+}
+
+function renderVacatures() {
+  const container = document.getElementById('vacature-list');
+  container.innerHTML = '';
+
+  if (vacatures.length === 0) {
+    container.innerHTML = '<p style="color:var(--slate);font-size:0.9rem;padding:12px 0;">Geen vacatures gevonden. Voeg er een toe.</p>';
+    return;
+  }
+
+  vacatures.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'vacature-card' + (v.active ? '' : ' inactive');
+    card.innerHTML = `
+      <div class="vacature-body">
+        <span class="vacature-badge">${escHtml(v.badge)}</span>
+        <div class="vacature-title">${escHtml(v.title)}</div>
+        <div class="vacature-desc">${escHtml(v.desc)}</div>
+        <div class="vacature-email">${escHtml(v.email)}</div>
+      </div>
+      <div class="vacature-actions">
+        <div class="toggle-wrap">
+          <span class="toggle-label">${v.active ? 'Actief' : 'Inactief'}</span>
+          <label class="toggle">
+            <input type="checkbox" ${v.active ? 'checked' : ''} onchange="toggleVacature(${v.id}, this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="editVacature(${v.id})">Bewerken</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteVacature(${v.id})">Verwijderen</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function toggleAddForm() {
+  const wrap = document.getElementById('add-form-wrap');
+  wrap.classList.toggle('open');
+  if (wrap.classList.contains('open')) {
+    document.getElementById('new-badge').focus();
+  }
+}
+
+function saveNewVacature() {
+  const badge = document.getElementById('new-badge').value.trim();
+  const title = document.getElementById('new-title').value.trim();
+  const desc = document.getElementById('new-desc').value.trim();
+  const email = document.getElementById('new-email').value.trim() || 'jobs@grouptrybou.be';
+  const active = document.getElementById('new-active').checked;
+
+  if (!title) { alert('Functietitel is verplicht.'); return; }
+
+  pushUndo();
+  const newId = vacatures.length > 0 ? Math.max(...vacatures.map(v => v.id)) + 1 : 1;
+  vacatures.push({ id: newId, badge: badge || 'Vacature', title, desc, email, active });
+
+  saveVacaturesToFirestore().then(() => {
+    document.getElementById('new-badge').value = '';
+    document.getElementById('new-title').value = '';
+    document.getElementById('new-desc').value = '';
+    document.getElementById('new-email').value = '';
+    document.getElementById('new-active').checked = true;
+    document.getElementById('add-form-wrap').classList.remove('open');
+    renderVacatures();
+    showToast('Vacature toegevoegd ✓');
+  }).catch(() => showToast('Fout bij opslaan'));
+}
+
+function deleteVacature(id) {
+  if (!confirm('Vacature verwijderen?')) return;
+  pushUndo();
+  vacatures = vacatures.filter(v => v.id !== id);
+  saveVacaturesToFirestore().then(() => {
+    renderVacatures();
+    showToast('Vacature verwijderd');
+  }).catch(() => showToast('Fout bij verwijderen'));
+}
+
+function toggleVacature(id, checked) {
+  const v = vacatures.find(v => v.id === id);
+  if (!v) return;
+  pushUndo();
+  v.active = checked;
+  saveVacaturesToFirestore().then(() => {
+    renderVacatures();
+    showToast();
+  }).catch(() => showToast('Fout bij opslaan'));
+}
+
+function editVacature(id) {
+  const v = vacatures.find(v => v.id === id);
+  if (!v) return;
+
+  const container = document.getElementById('vacature-list');
+  const cards = container.querySelectorAll('.vacature-card');
+  let cardIdx = -1;
+  vacatures.forEach((item, i) => { if (item.id === id) cardIdx = i; });
+  if (cardIdx < 0) return;
+
+  const editDiv = document.createElement('div');
+  editDiv.className = 'vacature-card';
+  editDiv.style.flexDirection = 'column';
+  editDiv.innerHTML = `
+    <div style="font-weight:600;font-size:0.95rem;margin-bottom:14px;color:var(--ink);">Bewerken</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="form-group"><label>Badge</label><input type="text" id="edit-badge-${id}" value="${escHtml(v.badge)}"></div>
+      <div class="form-group"><label>E-mail</label><input type="email" id="edit-email-${id}" value="${escHtml(v.email)}"></div>
+    </div>
+    <div class="form-group"><label>Functietitel</label><input type="text" id="edit-title-${id}" value="${escHtml(v.title)}"></div>
+    <div class="form-group"><label>Omschrijving</label><textarea id="edit-desc-${id}">${escHtml(v.desc)}</textarea></div>
+    <div class="check-group" style="margin-bottom:12px;"><input type="checkbox" id="edit-active-${id}" ${v.active ? 'checked' : ''}><label for="edit-active-${id}">Actief</label></div>
+    <div class="form-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveEditVacature(${id})">Opslaan</button>
+      <button class="btn btn-ghost btn-sm" onclick="renderVacatures()">Annuleren</button>
+    </div>
+  `;
+  cards[cardIdx].replaceWith(editDiv);
+}
+
+function saveEditVacature(id) {
+  const v = vacatures.find(v => v.id === id);
+  if (!v) return;
+  pushUndo();
+  v.badge = document.getElementById('edit-badge-' + id).value.trim() || v.badge;
+  v.title = document.getElementById('edit-title-' + id).value.trim() || v.title;
+  v.desc = document.getElementById('edit-desc-' + id).value.trim();
+  v.email = document.getElementById('edit-email-' + id).value.trim() || v.email;
+  v.active = document.getElementById('edit-active-' + id).checked;
+
+  saveVacaturesToFirestore().then(() => {
+    renderVacatures();
+    showToast();
+  }).catch(() => showToast('Fout bij opslaan'));
+}
+
+// ── HERO ──
+function loadHero() {
+  db.collection('content').doc('hero').get()
+    .then(doc => {
+      if (doc.exists) {
+        const d = doc.data();
+        heroData = { title: d.title||'', subtitle: d.subtitle||'', title_en: d.title_en||'', subtitle_en: d.subtitle_en||'', title_fr: d.title_fr||'', subtitle_fr: d.subtitle_fr||'' };
+        document.getElementById('hero-title').value = heroData.title;
+        document.getElementById('hero-subtitle').value = heroData.subtitle;
+        document.getElementById('hero-title-en').value = heroData.title_en;
+        document.getElementById('hero-subtitle-en').value = heroData.subtitle_en;
+        document.getElementById('hero-title-fr').value = heroData.title_fr;
+        document.getElementById('hero-subtitle-fr').value = heroData.subtitle_fr;
+      }
+    })
+    .catch(() => {});
+}
+
+function saveHero() {
+  pushUndo();
+  const title = document.getElementById('hero-title').value;
+  const subtitle = document.getElementById('hero-subtitle').value;
+  heroData = { title, subtitle,
+    title_en: document.getElementById('hero-title-en').value.trim(),
+    subtitle_en: document.getElementById('hero-subtitle-en').value.trim(),
+    title_fr: document.getElementById('hero-title-fr').value.trim(),
+    subtitle_fr: document.getElementById('hero-subtitle-fr').value.trim()
+  };
+  db.collection('content').doc('hero').set(heroData)
+    .then(() => showToast())
+    .catch(() => showToast('Fout bij opslaan'));
+}
+
+// ── SECTORS ──
+const DEFAULT_SECTORS = [
+  { id: 1, label: 'Bouw & Vastgoed', desc: 'ABR, tienjarige aansprakelijkheid en werfverzekeringen.', icon: '🏗️', visible: true, pageKey: 'bouw',
+    page: { heroSubtitle: 'ABR, tienjarige aansprakelijkheid, werfverzekeringen en BA voor aannemers en promotoren.', forLabel: 'Voor de bouwsector', h2: 'Bescherming op elke bouwplaats', p1: 'De bouwsector draagt enorme risico\'s: schade aan derden, constructiefouten, arbeidsongevallen op de werf... Wij begrijpen de complexiteit van uw activiteiten en zorgen voor een sluitend verzekeringsplan.', p2: 'Van kleine aannemers tot grote projectontwikkelaars: wij bieden op maat gemaakte oplossingen voor élke bouwer.', ctaText: 'Gratis werfanalyse →', insurances: [{t:'ABR: Alle Bouwplaatsrisico\'s',d:'Dekking voor schade aan het werk in uitvoering, materialen en machines op de werf.'},{t:'Tienjarige Aansprakelijkheid',d:'Wettelijk verplicht voor aannemers en architecten op constructieve elementen.'},{t:'Arbeidsongevallen Werf',d:'Uitgebreide bescherming voor werknemers en tijdelijke medewerkers op de bouwplaats.'},{t:'BA Aannemer',d:'Aansprakelijkheid voor schade aan derden door uw werken of uw personeel.'},{t:'Vastgoedpromovering',d:'Bescherming voor projectontwikkelaars tijdens de bouw en verkoopfase.'},{t:'Materieel & Machines',d:'All-risk voor bouwmachines, kranen, heftrucks en zwaar materiaal.'}] } },
+  { id: 2, label: 'Transport & Logistiek', desc: 'CMR, goederenverzekering en wagenpark op maat.', icon: '🚛', visible: true, pageKey: 'transport',
+    page: { heroSubtitle: 'CMR, goederenverzekering, wagenpark en aansprakelijkheid voor transporteurs en logistieke spelers.', forLabel: 'Voor transport & logistiek', h2: 'Op de weg én in het magazijn beschermd', p1: 'Transport en logistiek zijn sectoren met hoge risico\'s: ongelukken, goederenschade, vertragingen en internationale aansprakelijkheid. Wij brengen alles samen in een efficiënt verzekeringsplan.', p2: 'Van eenpersoonszaak tot internationale carrier: wij kennen uw dagelijkse uitdagingen en zorgen voor de juiste dekking.', ctaText: 'Analyse aanvragen →', insurances: [{t:'CMR-verzekering',d:'Internationale wegvervoerdersaansprakelijkheid conform het CMR-verdrag.'},{t:'Goederenverzekering',d:'All-risk of named-perils dekking voor goederen tijdens transport.'},{t:'Fleet Management',d:'BA, mini-omnium en full-omnium voor uw volledige voertuigenpark.'},{t:'Magazijnverzekering',d:'Brand, inbraak en aansprakelijkheid voor opgeslagen goederen van derden.'},{t:'Expediteur BA',d:'Aansprakelijkheidsdekking voor expeditiebedrijven en logistieke dienstverleners.'},{t:'Arbeidsongevallen',d:'Bescherming voor chauffeurs en magazijnpersoneel bij arbeidsongevallen.'}] } },
+  { id: 3, label: 'Landbouw', desc: 'Oogst, vee, machines en bedrijfsgebouwen.', icon: '🌾', visible: true, pageKey: 'landbouw',
+    page: { heroSubtitle: 'Oogst, vee, machines en bedrijfsgebouwen — beschermd van zaaien tot oogsten.', forLabel: 'Voor de landbouwsector', h2: 'Uw oogst en bedrijf volledig beschermd', p1: 'De landbouw kent zijn eigen risico\'s: weerschade, veeziekten, machinebreuk en aansprakelijkheid. Als onafhankelijk makelaar zoeken wij de beste dekking voor uw specifieke situatie.', p2: 'Van akkerbouw tot veeteelt en tuinbouw — wij begeleiden u door het volledige verzekeringslandschap voor de agrosector.', ctaText: 'Gratis analyse aanvragen →', insurances: [{t:'Oogstverzekering',d:'Bescherming tegen weerschade, droogte, hagel en andere onvoorziene omstandigheden.'},{t:'Veeverzekering',d:'Dekking voor ziekte, ongelukken en noodslacht van uw veestapel.'},{t:'Landbouwmachines',d:'All-risk voor traktoren, combines, aardappelrooiers en ander zwaar materieel.'},{t:'Gebouwen & Loods',d:'Brandverzekering voor stallen, loodsen, serres en andere landbouwgebouwen.'},{t:'BA Landbouwer',d:'Aansprakelijkheid voor schade aan derden door uw bedrijfsactiviteiten of machines.'},{t:'Arbeidsongevallen',d:'Wettelijk verplichte dekking voor vaste medewerkers én seizoenarbeiders.'}] } },
+  { id: 4, label: 'Dienstensector', desc: 'BA, cyber en kantoorverzekering voor dienstenbedrijven.', icon: '💼', visible: true, pageKey: 'diensten',
+    page: { heroSubtitle: 'BA, cyber, kantoorverzekering en bestuurdersaansprakelijkheid voor dienstverlenende bedrijven.', forLabel: 'Voor de dienstensector', h2: 'Uw kantoor en reputatie beschermd', p1: 'Dienstverlenende bedrijven staan bloot aan specifieke risico\'s: adviesfouten, cyberaanvallen, bedrijfsonderbrekingen en aansprakelijkheid. Wij brengen alles samen in een efficiënt verzekeringsplan op maat.', p2: 'Van consultancybureaus tot IT-bedrijven en zorgverleners: wij kennen de uitdagingen van uw sector.', ctaText: 'Gratis risicoanalyse →', insurances: [{t:'BA Bedrijf & Beroep',d:'Bescherming voor schade aan derden door uw activiteiten of adviesfouten.'},{t:'Cyberverzekering',d:'Dekking bij hacking, dataverlies, ransomware en privacyschendingen (GDPR).'},{t:'Kantoor & Inhoud',d:'Brand, diefstal, waterschade en technische installaties in uw kantoorpand.'},{t:'Arbeidsongevallen',d:'Uitgebreide bescherming voor uw medewerkers, ook bij thuiswerk.'},{t:'Bestuurdersaansprakelijkheid',d:'Persoonlijke bescherming voor bestuurders en zaakvoerders bij bestuursfouten.'},{t:'Rechtsbijstand',d:'Juridische verdediging en bijstand bij conflicten met klanten, leveranciers of overheid.'}] } },
+  { id: 5, label: 'Andere sector?', desc: 'Nog een andere sector? Vraag ons naar uw specifieke dekking.', icon: '🌐', visible: true, pageKey: 'andere',
+    page: { heroSubtitle: 'Wat ook uw activiteit is — Trybou vindt voor elke sector de juiste bescherming.', forLabel: 'Voor elke sector', h2: 'Geen sector te specifiek voor ons', p1: 'Naast onze gespecialiseerde sectoren verzekeren wij ook bedrijven uit tal van andere activiteitsdomeinen: horeca, retail, industrie, vrije beroepen, non-profit en meer. Elke sector heeft zijn eigen risico\'s — en wij kennen ze.', p2: 'Vertel ons meer over uw activiteit en wij stellen een verzekeringsplan op dat perfect aansluit bij uw noden en budget.', ctaText: 'Vrijblijvend gesprek aanvragen →', insurances: [{t:'BA Onderneming',d:'Aansprakelijkheid voor schade aan klanten, bezoekers of derden door uw activiteiten.'},{t:'Bedrijfseigendom',d:'Brand, diefstal en waterschade voor uw gebouwen, inhoud en installaties.'},{t:'Arbeidsongevallen',d:'Wettelijk verplichte dekking voor al uw medewerkers, aangepast aan uw sector.'},{t:'Cyberverzekering',d:'Bescherming bij dataverlies, hacking en digitale aanvallen op uw bedrijf.'},{t:'Bedrijfsonderbreking',d:'Vergoeding van vaste kosten en winstderving bij onvrijwillig stilleggen van uw activiteit.'},{t:'Rechtsbijstand',d:'Juridische ondersteuning en verdediging bij geschillen met klanten of leveranciers.'}] } }
+];
+
+function loadSectors() {
+  db.collection('content').doc('sectors').get()
+    .then(doc => {
+      if (doc.exists && doc.data().list && doc.data().list.length > 0) {
+        sectorsList = doc.data().list;
+      } else {
+        sectorsList = JSON.parse(JSON.stringify(DEFAULT_SECTORS));
+        db.collection('content').doc('sectors').set({ list: sectorsList });
+      }
+      renderSectorCards();
+    })
+    .catch(() => { sectorsList = JSON.parse(JSON.stringify(DEFAULT_SECTORS)); renderSectorCards(); });
+}
+
+function renderSectorCards() {
+  const container = document.getElementById('sector-card-list');
+  container.innerHTML = '';
+  if (sectorsList.length === 0) {
+    container.innerHTML = '<p style="color:var(--slate);font-size:0.9rem;padding:12px 0;">Geen sectoren. Voeg er een toe.</p>';
+    return;
+  }
+  sectorsList.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'sector-card' + (s.visible ? '' : ' inactive');
+    card.innerHTML = `
+      <div class="sector-icon-preview">${escHtml(s.icon || '📌')}</div>
+      <div class="sector-card-body">
+        <div class="sector-card-label">${escHtml(s.label)}</div>
+        ${s.desc ? `<div class="sector-card-desc">${escHtml(s.desc)}</div>` : ''}
+      </div>
+      <div class="vacature-actions">
+        <div class="toggle-wrap">
+          <span class="toggle-label">${s.visible ? 'Zichtbaar' : 'Verborgen'}</span>
+          <label class="toggle">
+            <input type="checkbox" ${s.visible ? 'checked' : ''} onchange="toggleSector(${s.id}, this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="editSector(${s.id})">Bewerken</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteSector(${s.id})">Verwijderen</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function toggleAddSectorForm() {
+  const w = document.getElementById('add-sector-form-wrap');
+  w.style.display = w.style.display === 'none' ? 'block' : 'none';
+  if (w.style.display === 'block') document.getElementById('new-sector-label').focus();
+}
+
+function saveNewSector() {
+  const label = document.getElementById('new-sector-label').value.trim();
+  if (!label) { alert('Naam is verplicht.'); return; }
+  pushUndo();
+  const newId = sectorsList.length > 0 ? Math.max(...sectorsList.map(s => s.id)) + 1 : 1;
+  sectorsList.push({
+    id: newId,
+    label,
+    desc: document.getElementById('new-sector-desc').value.trim(),
+    icon: document.getElementById('new-sector-icon').value.trim() || '📌',
+    visible: document.getElementById('new-sector-visible').checked
+  });
+  db.collection('content').doc('sectors').set({ list: sectorsList }).then(() => {
+    document.getElementById('new-sector-label').value = '';
+    document.getElementById('new-sector-desc').value = '';
+    document.getElementById('new-sector-icon').value = '';
+    document.getElementById('new-sector-visible').checked = true;
+    document.getElementById('add-sector-form-wrap').style.display = 'none';
+    renderSectorCards();
+    showToast('Sector toegevoegd ✓');
+  }).catch(() => showToast('Fout bij opslaan'));
+}
+
+function toggleSector(id, checked) {
+  const s = sectorsList.find(s => s.id === id);
+  if (!s) return;
+  pushUndo();
+  s.visible = checked;
+  db.collection('content').doc('sectors').set({ list: sectorsList }).then(() => { renderSectorCards(); showToast(); }).catch(() => showToast('Fout'));
+}
+
+function editSector(id) {
+  const s = sectorsList.find(s => s.id === id);
+  if (!s) return;
+  const idx = sectorsList.indexOf(s);
+  const cards = document.getElementById('sector-card-list').querySelectorAll('.sector-card');
+  const editDiv = document.createElement('div');
+  editDiv.className = 'sector-card';
+  editDiv.style.flexDirection = 'column';
+  const pc = s.page || {};
+  const ins = pc.insurances || [{t:'',d:''},{t:'',d:''},{t:'',d:''},{t:'',d:''},{t:'',d:''},{t:'',d:''}];
+  while (ins.length < 6) ins.push({t:'',d:''});
+  let insHtml = '';
+  for (let i = 0; i < 6; i++) {
+    insHtml += `<div style="background:#f9fafb;border-radius:8px;padding:12px;margin-bottom:8px;">
+      <div style="font-size:0.78rem;font-weight:600;color:var(--slate);margin-bottom:6px;">Verzekering ${i+1}</div>
+      <div class="form-group" style="margin-bottom:6px;"><input type="text" id="es-in-t-${id}-${i}" value="${escHtml(ins[i]?.t||'')}" placeholder="Naam"></div>
+      <div class="form-group" style="margin-bottom:0;"><input type="text" id="es-in-d-${id}-${i}" value="${escHtml(ins[i]?.d||'')}" placeholder="Omschrijving"></div>
+    </div>`;
+  }
+  editDiv.innerHTML = `
+    <div style="font-weight:600;font-size:0.95rem;margin-bottom:14px;color:var(--ink);">Bewerken</div>
+    <div style="display:grid;grid-template-columns:1fr 80px;gap:12px;">
+      <div class="form-group"><label>Naam</label><input type="text" id="es-label-${id}" value="${escHtml(s.label)}"></div>
+      <div class="form-group"><label>Icoon</label><input type="text" id="es-icon-${id}" value="${escHtml(s.icon)}" maxlength="4"></div>
+    </div>
+    <div class="form-group"><label>Kaartomschrijving</label><input type="text" id="es-desc-${id}" value="${escHtml(s.desc)}"></div>
+    <div class="form-group"><label>Pagina-sleutel <span style="font-size:0.78rem;font-weight:400;color:#9ca3af;">(showPage-id, bijv. "landbouw")</span></label><input type="text" id="es-key-${id}" value="${escHtml(s.pageKey||'')}" placeholder="bijv. landbouw"></div>
+    <div class="check-group" style="margin-bottom:16px;"><input type="checkbox" id="es-vis-${id}" ${s.visible ? 'checked' : ''}><label for="es-vis-${id}">Zichtbaar op website</label></div>
+    <details style="margin-bottom:16px;">
+      <summary style="font-weight:600;font-size:0.92rem;cursor:pointer;padding:10px 0;color:var(--blue);">Pagina-inhoud bewerken</summary>
+      <div style="margin-top:12px;">
+        <div class="form-group"><label>Hero afbeelding URL</label><input type="url" id="es-hero-img-${id}" value="${escHtml(pc.heroImage||'')}" placeholder="https://images.unsplash.com/..."></div>
+        <div class="form-group"><label>Hero subtitel</label><input type="text" id="es-hero-p-${id}" value="${escHtml(pc.heroSubtitle||'')}" placeholder="Korte intro onder de paginatitel"></div>
+        <div class="form-group"><label>Sectie-label</label><input type="text" id="es-for-${id}" value="${escHtml(pc.forLabel||'')}" placeholder="bijv. Voor de landbouwsector"></div>
+        <div class="form-group"><label>Hoofdtitel (h2)</label><input type="text" id="es-h2-${id}" value="${escHtml(pc.h2||'')}" placeholder="Hoofdtitel van de pagina"></div>
+        <div class="form-group"><label>Paragraaf 1</label><textarea id="es-p1-${id}" placeholder="Eerste paragraaf...">${escHtml(pc.p1||'')}</textarea></div>
+        <div class="form-group"><label>Paragraaf 2</label><textarea id="es-p2-${id}" placeholder="Tweede paragraaf...">${escHtml(pc.p2||'')}</textarea></div>
+        <div class="form-group"><label>CTA-knoptekst</label><input type="text" id="es-cta-${id}" value="${escHtml(pc.ctaText||'')}" placeholder="bijv. Gratis analyse aanvragen →"></div>
+        <div style="font-weight:600;font-size:0.88rem;color:var(--ink);margin:16px 0 10px;">Verzekeringsproducten (max. 6)</div>
+        ${insHtml}
+      </div>
+    </details>
+    <div class="form-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveEditSector(${id})">Opslaan</button>
+      <button class="btn btn-ghost btn-sm" onclick="renderSectorCards()">Annuleren</button>
+    </div>
+  `;
+  cards[idx].replaceWith(editDiv);
+}
+
+function saveEditSector(id) {
+  const s = sectorsList.find(s => s.id === id);
+  if (!s) return;
+  pushUndo();
+  s.label = document.getElementById('es-label-' + id).value.trim() || s.label;
+  s.icon = document.getElementById('es-icon-' + id).value.trim() || s.icon;
+  s.desc = document.getElementById('es-desc-' + id).value.trim();
+  s.pageKey = document.getElementById('es-key-' + id).value.trim();
+  s.visible = document.getElementById('es-vis-' + id).checked;
+  const insurances = [];
+  for (let i = 0; i < 6; i++) {
+    const t = document.getElementById(`es-in-t-${id}-${i}`)?.value.trim();
+    const d = document.getElementById(`es-in-d-${id}-${i}`)?.value.trim();
+    if (t) insurances.push({ t, d });
+  }
+  s.page = {
+    heroImage: document.getElementById('es-hero-img-' + id)?.value.trim() || '',
+    heroSubtitle: document.getElementById('es-hero-p-' + id)?.value.trim() || '',
+    forLabel: document.getElementById('es-for-' + id)?.value.trim() || '',
+    h2: document.getElementById('es-h2-' + id)?.value.trim() || '',
+    p1: document.getElementById('es-p1-' + id)?.value.trim() || '',
+    p2: document.getElementById('es-p2-' + id)?.value.trim() || '',
+    ctaText: document.getElementById('es-cta-' + id)?.value.trim() || '',
+    insurances
+  };
+  db.collection('content').doc('sectors').set({ list: sectorsList }).then(() => { renderSectorCards(); showToast(); }).catch(() => showToast('Fout'));
+}
+
+function deleteSector(id) {
+  if (!confirm('Sector verwijderen?')) return;
+  pushUndo();
+  sectorsList = sectorsList.filter(s => s.id !== id);
+  db.collection('content').doc('sectors').set({ list: sectorsList }).then(() => { renderSectorCards(); showToast('Sector verwijderd'); }).catch(() => showToast('Fout'));
+}
+
+// ── MEDEWERKERS ──
+const DEFAULT_MEDEWERKERS = [
+  { id:1,  name:'Tom Trybou',             role:'Verzekeringen Trybou BV',              role_en:'Insurance Trybou BV',              role_fr:'Assurances Trybou BV',              photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317012231dsc09194.jpg',         bio:'', visible:true },
+  { id:2,  name:'Jan Decruyenaere',        role:'Adviseur Verzekeringen & Beleggingen', role_en:'Insurance & Investment Advisor',    role_fr:'Conseiller Assurances & Investissements', photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317012707dsc09109.jpg',         bio:'', visible:true },
+  { id:3,  name:'Sander Ampe',             role:'Verantwoordelijke Schade',             role_en:'Claims Manager',                   role_fr:'Responsable Sinistres',             photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317012853dsc09247.jpg',         bio:'', visible:true },
+  { id:4,  name:'Linde Masson',            role:'Verantwoordelijke KMO',                role_en:'SME Manager',                      role_fr:'Responsable PME',                   photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317024515dsc09202.jpg',         bio:'', visible:true },
+  { id:5,  name:'Ruben Callewaert',        role:'Verantwoordelijke Levensverzekeringen',role_en:'Life Insurance Manager',            role_fr:'Responsable Assurances Vie',        photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317024537dsc09168.jpg',         bio:'', visible:true },
+  { id:6,  name:'Sandra Jonckheere',       role:'Verzekeringsadviseur',                 role_en:'Insurance Advisor',                role_fr:'Conseiller en Assurances',          photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250403052459dsc03626-verbeterd-nr.jpg', bio:'', visible:true },
+  { id:7,  name:'Tine Dedeurwaerder',      role:'Schadebeheer',                         role_en:'Claims Management',                role_fr:'Gestion des Sinistres',             photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/202506181015252.jpg',                bio:'', visible:true },
+  { id:8,  name:'Frank Hoornaert',         role:'Kantoor Hoornaert',                    role_en:'Office Hoornaert',                 role_fr:'Bureau Hoornaert',                  photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20260116033130frank-hoornaert-site3.jpg', bio:'', visible:true },
+  { id:9,  name:'Kris Hoornaert',          role:'Kantoor Hoornaert',                    role_en:'Office Hoornaert',                 role_fr:'Bureau Hoornaert',                  photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20260114095658kris-hoornaert-sitelogo.jpg', bio:'', visible:true },
+  { id:10, name:'Kris Roseeuw',            role:'Adviseur Kredieten & Nalatenschappen', role_en:'Credit & Estate Advisor',          role_fr:'Conseiller Crédits & Successions',  photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250708093547vierkant.jpg',          bio:'', visible:true },
+  { id:11, name:'Leen Duron',              role:'Adviseur Bank',                        role_en:'Banking Advisor',                  role_fr:'Conseiller Bancaire',               photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317012920dsc09273.jpg',          bio:'', visible:true },
+  { id:12, name:'Andrew Hubert',           role:'Adviseur Beleggingen',                 role_en:'Investment Advisor',               role_fr:'Conseiller en Investissements',     photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317024415nb_andrew.jpg',         bio:'', visible:true },
+  { id:13, name:'Andy Vandevivere',        role:'Adviseur Bank',                        role_en:'Banking Advisor',                  role_fr:'Conseiller Bancaire',               photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317024614dsc09288.jpg',          bio:'', visible:true },
+  { id:14, name:'Tim Vankeirsbilck',       role:'Adviseur Beleggingen',                 role_en:'Investment Advisor',               role_fr:'Conseiller en Investissements',     photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317024643dsc09098.jpg',          bio:'', visible:true },
+  { id:15, name:'Charlot Vandendriessche', role:'Adviseur Kredieten',                   role_en:'Credit Advisor',                   role_fr:'Conseiller en Crédits',             photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250211115707dsc09148.jpg',          bio:'', visible:true },
+  { id:16, name:'Mieke Prinzie',           role:'Beleggingsadviseur',                   role_en:'Investment Advisor',               role_fr:'Conseiller en Investissements',     photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250521104907dsc00708.jpg',          bio:'', visible:true },
+  { id:17, name:'Ciska Baelde',            role:'Kredietadviseur',                      role_en:'Credit Advisor',                   role_fr:'Conseiller en Crédits',             photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250703020547site.jpg',              bio:'', visible:true },
+  { id:18, name:'Warre Carpentier',        role:'Adviseur Bank',                        role_en:'Banking Advisor',                  role_fr:'Conseiller Bancaire',               photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20251129101100standaard.jpg',         bio:'', visible:true },
+  { id:19, name:'Thijs Trybou',            role:'Immo Trybou BV',                       role_en:'Real Estate Trybou BV',            role_fr:'Immobilier Trybou BV',              photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317012304dsc09318.jpg',          bio:'', visible:true },
+  { id:20, name:'Femke Hoet',              role:'Immo & Verzekeringen',                 role_en:'Real Estate & Insurance',          role_fr:'Immobilier & Assurances',           photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20221027112814trybou-femke-156-2.jpg?hash=qO5NqlDQKmjj6fUhOte62tQlqTH0xuWq', bio:'', visible:true },
+  { id:21, name:'Celine Nevejans',         role:'IMMO',                                 role_en:'Real Estate',                      role_fr:'Immobilier',                        photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317024712dsc09295.jpg',          bio:'', visible:true },
+  { id:22, name:'Friedel Dejonckheere',    role:'Administratie IMMO',                   role_en:'Real Estate Administration',       role_fr:'Administration Immobilier',         photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20260211100553ttt09345-bewerkt1x1.jpg', bio:'', visible:true },
+  { id:23, name:'Bart Trybou',             role:'Algemeen bestuurder',                  role_en:'General Manager',                  role_fr:'Administrateur Général',            photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317012633dsc09266.jpg',          bio:'', visible:true },
+  { id:24, name:'Bieke Trybou',            role:'Finance Trybou BV',                    role_en:'Finance Trybou BV',                role_fr:'Finance Trybou BV',                 photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317012435dsc09256.jpg',          bio:'', visible:true },
+  { id:25, name:'Rani Desender',           role:'Administratie & Boekhouding',          role_en:'Administration & Accounting',      role_fr:'Administration & Comptabilité',     photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317024736dsc09137.jpg',          bio:'', visible:true },
+  { id:26, name:'Simon Wybo',              role:'Onthaal & Daily Banking',              role_en:'Reception & Daily Banking',        role_fr:'Accueil & Banque au Quotidien',     photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20250317024757dsc09156.jpg',          bio:'', visible:true },
+  { id:27, name:'Thibo Treve',             role:'Marketeer',                            role_en:'Marketer',                         role_fr:'Responsable Marketing',             photo:'https://www.verzekeringentrybou.be/_userfiles/teammembers/1x1/2x/20240515013759resida-jpg_high-84.jpg', bio:'', visible:true }
+];
+
+function loadMedewerkers() {
+  db.collection('content').doc('medewerkers').get()
+    .then(doc => {
+      if (doc.exists && doc.data().list && doc.data().list.length > 0) {
+        medewerkers = doc.data().list;
+        // Migration: fill missing role_en / role_fr from DEFAULT_MEDEWERKERS
+        let changed = false;
+        medewerkers.forEach(m => {
+          if (!m.role_en || !m.role_fr) {
+            const def = DEFAULT_MEDEWERKERS.find(d => d.id === m.id || d.name === m.name);
+            if (def) {
+              if (!m.role_en) { m.role_en = def.role_en || m.role; changed = true; }
+              if (!m.role_fr) { m.role_fr = def.role_fr || m.role; changed = true; }
+            }
+          }
+        });
+        if (changed) db.collection('content').doc('medewerkers').set({ list: medewerkers });
+      } else {
+        medewerkers = JSON.parse(JSON.stringify(DEFAULT_MEDEWERKERS));
+        db.collection('content').doc('medewerkers').set({ list: medewerkers });
+      }
+      renderMedewerkers();
+    })
+    .catch(() => { medewerkers = JSON.parse(JSON.stringify(DEFAULT_MEDEWERKERS)); renderMedewerkers(); });
+}
+
+function renderMedewerkers() {
+  const container = document.getElementById('medewerker-list');
+  container.innerHTML = '';
+  if (medewerkers.length === 0) {
+    container.innerHTML = '<p style="color:var(--slate);font-size:0.9rem;padding:12px 0;">Geen medewerkers. Voeg er een toe.</p>';
+    return;
+  }
+  medewerkers.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'medewerker-card' + (m.visible ? '' : ' inactive');
+    const avatarInner = m.photo
+      ? `<img src="${escHtml(m.photo)}" alt="${escHtml(m.name)}" onerror="this.style.display='none'">`
+      : '👤';
+    card.innerHTML = `
+      <div class="member-avatar">${avatarInner}</div>
+      <div class="vacature-body">
+        <div class="member-name">${escHtml(m.name)}</div>
+        <div class="member-role">${escHtml(m.role)}</div>
+        ${m.bio ? `<div class="vacature-email">${escHtml(m.bio)}</div>` : ''}
+      </div>
+      <div class="vacature-actions">
+        <div class="toggle-wrap">
+          <span class="toggle-label">${m.visible ? 'Zichtbaar' : 'Verborgen'}</span>
+          <label class="toggle">
+            <input type="checkbox" ${m.visible ? 'checked' : ''} onchange="toggleMedewerker(${m.id}, this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="editMedewerker(${m.id})">Bewerken</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteMedewerker(${m.id})">Verwijderen</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function toggleAddMedewerkerForm() {
+  const w = document.getElementById('add-medewerker-form-wrap');
+  w.style.display = w.style.display === 'none' ? 'block' : 'none';
+  if (w.style.display === 'block') document.getElementById('new-member-name').focus();
+}
+
+function saveNewMedewerker() {
+  const name = document.getElementById('new-member-name').value.trim();
+  if (!name) { alert('Naam is verplicht.'); return; }
+  pushUndo();
+  const newId = medewerkers.length > 0 ? Math.max(...medewerkers.map(m => m.id)) + 1 : 1;
+  const role = document.getElementById('new-member-role').value.trim();
+  medewerkers.push({
+    id: newId,
+    name,
+    role,
+    role_en: document.getElementById('new-member-role-en').value.trim() || role,
+    role_fr: document.getElementById('new-member-role-fr').value.trim() || role,
+    photo: document.getElementById('new-member-photo').value.trim(),
+    bio: document.getElementById('new-member-bio').value.trim(),
+    visible: document.getElementById('new-member-visible').checked
+  });
+  db.collection('content').doc('medewerkers').set({ list: medewerkers }).then(() => {
+    ['new-member-name','new-member-role','new-member-role-en','new-member-role-fr','new-member-photo','new-member-bio'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('new-member-visible').checked = true;
+    document.getElementById('add-medewerker-form-wrap').style.display = 'none';
+    renderMedewerkers();
+    showToast('Medewerker toegevoegd ✓');
+  }).catch(() => showToast('Fout bij opslaan'));
+}
+
+function toggleMedewerker(id, checked) {
+  const m = medewerkers.find(m => m.id === id);
+  if (!m) return;
+  pushUndo();
+  m.visible = checked;
+  db.collection('content').doc('medewerkers').set({ list: medewerkers }).then(() => { renderMedewerkers(); showToast(); }).catch(() => showToast('Fout'));
+}
+
+function editMedewerker(id) {
+  const m = medewerkers.find(m => m.id === id);
+  if (!m) return;
+  const idx = medewerkers.indexOf(m);
+  const cards = document.getElementById('medewerker-list').querySelectorAll('.medewerker-card');
+  const editDiv = document.createElement('div');
+  editDiv.className = 'medewerker-card';
+  editDiv.style.flexDirection = 'column';
+  editDiv.innerHTML = `
+    <div style="font-weight:600;font-size:0.95rem;margin-bottom:14px;color:var(--ink);">Bewerken</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="form-group"><label>Naam</label><input type="text" id="em-name-${id}" value="${escHtml(m.name)}"></div>
+      <div class="form-group"><label>Functie (NL)</label><input type="text" id="em-role-${id}" value="${escHtml(m.role)}"></div>
+    </div>
+    <details style="margin:6px 0;"><summary style="font-weight:600;font-size:0.85rem;cursor:pointer;color:var(--blue);padding:4px 0;">🇬🇧 Engels</summary><div style="margin-top:8px;"><div class="form-group"><label>Functie EN</label><input type="text" id="em-role-en-${id}" value="${escHtml(m.role_en || m.role)}"></div></div></details>
+    <details style="margin:6px 0 10px;"><summary style="font-weight:600;font-size:0.85rem;cursor:pointer;color:var(--blue);padding:4px 0;">🇫🇷 Frans</summary><div style="margin-top:8px;"><div class="form-group"><label>Functie FR</label><input type="text" id="em-role-fr-${id}" value="${escHtml(m.role_fr || m.role)}"></div></div></details>
+    <div class="form-group"><label>Foto URL</label><input type="url" id="em-photo-${id}" value="${escHtml(m.photo || '')}"></div>
+    <div class="form-group"><label>Bio</label><textarea id="em-bio-${id}">${escHtml(m.bio || '')}</textarea></div>
+    <div class="check-group" style="margin-bottom:12px;"><input type="checkbox" id="em-vis-${id}" ${m.visible ? 'checked' : ''}><label for="em-vis-${id}">Zichtbaar</label></div>
+    <div class="form-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveEditMedewerker(${id})">Opslaan</button>
+      <button class="btn btn-ghost btn-sm" onclick="renderMedewerkers()">Annuleren</button>
+    </div>
+  `;
+  cards[idx].replaceWith(editDiv);
+}
+
+function saveEditMedewerker(id) {
+  const m = medewerkers.find(m => m.id === id);
+  if (!m) return;
+  pushUndo();
+  m.name = document.getElementById('em-name-' + id).value.trim() || m.name;
+  m.role = document.getElementById('em-role-' + id).value.trim();
+  m.role_en = document.getElementById('em-role-en-' + id).value.trim() || m.role;
+  m.role_fr = document.getElementById('em-role-fr-' + id).value.trim() || m.role;
+  m.photo = document.getElementById('em-photo-' + id).value.trim();
+  m.bio = document.getElementById('em-bio-' + id).value.trim();
+  m.visible = document.getElementById('em-vis-' + id).checked;
+  db.collection('content').doc('medewerkers').set({ list: medewerkers }).then(() => { renderMedewerkers(); showToast(); }).catch(() => showToast('Fout'));
+}
+
+function deleteMedewerker(id) {
+  if (!confirm('Medewerker verwijderen?')) return;
+  pushUndo();
+  medewerkers = medewerkers.filter(m => m.id !== id);
+  db.collection('content').doc('medewerkers').set({ list: medewerkers }).then(() => { renderMedewerkers(); showToast('Medewerker verwijderd'); }).catch(() => showToast('Fout'));
+}
+
+// ── FAQ ──
+const DEFAULT_FAQ = [
+  { id:1, question:'Wat kost een verzekeringscheck?', answer:'Onze verzekeringscheck is volledig vrijblijvend en gratis. We analyseren uw huidige polissen en geven eerlijk advies, zonder verplichtingen.', question_en:'What does an insurance check cost?', answer_en:'Our insurance check is completely free and without obligation. We analyse your current policies and give honest advice, with no strings attached.', question_fr:"Combien coûte un bilan d'assurance ?", answer_fr:"Notre bilan d'assurance est entièrement gratuit et sans engagement. Nous analysons vos polices et vous donnons des conseils honnêtes, sans obligations.", active:true },
+  { id:2, question:'Kan ik mijn bestaande polissen overzetten?', answer:'Absoluut. Wij bekijken uw huidige verzekeringen, vergelijken en regelen de volledige overstap als dat voordeliger is.', question_en:'Can I transfer my existing policies?', answer_en:'Absolutely. We review your current insurance, compare options and arrange the full transfer if that is more advantageous.', question_fr:'Puis-je transférer mes polices existantes ?', answer_fr:'Absolument. Nous examinons vos assurances actuelles, comparons et organisons le transfert complet si cela est plus avantageux.', active:true },
+  { id:3, question:'Met welke maatschappijen werken jullie?', answer:'Wij zijn onafhankelijk en werken met een brede waaier aan maatschappijen, waaronder AG Insurance, Vivium, Optimco, AXA, Baloise, Euromex, Europ Assistance en nog vele anderen.', question_en:'Which insurance companies do you work with?', answer_en:'We are independent and work with a broad range of companies, including AG Insurance, Vivium, Optimco, AXA, Baloise, Euromex, Europ Assistance and many others.', question_fr:'Avec quelles compagnies travaillez-vous ?', answer_fr:"Nous sommes indépendants et travaillons avec un large éventail de compagnies, dont AG Insurance, Vivium, Optimco, AXA, Baloise, Euromex, Europ Assistance et bien d'autres.", active:true },
+  { id:4, question:'Hoe snel wordt een schadeclaim behandeld?', answer:'Wij starten dezelfde dag met de aangifte en volgen actief op tot alles geregeld is.', question_en:'How quickly is a claim handled?', answer_en:'We start the notification on the same day and actively follow up until everything is settled.', question_fr:'Dans quel délai un sinistre est-il traité ?', answer_fr:'Nous effectuons la déclaration le jour même et suivons activement jusqu\'à ce que tout soit réglé.', active:true },
+  { id:5, question:'Zijn jullie enkel actief in West-Vlaanderen?', answer:'Onze kantoren staan in Ieper, Poperinge, Houthulst en Westouter, maar wij bedienen ondernemers in heel België.', question_en:'Are you only active in West Flanders?', answer_en:'Our offices are in Ieper, Poperinge, Houthulst and Westouter, but we serve entrepreneurs throughout Belgium.', question_fr:'Êtes-vous uniquement actifs en Flandre occidentale ?', answer_fr:'Nos bureaux sont à Ieper, Poperinge, Houthulst et Westouter, mais nous servons des entrepreneurs dans toute la Belgique.', active:true },
+  { id:6, question:'Hoe lang duurt de overstap naar Group Trybou?', answer:'Gemiddeld 2 tot 4 weken. Wij regelen alle administratie en contacten met uw vorige makelaar of verzekeraar volledig voor u.', question_en:'How long does switching to Group Trybou take?', answer_en:'On average 2 to 4 weeks. We handle all administration and contacts with your previous broker or insurer completely for you.', question_fr:'Combien de temps dure le passage à Group Trybou ?', answer_fr:'En moyenne 2 à 4 semaines. Nous gérons toutes les démarches administratives et les contacts avec votre précédent courtier ou assureur.', active:true }
+];
+
+function loadFaq() {
+  db.collection('content').doc('faq').get()
+    .then(doc => {
+      if (doc.exists && doc.data().list && doc.data().list.length > 0) {
+        faqList = doc.data().list;
+        // Migrate: fill in missing translations from DEFAULT_FAQ
+        let changed = false;
+        faqList.forEach(f => {
+          const def = DEFAULT_FAQ.find(d => d.id === f.id);
+          if (!def) return;
+          ['question_en','answer_en','question_fr','answer_fr'].forEach(k => {
+            if (!f[k] && def[k]) { f[k] = def[k]; changed = true; }
+          });
+        });
+        if (changed) db.collection('content').doc('faq').set({ list: faqList });
+      } else {
+        faqList = JSON.parse(JSON.stringify(DEFAULT_FAQ));
+        db.collection('content').doc('faq').set({ list: faqList });
+      }
+      renderFaq();
+    })
+    .catch(() => { faqList = JSON.parse(JSON.stringify(DEFAULT_FAQ)); renderFaq(); });
+}
+
+function renderFaq() {
+  const container = document.getElementById('faq-list');
+  container.innerHTML = '';
+  if (faqList.length === 0) {
+    container.innerHTML = '<p style="color:var(--slate);font-size:0.9rem;padding:12px 0;">Geen FAQ-vragen. Voeg er een toe.</p>';
+    return;
+  }
+  faqList.forEach(f => {
+    const card = document.createElement('div');
+    card.className = 'faq-card' + (f.active ? '' : ' inactive');
+    card.innerHTML = `
+      <div class="faq-body">
+        <div class="faq-question">${escHtml(f.question)}</div>
+        <div class="faq-answer">${escHtml(f.answer)}</div>
+      </div>
+      <div class="vacature-actions" style="flex-direction:column;align-items:flex-end;gap:6px;">
+        <div class="toggle-wrap">
+          <span class="toggle-label">${f.active ? 'Actief' : 'Inactief'}</span>
+          <label class="toggle">
+            <input type="checkbox" ${f.active ? 'checked' : ''} onchange="toggleFaq(${f.id}, this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-outline btn-sm" onclick="editFaq(${f.id})">Bewerken</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteFaq(${f.id})">Verwijderen</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function toggleAddFaqForm() {
+  const w = document.getElementById('add-faq-form-wrap');
+  w.style.display = w.style.display === 'none' ? 'block' : 'none';
+  if (w.style.display === 'block') document.getElementById('new-faq-q').focus();
+}
+
+function saveNewFaq() {
+  const question = document.getElementById('new-faq-q').value.trim();
+  const answer = document.getElementById('new-faq-a').value.trim();
+  if (!question) { alert('Vraag is verplicht.'); return; }
+  pushUndo();
+  const newId = faqList.length > 0 ? Math.max(...faqList.map(f => f.id)) + 1 : 1;
+  faqList.push({ id: newId, question, answer,
+    question_en: document.getElementById('new-faq-q-en').value.trim(),
+    answer_en: document.getElementById('new-faq-a-en').value.trim(),
+    question_fr: document.getElementById('new-faq-q-fr').value.trim(),
+    answer_fr: document.getElementById('new-faq-a-fr').value.trim(),
+    active: document.getElementById('new-faq-active').checked });
+  db.collection('content').doc('faq').set({ list: faqList }).then(() => {
+    ['new-faq-q','new-faq-a','new-faq-q-en','new-faq-a-en','new-faq-q-fr','new-faq-a-fr'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('new-faq-active').checked = true;
+    document.getElementById('add-faq-form-wrap').style.display = 'none';
+    renderFaq();
+    showToast('FAQ-vraag toegevoegd ✓');
+  }).catch(() => showToast('Fout bij opslaan'));
+}
+
+function toggleFaq(id, checked) {
+  const f = faqList.find(f => f.id === id);
+  if (!f) return;
+  pushUndo();
+  f.active = checked;
+  db.collection('content').doc('faq').set({ list: faqList }).then(() => { renderFaq(); showToast(); }).catch(() => showToast('Fout'));
+}
+
+function editFaq(id) {
+  const f = faqList.find(f => f.id === id);
+  if (!f) return;
+  const idx = faqList.indexOf(f);
+  const cards = document.getElementById('faq-list').querySelectorAll('.faq-card');
+  const editDiv = document.createElement('div');
+  editDiv.className = 'faq-card';
+  editDiv.style.flexDirection = 'column';
+  editDiv.innerHTML = `
+    <div style="font-weight:600;font-size:0.95rem;margin-bottom:14px;color:var(--ink);">Bewerken</div>
+    <div style="font-size:0.78rem;font-weight:600;color:var(--slate);letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">🇧🇪 Nederlands</div>
+    <div class="form-group"><label>Vraag</label><input type="text" id="ef-q-${id}" value="${escHtml(f.question)}"></div>
+    <div class="form-group"><label>Antwoord</label><textarea id="ef-a-${id}" style="min-height:90px;">${escHtml(f.answer)}</textarea></div>
+    <details style="margin:10px 0 6px;"><summary style="font-weight:600;font-size:0.85rem;cursor:pointer;color:var(--blue);padding:4px 0;">🇬🇧 Engels <span style="font-weight:400;color:#9ca3af;">(optioneel)</span></summary><div style="margin-top:8px;"><div class="form-group"><label>Vraag EN</label><input type="text" id="ef-q-en-${id}" value="${escHtml(f.question_en||'')}"></div><div class="form-group"><label>Antwoord EN</label><textarea id="ef-a-en-${id}" style="min-height:70px;">${escHtml(f.answer_en||'')}</textarea></div></div></details>
+    <details style="margin:6px 0 10px;"><summary style="font-weight:600;font-size:0.85rem;cursor:pointer;color:var(--blue);padding:4px 0;">🇫🇷 Frans <span style="font-weight:400;color:#9ca3af;">(optioneel)</span></summary><div style="margin-top:8px;"><div class="form-group"><label>Vraag FR</label><input type="text" id="ef-q-fr-${id}" value="${escHtml(f.question_fr||'')}"></div><div class="form-group"><label>Antwoord FR</label><textarea id="ef-a-fr-${id}" style="min-height:70px;">${escHtml(f.answer_fr||'')}</textarea></div></div></details>
+    <div class="check-group" style="margin-bottom:12px;"><input type="checkbox" id="ef-act-${id}" ${f.active ? 'checked' : ''}><label for="ef-act-${id}">Actief</label></div>
+    <div class="form-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveEditFaq(${id})">Opslaan</button>
+      <button class="btn btn-ghost btn-sm" onclick="renderFaq()">Annuleren</button>
+    </div>
+  `;
+  cards[idx].replaceWith(editDiv);
+}
+
+function saveEditFaq(id) {
+  const f = faqList.find(f => f.id === id);
+  if (!f) return;
+  pushUndo();
+  f.question = document.getElementById('ef-q-' + id).value.trim() || f.question;
+  f.answer = document.getElementById('ef-a-' + id).value.trim();
+  f.question_en = document.getElementById('ef-q-en-' + id)?.value.trim() || '';
+  f.answer_en = document.getElementById('ef-a-en-' + id)?.value.trim() || '';
+  f.question_fr = document.getElementById('ef-q-fr-' + id)?.value.trim() || '';
+  f.answer_fr = document.getElementById('ef-a-fr-' + id)?.value.trim() || '';
+  f.active = document.getElementById('ef-act-' + id).checked;
+  db.collection('content').doc('faq').set({ list: faqList }).then(() => { renderFaq(); showToast(); }).catch(() => showToast('Fout'));
+}
+
+function deleteFaq(id) {
+  if (!confirm('FAQ-vraag verwijderen?')) return;
+  pushUndo();
+  faqList = faqList.filter(f => f.id !== id);
+  db.collection('content').doc('faq').set({ list: faqList }).then(() => { renderFaq(); showToast('Vraag verwijderd'); }).catch(() => showToast('Fout'));
+}
+
+// ── TIJDSLIJN ──
+const DEFAULT_TIMELINE = [
+  { id:1,  year:'1948', title:'Oprichting',                        desc:'André Trybou richt de spaarkas op: de basis van wat Group Trybou zal worden.',                                                title_en:'Foundation',                         desc_en:'André Trybou establishes the savings bank: the foundation of what Group Trybou will become.',                             title_fr:'Fondation',                          desc_fr:"André Trybou crée la caisse d'épargne\u00a0: le fondement de ce que deviendra Group Trybou." },
+  { id:2,  year:'1989', title:'Tweede generatie',                  desc:'Zoon Bart Trybou neemt het kantoor over en bouwt verder aan de groei.',                                                        title_en:'Second generation',                  desc_en:'Son Bart Trybou takes over the office and continues building the company.',                                                title_fr:'Deuxi\u00e8me g\u00e9n\u00e9ration', desc_fr:'Bart Trybou, fils, reprend le bureau et continue \u00e0 d\u00e9velopper l\u2019entreprise.' },
+  { id:3,  year:'2014', title:'Derde generatie',                   desc:'Thijs Trybou start bij Immo Trybou als eerste van de derde generatie.',                                                        title_en:'Third generation',                   desc_en:'Thijs Trybou joins Immo Trybou as the first of the third generation.',                                                     title_fr:'Troisi\u00e8me g\u00e9n\u00e9ration', desc_fr:'Thijs Trybou rejoint Immo Trybou en tant que premier de la troisi\u00e8me g\u00e9n\u00e9ration.' },
+  { id:4,  year:'2015', title:'Verzekeringen Trybou',              desc:'Tom Trybou vervoegt de groep bij Verzekeringen Trybou.',                                                                        title_en:'Insurance Trybou',                   desc_en:'Tom Trybou joins the group at Insurance Trybou.',                                                                          title_fr:'Assurances Trybou',                  desc_fr:'Tom Trybou rejoint le groupe chez Assurances Trybou.' },
+  { id:5,  year:'2017', title:'Opening kantoor Ieper',             desc:'Overname van kantoren in Vlamertinge, Brielen, Ieper en Poelkapelle.',                                                         title_en:'Opening Ieper office',               desc_en:'Takeover of offices in Vlamertinge, Brielen, Ieper and Poelkapelle.',                                                      title_fr:'Ouverture bureau Ypres',             desc_fr:'Reprise des bureaux \u00e0 Vlamertinge, Brielen, Ieper et Poelkapelle.' },
+  { id:6,  year:'2017', title:'Finance Trybou',                    desc:'Bieke Trybou start bij Finance Trybou en versterkt de financi\u00eble tak.',                                                   title_en:'Finance Trybou',                     desc_en:'Bieke Trybou joins Finance Trybou and strengthens the financial branch.',                                                  title_fr:'Finance Trybou',                     desc_fr:'Bieke Trybou rejoint Finance Trybou et renforce la branche financi\u00e8re.' },
+  { id:7,  year:'2019', title:'Kantoor Poperinge',                 desc:'Opening van een nieuw kantoor in Poperinge, dichter bij de klant in de regio.',                                               title_en:'Poperinge office',                   desc_en:'Opening of a new office in Poperinge, closer to clients in the region.',                                                  title_fr:'Bureau Poperinge',                   desc_fr:"Ouverture d'un nouveau bureau \u00e0 Poperinge, plus proche des clients de la r\u00e9gion." },
+  { id:8,  year:'2021', title:'Overnames',                         desc:'Overname bankgedeelte kantoor Hardeman en kantoor Hoornaert.',                                                                  title_en:'Acquisitions',                       desc_en:'Takeover of the banking part of Hardeman office and Hoornaert office.',                                                   title_fr:'Acquisitions',                       desc_fr:'Reprise de la partie bancaire du bureau Hardeman et du bureau Hoornaert.' },
+  { id:9,  year:'2022', title:'Verhuis naar Ter Waarde',           desc:'Het kantoor in de Diksmuidestraat verhuist naar een nieuwe, businessgerichte locatie op Ter Waarde.',                        title_en:'Move to Ter Waarde',                 desc_en:'The office on Diksmuidestraat moves to a new, business-oriented location at Ter Waarde.',                                 title_fr:'D\u00e9m\u00e9nagement \u00e0 Ter Waarde', desc_fr:'Le bureau de la Diksmuidestraat d\u00e9m\u00e9nage dans un nouveau lieu orient\u00e9 business \u00e0 Ter Waarde.' },
+  { id:10, year:'2024', title:'AXA Bank wordt Crelan',             desc:'Trybou Finance wordt zo Crelan-bankagent.',                                                                                    title_en:'AXA Bank becomes Crelan',            desc_en:'Trybou Finance becomes a Crelan bank agent.',                                                                              title_fr:'AXA Bank devient Crelan',            desc_fr:'Trybou Finance devient agent bancaire Crelan.' },
+  { id:11, year:'2025', title:'Nieuwe overnames',                  desc:'Overname van kantoor Schollaert en kantoor Prinzie: verdere groei van het netwerk.',                                          title_en:'New acquisitions',                   desc_en:'Takeover of Schollaert office and Prinzie office: further expansion of the network.',                                     title_fr:'Nouvelles acquisitions',             desc_fr:'Reprise du bureau Schollaert et du bureau Prinzie\u00a0: nouvelle expansion du r\u00e9seau.' },
+  { id:12, year:'2026', title:'Samenwerking kantoor Hoornaert',    desc:'Start samenwerking met Verzekeringen Hoornaert, een nieuwe stap in de groepsgroei.',                                          title_en:'Collaboration with Hoornaert',       desc_en:"Start of collaboration with Verzekeringen Hoornaert, a new step in the group's growth.",                                  title_fr:'Collaboration avec Hoornaert',       desc_fr:'D\u00e9but de la collaboration avec Verzekeringen Hoornaert, une nouvelle \u00e9tape dans la croissance du groupe.' }
+];
+
+function loadTimeline() {
+  db.collection('content').doc('timeline').get()
+    .then(doc => {
+      if (doc.exists && doc.data().list && doc.data().list.length > 0) {
+        timeline = doc.data().list;
+        // Migration: fill missing EN/FR fields
+        let changed = false;
+        timeline.forEach(t => {
+          const def = DEFAULT_TIMELINE.find(d => d.id === t.id || (d.year === t.year && d.title === t.title));
+          if (def) {
+            if (!t.title_en) { t.title_en = def.title_en; changed = true; }
+            if (!t.desc_en)  { t.desc_en  = def.desc_en;  changed = true; }
+            if (!t.title_fr) { t.title_fr = def.title_fr; changed = true; }
+            if (!t.desc_fr)  { t.desc_fr  = def.desc_fr;  changed = true; }
+          }
+        });
+        if (changed) db.collection('content').doc('timeline').set({ list: timeline });
+      } else {
+        timeline = JSON.parse(JSON.stringify(DEFAULT_TIMELINE));
+        db.collection('content').doc('timeline').set({ list: timeline });
+      }
+      renderTimeline();
+    })
+    .catch(() => { timeline = JSON.parse(JSON.stringify(DEFAULT_TIMELINE)); renderTimeline(); });
+}
+
+function renderTimeline() {
+  const container = document.getElementById('tijdslijn-list');
+  if (!container) return;
+  container.innerHTML = '';
+  if (timeline.length === 0) {
+    container.innerHTML = '<p style="color:var(--slate);font-size:0.9rem;padding:12px 0;">Geen stappen. Voeg er een toe.</p>';
+    return;
+  }
+  timeline.forEach((t, i) => {
+    const card = document.createElement('div');
+    card.className = 'vacature-card';
+    card.innerHTML = `
+      <div class="vacature-body">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+          <span style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--blue);">${escHtml(t.year)}</span>
+          <span style="font-weight:600;font-size:0.92rem;color:var(--ink);">${escHtml(t.title)}</span>
+          ${t.title_en ? '<span style="font-size:0.72rem;color:#9ca3af;background:#f3f4f6;border-radius:4px;padding:1px 6px;">EN</span>' : ''}
+          ${t.title_fr ? '<span style="font-size:0.72rem;color:#9ca3af;background:#f3f4f6;border-radius:4px;padding:1px 6px;">FR</span>' : ''}
+        </div>
+        <p style="font-size:0.82rem;color:var(--slate);margin:0;">${escHtml(t.desc)}</p>
+      </div>
+      <div class="vacature-actions">
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <button class="btn btn-outline btn-sm" style="padding:4px 8px;" onclick="moveTijdslijn(${t.id},-1)" ${i===0?'disabled':''} title="Omhoog">↑</button>
+          <button class="btn btn-outline btn-sm" style="padding:4px 8px;" onclick="moveTijdslijn(${t.id},1)" ${i===timeline.length-1?'disabled':''} title="Omlaag">↓</button>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="editTijdslijn(${t.id})">Bewerken</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteTijdslijn(${t.id})">Verwijderen</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function toggleAddTijdslijnForm() {
+  const w = document.getElementById('add-tijdslijn-form-wrap');
+  w.style.display = w.style.display === 'none' ? 'block' : 'none';
+  if (w.style.display === 'block') document.getElementById('new-tl-year').focus();
+}
+
+function saveNewTijdslijn() {
+  const year = document.getElementById('new-tl-year').value.trim();
+  const title = document.getElementById('new-tl-title').value.trim();
+  if (!year || !title) { alert('Jaar en titel zijn verplicht.'); return; }
+  pushUndo();
+  const newId = timeline.length > 0 ? Math.max(...timeline.map(t => t.id)) + 1 : 1;
+  timeline.push({
+    id: newId, year,
+    title,
+    desc: document.getElementById('new-tl-desc').value.trim(),
+    title_en: document.getElementById('new-tl-title-en').value.trim() || title,
+    desc_en: document.getElementById('new-tl-desc-en').value.trim(),
+    title_fr: document.getElementById('new-tl-title-fr').value.trim() || title,
+    desc_fr: document.getElementById('new-tl-desc-fr').value.trim()
+  });
+  db.collection('content').doc('timeline').set({ list: timeline }).then(() => {
+    ['new-tl-year','new-tl-title','new-tl-desc','new-tl-title-en','new-tl-desc-en','new-tl-title-fr','new-tl-desc-fr'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('add-tijdslijn-form-wrap').style.display = 'none';
+    renderTimeline();
+    showToast('Stap toegevoegd ✓');
+  }).catch(() => showToast('Fout bij opslaan'));
+}
+
+function moveTijdslijn(id, dir) {
+  const idx = timeline.findIndex(t => t.id === id);
+  if (idx < 0) return;
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= timeline.length) return;
+  pushUndo();
+  [timeline[idx], timeline[newIdx]] = [timeline[newIdx], timeline[idx]];
+  db.collection('content').doc('timeline').set({ list: timeline }).then(() => { renderTimeline(); showToast(); }).catch(() => showToast('Fout'));
+}
+
+function editTijdslijn(id) {
+  const t = timeline.find(t => t.id === id);
+  if (!t) return;
+  const idx = timeline.indexOf(t);
+  const cards = document.getElementById('tijdslijn-list').querySelectorAll('.vacature-card');
+  const editDiv = document.createElement('div');
+  editDiv.className = 'vacature-card';
+  editDiv.style.flexDirection = 'column';
+  editDiv.innerHTML = `
+    <div style="font-weight:600;font-size:0.95rem;margin-bottom:14px;color:var(--ink);">Bewerken</div>
+    <div style="display:grid;grid-template-columns:120px 1fr;gap:12px;">
+      <div class="form-group"><label>Jaar</label><input type="text" id="etl-year-${id}" value="${escHtml(t.year)}"></div>
+      <div class="form-group"><label>Titel (NL)</label><input type="text" id="etl-title-${id}" value="${escHtml(t.title)}"></div>
+    </div>
+    <div class="form-group"><label>Beschrijving (NL)</label><textarea id="etl-desc-${id}" style="min-height:70px;">${escHtml(t.desc || '')}</textarea></div>
+    <details style="margin:6px 0;"><summary style="font-weight:600;font-size:0.85rem;cursor:pointer;color:var(--blue);padding:4px 0;">🇬🇧 Engels</summary><div style="margin-top:8px;"><div class="form-group"><label>Titel EN</label><input type="text" id="etl-title-en-${id}" value="${escHtml(t.title_en || t.title)}"></div><div class="form-group"><label>Beschrijving EN</label><textarea id="etl-desc-en-${id}" style="min-height:60px;">${escHtml(t.desc_en || '')}</textarea></div></div></details>
+    <details style="margin:6px 0 10px;"><summary style="font-weight:600;font-size:0.85rem;cursor:pointer;color:var(--blue);padding:4px 0;">🇫🇷 Frans</summary><div style="margin-top:8px;"><div class="form-group"><label>Titel FR</label><input type="text" id="etl-title-fr-${id}" value="${escHtml(t.title_fr || t.title)}"></div><div class="form-group"><label>Beschrijving FR</label><textarea id="etl-desc-fr-${id}" style="min-height:60px;">${escHtml(t.desc_fr || '')}</textarea></div></div></details>
+    <div class="form-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveEditTijdslijn(${id})">Opslaan</button>
+      <button class="btn btn-ghost btn-sm" onclick="renderTimeline()">Annuleren</button>
+    </div>
+  `;
+  cards[idx].replaceWith(editDiv);
+}
+
+function saveEditTijdslijn(id) {
+  const t = timeline.find(t => t.id === id);
+  if (!t) return;
+  pushUndo();
+  t.year     = document.getElementById('etl-year-' + id).value.trim() || t.year;
+  t.title    = document.getElementById('etl-title-' + id).value.trim() || t.title;
+  t.desc     = document.getElementById('etl-desc-' + id).value.trim();
+  t.title_en = document.getElementById('etl-title-en-' + id).value.trim() || t.title;
+  t.desc_en  = document.getElementById('etl-desc-en-' + id).value.trim();
+  t.title_fr = document.getElementById('etl-title-fr-' + id).value.trim() || t.title;
+  t.desc_fr  = document.getElementById('etl-desc-fr-' + id).value.trim();
+  db.collection('content').doc('timeline').set({ list: timeline }).then(() => { renderTimeline(); showToast(); }).catch(() => showToast('Fout'));
+}
+
+function deleteTijdslijn(id) {
+  if (!confirm('Tijdslijn-stap verwijderen?')) return;
+  pushUndo();
+  timeline = timeline.filter(t => t.id !== id);
+  db.collection('content').doc('timeline').set({ list: timeline }).then(() => { renderTimeline(); showToast('Stap verwijderd'); }).catch(() => showToast('Fout'));
+}
+
+// ── BEOORDELINGEN ──
+const DEFAULT_REVIEWS = [
+  {id:1,author:"Thomas V.",role:"Zaakvoerder productiebedrijf",role_en:"Managing director, production company",role_fr:"Gérant d'une entreprise de production",stars:5,quote:"Eindelijk een makelaar die onze bedrijfsrisico's écht begrijpt.",quote_en:"Finally a broker who truly understands our business risks.",quote_fr:"Enfin un courtier qui comprend vraiment nos risques d'entreprise.",img:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&auto=format&fit=crop&crop=face"},
+  {id:2,author:"Sarah M.",role:"Eigenares textielbedrijf",role_en:"Owner, textile company",role_fr:"Propriétaire d'une entreprise textile",stars:5,quote:"Na een zware brandschade was alles binnen de week geregeld.",quote_en:"After a major fire, everything was sorted within a week.",quote_fr:"Après un grave incendie, tout était réglé en une semaine.",img:"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80&auto=format&fit=crop&crop=face"},
+  {id:3,author:"Dirk L.",role:"Transportbedrijf",role_en:"Transport company",role_fr:"Entreprise de transport",stars:5,quote:"Ze hebben onze fleet en BA-polis herbekeken. 30% bespaard.",quote_en:"They reviewed our fleet and liability policy. Saved 30%.",quote_fr:"Ils ont revu notre flotte et notre RC. 30% d'économies.",img:"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80&auto=format&fit=crop&crop=face"},
+  {id:4,author:"Nadia K.",role:"Zelfstandig architect",role_en:"Independent architect",role_fr:"Architecte indépendante",stars:5,quote:"Als architect is het fijn om een vast aanspreekpunt te hebben.",quote_en:"As an architect, it's great to have a dedicated point of contact.",quote_fr:"En tant qu'architecte, c'est bien d'avoir un interlocuteur dédié.",img:"https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80&auto=format&fit=crop&crop=face"},
+  {id:5,author:"Jan D.",role:"Zaakvoerder bouwbedrijf",role_en:"Managing director, construction company",role_fr:"Gérant d'une entreprise de construction",stars:5,quote:"Professioneel, eerlijk en transparant. Geen verrassingen.",quote_en:"Professional, honest and transparent. No surprises.",quote_fr:"Professionnel, honnête et transparent. Pas de mauvaises surprises.",img:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80&auto=format&fit=crop&crop=face"},
+];
+
+function loadReviews() {
+  db.collection('content').doc('reviews').get()
+    .then(doc => {
+      if (doc.exists && doc.data().list && doc.data().list.length > 0) {
+        reviews = doc.data().list;
+      } else {
+        reviews = JSON.parse(JSON.stringify(DEFAULT_REVIEWS));
+        db.collection('content').doc('reviews').set({ list: reviews });
+      }
+      renderReviews();
+      setTimeout(() => pickStar('new-rv', 5), 0);
+    })
+    .catch(() => { reviews = []; renderReviews(); });
+}
+
+function renderReviews() {
+  const container = document.getElementById('reviews-list');
+  if (!container) return;
+  container.innerHTML = '';
+  if (reviews.length === 0) {
+    container.innerHTML = '<p style="color:var(--slate);font-size:0.9rem;padding:12px 0;">Geen beoordelingen. Voeg er een toe.</p>';
+    return;
+  }
+  reviews.forEach((r, i) => {
+    const card = document.createElement('div');
+    card.className = 'vacature-card';
+    const filled = '★'.repeat(r.stars || 5);
+    const empty  = '☆'.repeat(5 - (r.stars || 5));
+    card.innerHTML = `
+      <div class="vacature-body" style="display:flex;gap:14px;align-items:flex-start;">
+        ${r.img
+          ? `<img src="${r.img}" style="width:42px;height:57px;object-fit:cover;border-radius:6px;flex-shrink:0;border:1px solid #e5e7eb;">`
+          : `<div style="width:42px;height:57px;border-radius:6px;background:#f3f4f6;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:1.1rem;">📷</div>`}
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+            <span style="font-weight:600;font-size:0.92rem;color:var(--ink);">${escHtml(r.author)}</span>
+            <span style="font-size:0.82rem;color:var(--slate);">${escHtml(r.role || '')}</span>
+          </div>
+          <div style="color:#d97706;font-size:0.82rem;margin-bottom:4px;">${filled}<span style="color:#d1d5db;">${empty}</span></div>
+          <p style="font-size:0.82rem;color:var(--slate);margin:0;">"${escHtml(r.quote)}"</p>
+        </div>
+      </div>
+      <div class="vacature-actions">
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <button class="btn btn-outline btn-sm" style="padding:4px 8px;" onclick="moveReview(${r.id},-1)" ${i===0?'disabled':''} title="Omhoog">↑</button>
+          <button class="btn btn-outline btn-sm" style="padding:4px 8px;" onclick="moveReview(${r.id},1)" ${i===reviews.length-1?'disabled':''} title="Omlaag">↓</button>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="editReview(${r.id})">Bewerken</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteReview(${r.id})">Verwijderen</button>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function toggleAddReviewForm() {
+  const w = document.getElementById('add-review-form-wrap');
+  const open = w.style.display !== 'none';
+  w.style.display = open ? 'none' : 'block';
+  if (!open) setTimeout(() => pickStar('new-rv', 5), 0);
+}
+
+function pickStar(prefix, n) {
+  const valEl = document.getElementById(prefix + '-stars');
+  const selEl = document.getElementById(prefix + '-star-sel');
+  if (valEl) valEl.value = n;
+  if (selEl) selEl.querySelectorAll('span').forEach((s, i) => { s.style.color = i < n ? '#d97706' : '#d1d5db'; });
+}
+
+function saveNewReview() {
+  const author = document.getElementById('new-rv-author').value.trim();
+  const role   = document.getElementById('new-rv-role').value.trim();
+  const quote  = document.getElementById('new-rv-quote').value.trim();
+  const stars  = parseInt(document.getElementById('new-rv-stars').value) || 5;
+  const role_en   = document.getElementById('new-rv-role-en').value.trim();
+  const role_fr   = document.getElementById('new-rv-role-fr').value.trim();
+  const quote_en  = document.getElementById('new-rv-quote-en').value.trim();
+  const quote_fr  = document.getElementById('new-rv-quote-fr').value.trim();
+  const img       = document.getElementById('new-rv-img').value;
+  if (!author || !quote) { showToast('Naam en citaat zijn verplicht'); return; }
+  pushUndo();
+  reviews.push({ id: Date.now(), author, role, role_en, role_fr, quote, quote_en, quote_fr, stars, img });
+  db.collection('content').doc('reviews').set({ list: reviews })
+    .then(() => {
+      renderReviews();
+      showToast('Beoordeling toegevoegd ✓');
+      toggleAddReviewForm();
+      ['new-rv-author','new-rv-role','new-rv-role-en','new-rv-role-fr','new-rv-quote','new-rv-quote-en','new-rv-quote-fr','new-rv-img'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      const prev = document.getElementById('new-rv-preview');
+      if (prev) { prev.src = ''; prev.style.display = 'none'; }
+    })
+    .catch(() => showToast('Fout bij opslaan'));
+}
+
+function moveReview(id, dir) {
+  const idx = reviews.findIndex(r => r.id === id);
+  if (idx === -1) return;
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= reviews.length) return;
+  pushUndo();
+  [reviews[idx], reviews[newIdx]] = [reviews[newIdx], reviews[idx]];
+  db.collection('content').doc('reviews').set({ list: reviews }).then(() => renderReviews()).catch(() => showToast('Fout'));
+}
+
+function editReview(id) {
+  const r = reviews.find(r => r.id === id);
+  if (!r) return;
+  const idx = reviews.indexOf(r);
+  const cards = document.getElementById('reviews-list').querySelectorAll('.vacature-card');
+  const starsHtml = [1,2,3,4,5].map(n =>
+    `<span onclick="pickStar('er-${id}',${n})" style="color:${n<=(r.stars||5)?'#d97706':'#d1d5db'};cursor:pointer;">★</span>`
+  ).join('');
+  const editDiv = document.createElement('div');
+  editDiv.className = 'vacature-card';
+  editDiv.style.flexDirection = 'column';
+  editDiv.innerHTML = `
+    <div style="font-weight:600;font-size:0.95rem;margin-bottom:14px;color:var(--ink);">Bewerken</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="form-group"><label>Naam</label><input type="text" id="er-${id}-author" value="${escHtml(r.author)}"></div>
+      <div class="form-group"><label>Functie / Bedrijf (NL)</label><input type="text" id="er-${id}-role" value="${escHtml(r.role||'')}"></div>
+    </div>
+    <div class="form-group"><label>Citaat (NL)</label><textarea id="er-${id}-quote" style="min-height:70px;">${escHtml(r.quote||'')}</textarea></div>
+    <details style="margin:-4px 0 12px;"><summary style="font-weight:600;font-size:0.85rem;cursor:pointer;color:var(--blue);padding:4px 0;">🇬🇧 Engels / 🇫🇷 Frans</summary><div style="margin-top:10px;display:grid;gap:12px;">
+      <div class="form-row">
+        <div class="form-group"><label>Functie EN</label><input type="text" id="er-${id}-role-en" value="${escHtml(r.role_en||'')}"></div>
+        <div class="form-group"><label>Functie FR</label><input type="text" id="er-${id}-role-fr" value="${escHtml(r.role_fr||'')}"></div>
+      </div>
+      <div class="form-group"><label>Citaat EN</label><textarea id="er-${id}-quote-en" style="min-height:60px;">${escHtml(r.quote_en||'')}</textarea></div>
+      <div class="form-group"><label>Citaat FR</label><textarea id="er-${id}-quote-fr" style="min-height:60px;">${escHtml(r.quote_fr||'')}</textarea></div>
+    </div></details>
+    <div class="form-group">
+      <label>Score</label>
+      <div style="display:flex;gap:4px;font-size:1.5rem;margin-top:4px;" id="er-${id}-star-sel">${starsHtml}</div>
+      <input type="hidden" id="er-${id}-stars" value="${r.stars||5}">
+    </div>
+    <div class="form-group">
+      <label>Foto</label>
+      <div style="display:flex;gap:10px;align-items:center;margin-top:4px;">
+        ${r.img ? `<img id="er-${id}-preview" src="${r.img}" style="width:42px;height:57px;object-fit:cover;border-radius:6px;border:1px solid #e5e7eb;">` : `<div id="er-${id}-preview" style="width:42px;height:57px;border-radius:6px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;color:#9ca3af;">📷</div>`}
+        <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('er-file-${id}').click()">Vervangen</button>
+        <input type="file" id="er-file-${id}" accept="image/*" style="display:none" onchange="openCropModal(this.files[0],'er-${id}')">
+        <input type="hidden" id="er-${id}-img" value="${escHtml(r.img||'')}">
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveEditReview(${id})">Opslaan</button>
+      <button class="btn btn-ghost btn-sm" onclick="renderReviews()">Annuleren</button>
+    </div>`;
+  cards[idx].replaceWith(editDiv);
+}
+
+function saveEditReview(id) {
+  const r = reviews.find(r => r.id === id);
+  if (!r) return;
+  pushUndo();
+  r.author    = document.getElementById('er-' + id + '-author').value.trim();
+  r.role      = document.getElementById('er-' + id + '-role').value.trim();
+  r.role_en   = document.getElementById('er-' + id + '-role-en').value.trim();
+  r.role_fr   = document.getElementById('er-' + id + '-role-fr').value.trim();
+  r.quote     = document.getElementById('er-' + id + '-quote').value.trim();
+  r.quote_en  = document.getElementById('er-' + id + '-quote-en').value.trim();
+  r.quote_fr  = document.getElementById('er-' + id + '-quote-fr').value.trim();
+  r.stars     = parseInt(document.getElementById('er-' + id + '-stars').value) || 5;
+  r.img       = document.getElementById('er-' + id + '-img').value;
+  db.collection('content').doc('reviews').set({ list: reviews })
+    .then(() => { renderReviews(); showToast(); })
+    .catch(() => showToast('Fout'));
+}
+
+function deleteReview(id) {
+  if (!confirm('Beoordeling verwijderen?')) return;
+  pushUndo();
+  reviews = reviews.filter(r => r.id !== id);
+  db.collection('content').doc('reviews').set({ list: reviews })
+    .then(() => { renderReviews(); showToast('Beoordeling verwijderd'); })
+    .catch(() => showToast('Fout'));
+}
+
+// ── CROP MODAL ──
+var cropState = { scale: 1, x: 0, y: 0, minScale: 1, nw: 0, nh: 0, dragging: false, startX: 0, startY: 0, imgX: 0, imgY: 0 };
+var cropTarget = '';
+
+function openCropModal(file, target) {
+  if (!file) return;
+  cropTarget = target;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const imgEl = document.getElementById('crop-img');
+    imgEl.onload = function() {
+      const vw = 280, vh = 380;
+      cropState.nw = imgEl.naturalWidth;
+      cropState.nh = imgEl.naturalHeight;
+      const minS = Math.max(vw / cropState.nw, vh / cropState.nh);
+      cropState.minScale = minS;
+      cropState.scale = minS;
+      const w = cropState.nw * minS, h = cropState.nh * minS;
+      cropState.x = (vw - w) / 2;
+      cropState.y = (vh - h) / 2;
+      updateCropTransform();
+      document.getElementById('crop-modal').style.display = 'flex';
+    };
+    imgEl.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function updateCropTransform() {
+  const img = document.getElementById('crop-img');
+  img.style.width  = (cropState.nw * cropState.scale) + 'px';
+  img.style.height = (cropState.nh * cropState.scale) + 'px';
+  img.style.left   = cropState.x + 'px';
+  img.style.top    = cropState.y + 'px';
+  const lbl = document.getElementById('crop-zoom-label');
+  if (lbl) lbl.textContent = Math.round(cropState.scale / cropState.minScale * 100) + '%';
+}
+
+function clampCrop() {
+  const vw = 280, vh = 380;
+  const w = cropState.nw * cropState.scale, h = cropState.nh * cropState.scale;
+  if (cropState.x > 0) cropState.x = 0;
+  if (cropState.y > 0) cropState.y = 0;
+  if (cropState.x + w < vw) cropState.x = vw - w;
+  if (cropState.y + h < vh) cropState.y = vh - h;
+}
+
+function adjustZoom(d) {
+  const oldScale = cropState.scale;
+  cropState.scale = Math.max(cropState.minScale, Math.min(cropState.minScale * 4, cropState.scale + d * cropState.minScale));
+  const cx = 140, cy = 190; // center of 280×380 viewport
+  cropState.x = cx - (cx - cropState.x) * (cropState.scale / oldScale);
+  cropState.y = cy - (cy - cropState.y) * (cropState.scale / oldScale);
+  clampCrop();
+  updateCropTransform();
+}
+
+function confirmCrop() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 280; canvas.height = 380;
+  const ctx = canvas.getContext('2d');
+  const img = document.getElementById('crop-img');
+  ctx.drawImage(img, -cropState.x / cropState.scale, -cropState.y / cropState.scale, 280 / cropState.scale, 380 / cropState.scale, 0, 0, 280, 380);
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.80);
+  const previewEl = document.getElementById(cropTarget + '-preview');
+  const dataEl    = document.getElementById(cropTarget + '-img');
+  if (previewEl) {
+    previewEl.src = dataUrl;
+    previewEl.style.cssText = 'width:42px;height:57px;object-fit:cover;border-radius:6px;border:1px solid #e5e7eb;display:block;';
+  }
+  if (dataEl) dataEl.value = dataUrl;
+  document.getElementById('crop-modal').style.display = 'none';
+}
+
+(function setupCropDrag() {
+  document.addEventListener('DOMContentLoaded', function() {
+    const vp = document.getElementById('crop-viewport');
+    if (!vp) return;
+    vp.addEventListener('mousedown', function(e) {
+      cropState.dragging = true;
+      cropState.startX = e.clientX; cropState.startY = e.clientY;
+      cropState.imgX = cropState.x; cropState.imgY = cropState.y;
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', function(e) {
+      if (!cropState.dragging) return;
+      cropState.x = cropState.imgX + (e.clientX - cropState.startX);
+      cropState.y = cropState.imgY + (e.clientY - cropState.startY);
+      clampCrop(); updateCropTransform();
+    });
+    document.addEventListener('mouseup', function() { cropState.dragging = false; });
+    vp.addEventListener('touchstart', function(e) {
+      if (e.touches.length !== 1) return;
+      cropState.dragging = true;
+      cropState.startX = e.touches[0].clientX; cropState.startY = e.touches[0].clientY;
+      cropState.imgX = cropState.x; cropState.imgY = cropState.y;
+      e.preventDefault();
+    }, {passive:false});
+    vp.addEventListener('touchmove', function(e) {
+      if (!cropState.dragging || e.touches.length !== 1) return;
+      e.preventDefault();
+      cropState.x = cropState.imgX + (e.touches[0].clientX - cropState.startX);
+      cropState.y = cropState.imgY + (e.touches[0].clientY - cropState.startY);
+      clampCrop(); updateCropTransform();
+    }, {passive:false});
+    vp.addEventListener('touchend', function() { cropState.dragging = false; });
+  });
+})();
+
+// ── BANNER ──
+function loadBanner() {
+  db.collection('content').doc('banner').get()
+    .then(doc => {
+      bannerData = doc.exists ? doc.data() : {};
+      const activeEl = document.getElementById('banner-active');
+      const nlEl     = document.getElementById('banner-msg-nl');
+      const enEl     = document.getElementById('banner-msg-en');
+      const frEl     = document.getElementById('banner-msg-fr');
+      if (activeEl) activeEl.checked = !!bannerData.active;
+      if (nlEl)     nlEl.value       = bannerData.msg_nl || '';
+      if (enEl)     enEl.value       = bannerData.msg_en || '';
+      if (frEl)     frEl.value       = bannerData.msg_fr || '';
+    })
+    .catch(() => {});
+}
+
+function saveBanner() {
+  bannerData = {
+    active: document.getElementById('banner-active').checked,
+    msg_nl: document.getElementById('banner-msg-nl').value.trim(),
+    msg_en: document.getElementById('banner-msg-en').value.trim(),
+    msg_fr: document.getElementById('banner-msg-fr').value.trim()
+  };
+  db.collection('content').doc('banner').set(bannerData)
+    .then(() => showToast('Banner opgeslagen ✓'))
+    .catch(() => showToast('Fout bij opslaan'));
+}
+</script>
+</body>
+</html>
