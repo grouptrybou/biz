@@ -1202,20 +1202,61 @@
       <div id="tab-aanvragen" class="tab-pane">
         <div class="section-header">
           <h1 class="section-title">Aanvragen</h1>
-          <div style="display:flex;gap:8px;align-items:center">
-            <select id="aanvragen-filter" onchange="renderAanvragen()" style="padding:7px 12px;border:1.5px solid rgba(0,0,0,.1);border-radius:8px;font-family:inherit;font-size:.85rem;background:#fff;color:var(--ink)">
-              <option value="all">Alle aanvragen</option>
-              <option value="ongelezen">Ongelezen</option>
-              <option value="gelezen">Gelezen</option>
-            </select>
+        </div>
+        <div id="kanban-board" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start;">
+          <!-- col: Nieuw -->
+          <div class="kb-col" data-status="nieuw"
+               ondragover="event.preventDefault();this.classList.add('kb-over')"
+               ondragleave="this.classList.remove('kb-over')"
+               ondrop="kbDrop(event,'nieuw')"
+               style="background:#f4f6fb;border-radius:14px;padding:14px;min-height:200px;">
+            <div style="font-weight:700;font-size:.85rem;color:#5271a0;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+              <span style="width:10px;height:10px;border-radius:50%;background:#5b8dee;display:inline-block;"></span>
+              Nieuw <span id="kb-count-nieuw" style="margin-left:auto;background:#dde6f7;color:#3a5fad;border-radius:20px;font-size:.75rem;padding:1px 8px;font-weight:700;"></span>
+            </div>
+            <div id="kb-list-nieuw" class="kb-list"></div>
+          </div>
+          <!-- col: In behandeling -->
+          <div class="kb-col" data-status="behandeling"
+               ondragover="event.preventDefault();this.classList.add('kb-over')"
+               ondragleave="this.classList.remove('kb-over')"
+               ondrop="kbDrop(event,'behandeling')"
+               style="background:#f4f6fb;border-radius:14px;padding:14px;min-height:200px;">
+            <div style="font-weight:700;font-size:.85rem;color:#8a6200;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+              <span style="width:10px;height:10px;border-radius:50%;background:#f5a623;display:inline-block;"></span>
+              In behandeling <span id="kb-count-behandeling" style="margin-left:auto;background:#fef3dd;color:#9a6f00;border-radius:20px;font-size:.75rem;padding:1px 8px;font-weight:700;"></span>
+            </div>
+            <div id="kb-list-behandeling" class="kb-list"></div>
+          </div>
+          <!-- col: Afgehandeld -->
+          <div class="kb-col" data-status="afgehandeld"
+               ondragover="event.preventDefault();this.classList.add('kb-over')"
+               ondragleave="this.classList.remove('kb-over')"
+               ondrop="kbDrop(event,'afgehandeld')"
+               style="background:#f4f6fb;border-radius:14px;padding:14px;min-height:200px;">
+            <div style="font-weight:700;font-size:.85rem;color:#1a7a4a;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+              <span style="width:10px;height:10px;border-radius:50%;background:#28c76f;display:inline-block;"></span>
+              Afgehandeld <span id="kb-count-afgehandeld" style="margin-left:auto;background:#d9f5e7;color:#0f6636;border-radius:20px;font-size:.75rem;padding:1px 8px;font-weight:700;"></span>
+            </div>
+            <div id="kb-list-afgehandeld" class="kb-list"></div>
           </div>
         </div>
-        <div id="aanvragen-list" style="display:grid;gap:14px;"></div>
         <div id="aanvragen-empty" style="display:none;text-align:center;padding:60px 0;color:var(--muted)">
           <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 12px;display:block;opacity:.4"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           Geen aanvragen gevonden
         </div>
       </div>
+      <style>
+        .kb-col.kb-over { outline:2px dashed var(--blue);outline-offset:-2px; }
+        .kb-card { background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 1px 6px rgba(0,0,0,.07);cursor:grab;margin-bottom:10px;transition:box-shadow .15s,transform .15s; }
+        .kb-card:active { cursor:grabbing; }
+        .kb-card.kb-dragging { opacity:.45;transform:scale(.97); }
+        .kb-card-name { font-weight:700;font-size:.9rem;color:var(--ink); }
+        .kb-card-date { font-size:.75rem;color:var(--muted);margin-top:1px; }
+        .kb-card-meta { margin-top:8px;font-size:.78rem;color:var(--slate);display:flex;flex-direction:column;gap:3px; }
+        .kb-card-actions { margin-top:10px;display:flex;gap:6px;flex-wrap:wrap; }
+        .kb-new-dot { width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block;margin-right:4px;vertical-align:middle; }
+      </style>
 
       <div id="tab-instellingen" class="tab-pane">
         <div class="section-header">
@@ -1332,13 +1373,20 @@ const TAB_TITLES = {
   instellingen: 'Instellingen'
 };
 
-// ── AANVRAGEN ──
+// ── AANVRAGEN KANBAN ──
 let allAanvragen = [];
+let kbDragId = null;
+
+const KB_COLS = ['nieuw', 'behandeling', 'afgehandeld'];
 
 function loadAanvragen() {
   db.collection('aanvragen').orderBy('datum', 'desc').get().then(snap => {
     allAanvragen = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    const ongelezen = allAanvragen.filter(a => !a.gelezen).length;
+    // migrate: items without status default to 'nieuw', unless gelezen → 'behandeling'
+    allAanvragen.forEach(a => {
+      if (!a.status) a.status = a.gelezen ? 'behandeling' : 'nieuw';
+    });
+    const ongelezen = allAanvragen.filter(a => a.status === 'nieuw').length;
     const badge = document.getElementById('aanvragen-badge');
     if (badge) {
       if (ongelezen > 0) { badge.textContent = ongelezen; badge.style.display = 'inline'; }
@@ -1349,61 +1397,91 @@ function loadAanvragen() {
 }
 
 function renderAanvragen() {
-  const filter = (document.getElementById('aanvragen-filter') || {}).value || 'all';
-  const list = document.getElementById('aanvragen-list');
   const empty = document.getElementById('aanvragen-empty');
-  if (!list) return;
-
-  const filtered = allAanvragen.filter(a => {
-    if (filter === 'ongelezen') return !a.gelezen;
-    if (filter === 'gelezen')   return  a.gelezen;
-    return true;
-  });
-
-  if (filtered.length === 0) {
-    list.innerHTML = ''; empty.style.display = 'block'; return;
+  if (allAanvragen.length === 0) {
+    document.getElementById('kanban-board').style.display = 'none';
+    empty.style.display = 'block'; return;
   }
+  document.getElementById('kanban-board').style.display = 'grid';
   empty.style.display = 'none';
 
-  list.innerHTML = filtered.map(a => {
-    const datum = a.datum ? new Date(a.datum).toLocaleString('nl-BE', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '—';
-    const naam  = [a.voornaam, a.achternaam].filter(Boolean).join(' ') || '(geen naam)';
-    const quizHtml = a.quiz ? `
-      <div style="margin-top:10px;padding:10px 14px;background:var(--blue-ghost);border-radius:8px;font-size:.8rem;color:var(--slate);display:flex;gap:16px;flex-wrap:wrap">
-        ${a.quiz.profiel    ? `<span><strong>Profiel:</strong> ${a.quiz.profiel}</span>` : ''}
-        ${a.quiz.timing     ? `<span><strong>Laatste check:</strong> ${a.quiz.timing}</span>` : ''}
-        ${a.quiz.aanleiding ? `<span><strong>Aanleiding:</strong> ${a.quiz.aanleiding}</span>` : ''}
-      </div>` : '';
-    return `
-      <div style="background:#fff;border-radius:14px;padding:22px 26px;box-shadow:0 2px 12px rgba(0,0,0,.06);border-left:4px solid ${a.gelezen ? 'transparent' : 'var(--blue)'}">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
+  KB_COLS.forEach(col => {
+    const items = allAanvragen.filter(a => (a.status || 'nieuw') === col);
+    const countEl = document.getElementById('kb-count-' + col);
+    if (countEl) countEl.textContent = items.length;
+    const listEl = document.getElementById('kb-list-' + col);
+    if (!listEl) return;
+    listEl.innerHTML = items.map(a => {
+      const datum = a.datum ? new Date(a.datum).toLocaleString('nl-BE', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '—';
+      const naam  = [a.voornaam, a.achternaam].filter(Boolean).join(' ') || '(geen naam)';
+      const isNieuw = col === 'nieuw';
+      const quizTags = a.quiz ? [
+        a.quiz.profiel    ? a.quiz.profiel    : null,
+        a.quiz.timing     ? a.quiz.timing     : null,
+        a.quiz.aanleiding ? a.quiz.aanleiding : null,
+      ].filter(Boolean).map(t => `<span style="background:#eef3fc;color:#3a5fad;border-radius:20px;font-size:.72rem;padding:2px 8px;">${esc(t)}</span>`).join('') : '';
+      return `
+      <div class="kb-card${isNieuw ? ' kb-card-new' : ''}"
+           draggable="true"
+           data-id="${esc(a.id)}"
+           ondragstart="kbDragStart(event,'${esc(a.id)}')"
+           ondragend="this.classList.remove('kb-dragging')">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px;">
           <div>
-            <div style="font-weight:700;font-size:.97rem;color:var(--ink)">${esc(naam)}</div>
-            <div style="font-size:.82rem;color:var(--muted);margin-top:2px">${datum}</div>
+            ${isNieuw ? '<span class="kb-new-dot"></span>' : ''}
+            <span class="kb-card-name">${esc(naam)}</span>
+            <div class="kb-card-date">${datum}</div>
           </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-            ${!a.gelezen ? `<button class="btn btn-outline btn-sm" onclick="markGelezen('${a.id}')">Markeer gelezen</button>` : `<span style="font-size:.78rem;color:var(--muted);font-style:italic">Gelezen</span>`}
-            <button class="btn btn-danger btn-sm" onclick="deleteAanvraag('${a.id}')">Verwijder</button>
-          </div>
+          <button onclick="deleteAanvraag('${esc(a.id)}')" title="Verwijder"
+            style="background:none;border:none;cursor:pointer;color:#ccc;font-size:1rem;padding:0;line-height:1;flex-shrink:0;"
+            onmouseenter="this.style.color='#dc3545'" onmouseleave="this.style.color='#ccc'">✕</button>
         </div>
-        <div style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px 20px;font-size:.83rem;color:var(--slate)">
-          ${a.email    ? `<div><strong>E-mail:</strong> <a href="mailto:${esc(a.email)}" style="color:var(--blue)">${esc(a.email)}</a></div>` : ''}
-          ${a.telefoon ? `<div><strong>Tel:</strong> <a href="tel:${esc(a.telefoon)}">${esc(a.telefoon)}</a></div>` : ''}
-          ${a.sector   ? `<div><strong>Sector:</strong> ${esc(a.sector)}</div>` : ''}
-          ${a.kantoor  ? `<div><strong>Kantoor:</strong> ${esc(a.kantoor)}</div>` : ''}
+        <div class="kb-card-meta">
+          ${a.email    ? `<span>✉ <a href="mailto:${esc(a.email)}" style="color:var(--blue)">${esc(a.email)}</a></span>` : ''}
+          ${a.telefoon ? `<span>☎ <a href="tel:${esc(a.telefoon)}" style="color:inherit">${esc(a.telefoon)}</a></span>` : ''}
+          ${a.sector   ? `<span>🏢 ${esc(a.sector)}</span>` : ''}
+          ${a.kantoor  ? `<span>📍 ${esc(a.kantoor)}</span>` : ''}
         </div>
-        ${a.bericht ? `<div style="margin-top:10px;font-size:.85rem;color:var(--slate);line-height:1.6;white-space:pre-wrap">${esc(a.bericht)}</div>` : ''}
-        ${quizHtml}
+        ${a.bericht ? `<div style="margin-top:8px;font-size:.78rem;color:var(--slate);line-height:1.5;white-space:pre-wrap;border-top:1px solid #f0f0f0;padding-top:8px;">${esc(a.bericht)}</div>` : ''}
+        ${quizTags ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;">${quizTags}</div>` : ''}
+        <div class="kb-card-actions">
+          ${col !== 'nieuw'        ? `<button class="btn btn-outline btn-sm" onclick="moveAanvraag('${esc(a.id)}','nieuw')">← Nieuw</button>` : ''}
+          ${col !== 'behandeling'  ? `<button class="btn btn-outline btn-sm" onclick="moveAanvraag('${esc(a.id)}','behandeling')">In behandeling</button>` : ''}
+          ${col !== 'afgehandeld'  ? `<button class="btn btn-outline btn-sm" onclick="moveAanvraag('${esc(a.id)}','afgehandeld')">Afgehandeld ✓</button>` : ''}
+        </div>
       </div>`;
-  }).join('');
+    }).join('');
+  });
 }
 
-function markGelezen(id) {
-  db.collection('aanvragen').doc(id).update({ gelezen: true }).then(() => {
-    const item = allAanvragen.find(a => a.id === id);
-    if (item) item.gelezen = true;
-    loadAanvragen();
-  }).catch(() => {});
+function kbDragStart(e, id) {
+  kbDragId = id;
+  e.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => { const el = document.querySelector(`.kb-card[data-id="${id}"]`); if (el) el.classList.add('kb-dragging'); }, 0);
+}
+
+function kbDrop(e, targetStatus) {
+  e.preventDefault();
+  document.querySelectorAll('.kb-col').forEach(c => c.classList.remove('kb-over'));
+  if (!kbDragId) return;
+  moveAanvraag(kbDragId, targetStatus);
+  kbDragId = null;
+}
+
+function moveAanvraag(id, newStatus) {
+  const item = allAanvragen.find(a => a.id === id);
+  if (!item || item.status === newStatus) return;
+  item.status = newStatus;
+  if (newStatus !== 'nieuw') item.gelezen = true;
+  db.collection('aanvragen').doc(id).update({ status: newStatus, gelezen: newStatus !== 'nieuw' }).catch(() => {});
+  renderAanvragen();
+  // update badge
+  const ongelezen = allAanvragen.filter(a => a.status === 'nieuw').length;
+  const badge = document.getElementById('aanvragen-badge');
+  if (badge) {
+    if (ongelezen > 0) { badge.textContent = ongelezen; badge.style.display = 'inline'; }
+    else { badge.style.display = 'none'; }
+  }
 }
 
 function deleteAanvraag(id) {
@@ -1425,6 +1503,7 @@ function showToast(msg) {
 function escHtml(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+const esc = escHtml;
 
 // ── AUTH ──
 function doLogin() {
