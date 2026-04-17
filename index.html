@@ -789,16 +789,8 @@ footer a:hover{color:var(--white)}
   </div>
 </div>
 
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
+<script>
+  var firebaseConfig = {
     apiKey: "AIzaSyAtwAXkGxxOzOIvoNKSmo5__vK7IUasUu8",
     authDomain: "trybou-biz.firebaseapp.com",
     projectId: "trybou-biz",
@@ -807,10 +799,6 @@ footer a:hover{color:var(--white)}
     appId: "1:903288045605:web:5bf10a1ac5941583aebfcc",
     measurementId: "G-KR4WF61E3Q"
   };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
 </script>
 
 <div id="site-banner" role="alert">
@@ -4337,23 +4325,13 @@ function submitForm() {
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 <script>
 (function() {
-  // ===== CMS INTEGRATIE =====
-  // Zelfde firebaseConfig als in admin.html invullen:
-  var firebaseConfig = {
-    apiKey: "AIzaSyAtwAXkGxxOzOIvoNKSmo5__vK7IUasUu8",
-    authDomain: "trybou-biz.firebaseapp.com",
-    projectId: "trybou-biz",
-    storageBucket: "trybou-biz.firebasestorage.app",
-    messagingSenderId: "903288045605",
-    appId: "1:903288045605:web:5bf10a1ac5941583aebfcc",
-    measurementId: "G-KR4WF61E3Q"
-  };
-  // ==========================
+  if (!firebaseConfig || firebaseConfig.apiKey === "UW_API_KEY") return;
 
-  if (firebaseConfig.apiKey === "UW_API_KEY") return; // not configured yet, use static HTML
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
 
   try {
-    firebase.initializeApp(firebaseConfig);
     var db = firebase.firestore();
 
     // ── VACATURES ──
