@@ -768,28 +768,25 @@ footer a:hover{color:var(--white)}
     </div>
     <div class="pm-body">
       <div id="pm-form">
-        <p class="pm-subtitle">Stuur uw huidige polissen door en we beginnen al aan een voorstel vóór onze afspraak.</p>
+        <p class="pm-subtitle">Vul uw gegevens in — we stellen een e-mail op naar Tom. U voegt uw polissen als bijlage toe en klikt op verzenden.</p>
         <div class="pm-field"><label>Naam *</label><input id="pm-naam" type="text" placeholder="Uw naam"></div>
         <div class="pm-field"><label>E-mail *</label><input id="pm-email" type="email" placeholder="uwmail@bedrijf.be"></div>
         <div class="pm-field"><label>Telefoon</label><input id="pm-telefoon" type="tel" placeholder="0470 00 00 00"></div>
         <div class="pm-dropzone" id="pm-dropzone" onclick="document.getElementById('pm-file-input').click()">
           <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
-          <p>Sleep uw polissen hier of <span>klik om te bladeren</span></p>
-          <p class="pm-hint">PDF, Word, JPG, PNG · max. 10 MB per bestand</p>
+          <p>Selecteer uw polissen of sleep ze hier</p>
+          <p class="pm-hint">PDF, Word, JPG, PNG · u voegt deze toe als bijlage in uw e-mailprogramma</p>
           <input id="pm-file-input" type="file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display:none" onchange="pmHandleFiles(this.files)">
         </div>
         <div class="pm-file-list" id="pm-file-list"></div>
         <div class="pm-error" id="pm-error"></div>
-        <button class="pm-submit" id="pm-submit" onclick="submitPolissen()">Polissen bezorgen →</button>
-        <div class="pm-progress-wrap" id="pm-progress-wrap">
-          <div class="pm-progress-bar" id="pm-progress-bar"></div>
-          <div class="pm-progress-label" id="pm-progress-label">Uploaden…</div>
-        </div>
+        <button class="pm-submit" id="pm-submit" onclick="submitPolissen()">E-mail opstellen naar Tom →</button>
       </div>
       <div id="pm-success">
         <svg width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
-        <h4>Ontvangen!</h4>
-        <p>Uw polissen zijn bezorgd. We beginnen meteen met de analyse en nemen spoedig contact met u op.</p>
+        <h4>E-mail staat klaar!</h4>
+        <p>Uw e-mailprogramma is geopend met alle gegevens ingevuld. <strong>Voeg uw polissen als bijlage toe en klik op verzenden.</strong></p>
+        <div id="pm-success-files"></div>
         <button onclick="closePolissenModal()">Sluiten</button>
       </div>
     </div>
@@ -4629,14 +4626,12 @@ function closePolissenModal() {
   document.getElementById('pm-telefoon').value = '';
   pmFiles = [];
   pmRenderFiles();
-  document.getElementById('pm-form').style.display = 'block';
+  document.getElementById('pm-form').style.display    = 'block';
   document.getElementById('pm-success').style.display = 'none';
-  document.getElementById('pm-error').style.display = 'none';
-  var btn  = document.getElementById('pm-submit');
-  var wrap = document.getElementById('pm-progress-wrap');
-  var bar  = document.getElementById('pm-progress-bar');
+  document.getElementById('pm-error').style.display   = 'none';
+  document.getElementById('pm-success-files').innerHTML = '';
+  var btn = document.getElementById('pm-submit');
   btn.disabled = false; btn.style.display = '';
-  if (wrap) { wrap.style.display = 'none'; bar.style.width = '0%'; }
 }
 
 function pmHandleFiles(files) {
@@ -4663,146 +4658,33 @@ function pmShowError(msg) {
 }
 
 function submitPolissen() {
-  console.log('[PM] submitPolissen aangeroepen');
   var naam     = document.getElementById('pm-naam').value.trim();
   var email    = document.getElementById('pm-email').value.trim();
   var telefoon = document.getElementById('pm-telefoon').value.trim();
   document.getElementById('pm-error').style.display = 'none';
 
-  if (!naam)                           { pmShowError('Naam is verplicht.'); return; }
-  if (!email || !email.includes('@'))  { pmShowError('Geldig e-mailadres is verplicht.'); return; }
-  if (!pmFiles.length)                 { pmShowError('Voeg minstens één polis toe.'); return; }
-  console.log('[PM] validatie ok, bestanden:', pmFiles.length);
+  if (!naam)                          { pmShowError('Naam is verplicht.'); return; }
+  if (!email || !email.includes('@')) { pmShowError('Geldig e-mailadres is verplicht.'); return; }
+  if (!pmFiles.length)                { pmShowError('Selecteer minstens één polis om bij te voegen.'); return; }
 
-  var btn  = document.getElementById('pm-submit');
-  var wrap = document.getElementById('pm-progress-wrap');
-  var bar  = document.getElementById('pm-progress-bar');
-  var lbl  = document.getElementById('pm-progress-label');
+  var fileLines = pmFiles.map(function(f) { return '- ' + f.name; }).join('\r\n');
+  var body = 'Naam: ' + naam + '\r\n' +
+             'E-mail: ' + email + '\r\n' +
+             (telefoon ? 'Telefoon: ' + telefoon + '\r\n' : '') +
+             '\r\nBij te voegen polissen:\r\n' + fileLines +
+             '\r\n\r\nVoeg de bovenstaande bestanden als bijlage toe vóór u verzendt.';
 
-  function showProgress(pct, text) {
-    btn.style.display  = 'none';
-    wrap.style.display = 'block';
-    bar.style.width    = pct + '%';
-    lbl.textContent    = text;
+  var subject = 'Polissen van ' + naam;
+  window.location.href = 'mailto:tom@grouptrybou.be?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+  var successFiles = document.getElementById('pm-success-files');
+  if (pmFiles.length) {
+    successFiles.innerHTML = '<p style="font-size:.85rem;color:#6b7280;margin:8px 0 4px">Nog toe te voegen als bijlage:</p><ul style="font-size:.85rem;color:#374151;text-align:left;margin:0;padding-left:20px">' +
+      pmFiles.map(function(f) { return '<li>' + f.name.replace(/</g,'&lt;') + '</li>'; }).join('') + '</ul>';
   }
 
-  function restoreBtn() {
-    wrap.style.display = 'none';
-    bar.style.width    = '0%';
-    btn.style.display  = '';
-    btn.disabled       = false;
-  }
-
-  btn.disabled = true;
-  showProgress(0, 'Uploaden…');
-
-  console.log('[PM] firebase.apps.length:', firebase.apps.length);
-  var storage, db;
-  try {
-    storage = firebase.storage();
-    db      = firebase.firestore();
-    console.log('[PM] firebase storage + firestore ok');
-  } catch(initErr) {
-    console.error('[PM] firebase init fout:', initErr);
-    pmShowError('Firebase niet beschikbaar (' + initErr.message + '). Mail naar info@grouptrybou.be.');
-    restoreBtn();
-    return;
-  }
-
-  var uploadedFiles = [];
-  var currentIndex  = 0;
-
-  function uploadNext() {
-    if (currentIndex >= pmFiles.length) {
-      showProgress(100, 'Opslaan…');
-      db.collection('aanvragen').add({
-        naam:     naam,
-        email:    email,
-        telefoon: telefoon || null,
-        type:     'polis-upload',
-        polissen: uploadedFiles,
-        datum:    firebase.firestore.FieldValue.serverTimestamp(),
-        status:   'nieuw',
-        gelezen:  false
-      }).then(function() {
-        document.getElementById('pm-form').style.display    = 'none';
-        document.getElementById('pm-success').style.display = 'flex';
-      }).catch(function(err) {
-        console.error('Firestore error:', err);
-        pmShowError('Opslaan mislukt (' + (err.code || err.message) + '). Probeer opnieuw of mail naar info@grouptrybou.be.');
-        restoreBtn();
-      });
-      return;
-    }
-
-    var file     = pmFiles[currentIndex];
-    var fileNum  = currentIndex + 1;
-    var total    = pmFiles.length;
-    var safeName = file.name.replace(/[^a-zA-Z0-9._\-]/g, '_');
-    var path     = 'polissen/' + Date.now() + '_' + safeName;
-    console.log('[PM] upload starten:', path);
-    var ref, task;
-    try {
-      ref  = storage.ref(path);
-      task = ref.put(file);
-      console.log('[PM] UploadTask aangemaakt:', !!task);
-    } catch(putErr) {
-      pmShowError('Upload starten mislukt (' + (putErr.code || putErr.message) + '). Probeer opnieuw.');
-      restoreBtn();
-      return;
-    }
-    var timedOut = false;
-
-    var globalPct = Math.round((currentIndex / total) * 100);
-    showProgress(globalPct, 'Bestand ' + fileNum + '/' + total + ' — 0%');
-
-    var timer = setTimeout(function() {
-      timedOut = true;
-      task.cancel();
-      pmShowError('Upload time-out bij bestand ' + fileNum + '. Controleer je verbinding en probeer opnieuw.');
-      restoreBtn();
-    }, 60000);
-
-    console.log('[PM] task.on registreren');
-    task.on('state_changed',
-      function(snapshot) {
-        console.log('[PM] state_changed:', snapshot.state, snapshot.bytesTransferred, '/', snapshot.totalBytes);
-        if (snapshot.totalBytes > 0) {
-          var filePct   = snapshot.bytesTransferred / snapshot.totalBytes;
-          var globalPct = Math.round(((currentIndex + filePct) / total) * 100);
-          var filePctInt = Math.round(filePct * 100);
-          showProgress(globalPct, 'Bestand ' + fileNum + '/' + total + ' — ' + filePctInt + '%');
-        }
-      },
-      function(err) {
-        if (timedOut) return;
-        clearTimeout(timer);
-        console.error('Storage error:', err);
-        pmShowError('Upload mislukt (' + (err.code || err.message) + '). Probeer opnieuw of mail naar info@grouptrybou.be.');
-        restoreBtn();
-      },
-      function() {
-        if (timedOut) return;
-        clearTimeout(timer);
-        ref.getDownloadURL().then(function(url) {
-          uploadedFiles.push({ naam: file.name, url: url });
-          currentIndex++;
-          uploadNext();
-        }).catch(function(err) {
-          console.error('getDownloadURL error:', err);
-          pmShowError('URL ophalen mislukt (' + (err.code || err.message) + '). Probeer opnieuw of mail naar info@grouptrybou.be.');
-          restoreBtn();
-        });
-      }
-    );
-  }
-
-  try {
-    uploadNext();
-  } catch(startErr) {
-    pmShowError('Onverwachte fout: ' + (startErr.message || startErr) + '. Probeer opnieuw.');
-    restoreBtn();
-  }
+  document.getElementById('pm-form').style.display    = 'none';
+  document.getElementById('pm-success').style.display = 'flex';
 }
 
 // Drag & drop
