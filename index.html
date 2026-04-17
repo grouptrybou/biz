@@ -373,6 +373,9 @@ nav.scrolled .mob-toggle,nav.solid .mob-toggle{background:transparent}
 .pm-submit{width:100%;margin-top:16px;padding:13px;background:var(--blue);color:#fff;border:none;border-radius:100px;font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;transition:background .2s,transform .15s}
 .pm-submit:hover{background:var(--blue-dark);transform:translateY(-1px)}
 .pm-submit:disabled{background:var(--muted);cursor:default;transform:none}
+.pm-progress-wrap{display:none;margin-top:16px;border-radius:100px;background:#e5e7eb;height:44px;position:relative;overflow:hidden}
+.pm-progress-bar{height:100%;background:var(--blue);border-radius:100px;width:0%;transition:width .4s ease}
+.pm-progress-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:600;color:#fff;pointer-events:none}
 #pm-success{display:none;flex-direction:column;align-items:center;text-align:center;padding:40px 24px}
 #pm-success svg{color:#16a34a;margin-bottom:16px}
 #pm-success h4{font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:8px}
@@ -778,6 +781,10 @@ footer a:hover{color:var(--white)}
         <div class="pm-file-list" id="pm-file-list"></div>
         <div class="pm-error" id="pm-error"></div>
         <button class="pm-submit" id="pm-submit" onclick="submitPolissen()">Polissen bezorgen →</button>
+        <div class="pm-progress-wrap" id="pm-progress-wrap">
+          <div class="pm-progress-bar" id="pm-progress-bar"></div>
+          <div class="pm-progress-label" id="pm-progress-label">Uploaden…</div>
+        </div>
       </div>
       <div id="pm-success">
         <svg width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
@@ -4625,8 +4632,11 @@ function closePolissenModal() {
   document.getElementById('pm-form').style.display = 'block';
   document.getElementById('pm-success').style.display = 'none';
   document.getElementById('pm-error').style.display = 'none';
-  var btn = document.getElementById('pm-submit');
-  btn.disabled = false; btn.textContent = 'Polissen bezorgen →';
+  var btn  = document.getElementById('pm-submit');
+  var wrap = document.getElementById('pm-progress-wrap');
+  var bar  = document.getElementById('pm-progress-bar');
+  btn.disabled = false; btn.style.display = '';
+  if (wrap) { wrap.style.display = 'none'; bar.style.width = '0%'; }
 }
 
 function pmHandleFiles(files) {
@@ -4652,50 +4662,126 @@ function pmShowError(msg) {
   el.textContent = msg; el.style.display = 'block';
 }
 
-async function submitPolissen() {
+function submitPolissen() {
   var naam     = document.getElementById('pm-naam').value.trim();
   var email    = document.getElementById('pm-email').value.trim();
   var telefoon = document.getElementById('pm-telefoon').value.trim();
   document.getElementById('pm-error').style.display = 'none';
 
-  if (!naam)                      { pmShowError('Naam is verplicht.'); return; }
-  if (!email || !email.includes('@')) { pmShowError('Geldig e-mailadres is verplicht.'); return; }
-  if (!pmFiles.length)            { pmShowError('Voeg minstens één polis toe.'); return; }
+  if (!naam)                           { pmShowError('Naam is verplicht.'); return; }
+  if (!email || !email.includes('@'))  { pmShowError('Geldig e-mailadres is verplicht.'); return; }
+  if (!pmFiles.length)                 { pmShowError('Voeg minstens één polis toe.'); return; }
 
-  var btn = document.getElementById('pm-submit');
-  btn.disabled = true; btn.textContent = 'Bezig met uploaden…';
+  var btn  = document.getElementById('pm-submit');
+  var wrap = document.getElementById('pm-progress-wrap');
+  var bar  = document.getElementById('pm-progress-bar');
+  var lbl  = document.getElementById('pm-progress-label');
 
-  try {
-    var storage = firebase.storage();
-    var db      = firebase.firestore();
-
-    var uploadedFiles = await Promise.all(pmFiles.map(async function(file) {
-      var safeName = file.name.replace(/[^a-zA-Z0-9._\-]/g, '_');
-      var path = 'polissen/' + Date.now() + '_' + safeName;
-      var ref  = storage.ref(path);
-      await ref.put(file);
-      var url  = await ref.getDownloadURL();
-      return { naam: file.name, url: url };
-    }));
-
-    await db.collection('aanvragen').add({
-      naam:     naam,
-      email:    email,
-      telefoon: telefoon || null,
-      type:     'polis-upload',
-      polissen: uploadedFiles,
-      datum:    firebase.firestore.FieldValue.serverTimestamp(),
-      status:   'nieuw',
-      gelezen:  false
-    });
-
-    document.getElementById('pm-form').style.display = 'none';
-    document.getElementById('pm-success').style.display = 'flex';
-  } catch(err) {
-    console.error(err);
-    pmShowError('Er ging iets mis. Probeer opnieuw of mail naar info@grouptrybou.be.');
-    btn.disabled = false; btn.textContent = 'Polissen bezorgen →';
+  function showProgress(pct, text) {
+    btn.style.display  = 'none';
+    wrap.style.display = 'block';
+    bar.style.width    = pct + '%';
+    lbl.textContent    = text;
   }
+
+  function restoreBtn() {
+    wrap.style.display = 'none';
+    bar.style.width    = '0%';
+    btn.style.display  = '';
+    btn.disabled       = false;
+  }
+
+  btn.disabled = true;
+  showProgress(0, 'Uploaden…');
+
+  var storage, db;
+  try {
+    storage = firebase.storage();
+    db      = firebase.firestore();
+  } catch(initErr) {
+    pmShowError('Firebase niet beschikbaar (' + initErr.message + '). Mail naar info@grouptrybou.be.');
+    restoreBtn();
+    return;
+  }
+
+  var uploadedFiles = [];
+  var currentIndex  = 0;
+
+  function uploadNext() {
+    if (currentIndex >= pmFiles.length) {
+      showProgress(100, 'Opslaan…');
+      db.collection('aanvragen').add({
+        naam:     naam,
+        email:    email,
+        telefoon: telefoon || null,
+        type:     'polis-upload',
+        polissen: uploadedFiles,
+        datum:    firebase.firestore.FieldValue.serverTimestamp(),
+        status:   'nieuw',
+        gelezen:  false
+      }).then(function() {
+        document.getElementById('pm-form').style.display    = 'none';
+        document.getElementById('pm-success').style.display = 'flex';
+      }).catch(function(err) {
+        console.error('Firestore error:', err);
+        pmShowError('Opslaan mislukt (' + (err.code || err.message) + '). Probeer opnieuw of mail naar info@grouptrybou.be.');
+        restoreBtn();
+      });
+      return;
+    }
+
+    var file     = pmFiles[currentIndex];
+    var fileNum  = currentIndex + 1;
+    var total    = pmFiles.length;
+    var safeName = file.name.replace(/[^a-zA-Z0-9._\-]/g, '_');
+    var path     = 'polissen/' + Date.now() + '_' + safeName;
+    var ref      = storage.ref(path);
+    var task     = ref.put(file);
+    var timedOut = false;
+
+    var globalPct = Math.round((currentIndex / total) * 100);
+    showProgress(globalPct, 'Bestand ' + fileNum + '/' + total + ' — 0%');
+
+    var timer = setTimeout(function() {
+      timedOut = true;
+      task.cancel();
+      pmShowError('Upload time-out bij bestand ' + fileNum + '. Controleer je verbinding en probeer opnieuw.');
+      restoreBtn();
+    }, 60000);
+
+    task.on('state_changed',
+      function(snapshot) {
+        if (snapshot.totalBytes > 0) {
+          var filePct   = snapshot.bytesTransferred / snapshot.totalBytes;
+          var globalPct = Math.round(((currentIndex + filePct) / total) * 100);
+          var filePctInt = Math.round(filePct * 100);
+          showProgress(globalPct, 'Bestand ' + fileNum + '/' + total + ' — ' + filePctInt + '%');
+        }
+      },
+      function(err) {
+        if (timedOut) return;
+        clearTimeout(timer);
+        console.error('Storage error:', err);
+        pmShowError('Upload mislukt (' + (err.code || err.message) + '). Probeer opnieuw of mail naar info@grouptrybou.be.');
+        restoreBtn();
+      },
+      function() {
+        if (timedOut) return;
+        clearTimeout(timer);
+        ref.getDownloadURL().then(function(url) {
+          uploadedFiles.push({ naam: file.name, url: url });
+          currentIndex++;
+          uploadNext();
+        }).catch(function(err) {
+          console.error('getDownloadURL error:', err);
+          pmShowError('URL ophalen mislukt (' + (err.code || err.message) + '). Probeer opnieuw of mail naar info@grouptrybou.be.');
+          restoreBtn();
+        });
+      }
+    );
+  }
+
+  uploadNext();
 }
 
 // Drag & drop
