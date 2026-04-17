@@ -1029,12 +1029,12 @@ footer a:hover{color:var(--white)}
               <button class="step-option-btn" data-lang="step-1-opt-a-cta">Plan uw check</button>
             </div>
             <div class="step-option-or" data-lang="step-1-or">of</div>
-            <div class="step-option clickable" onclick="openPolissenModal()">
+            <div class="step-option clickable" onclick="window.location.href='mailto:tom@grouptrybou.be?subject=' + encodeURIComponent('Polissen doorsturen')">
               <div class="step-option-inner">
-                <div class="step-option-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></div>
-                <div><strong data-lang="step-1-opt-b-title">Stuur uw polissen digitaal door</strong><span class="step-opt-desc" data-lang="step-1-opt-b-desc">We beginnen al aan een voorstel vóór onze afspraak op basis van uw huidige polissen.</span></div>
+                <div class="step-option-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                <div><strong data-lang="step-1-opt-b-title">Stuur uw polissen per e-mail door</strong><span class="step-opt-desc" data-lang="step-1-opt-b-desc">We stellen een e-mail op naar Tom. U voegt uw polissen als bijlage toe en klikt op verzenden.</span></div>
               </div>
-              <button class="step-option-btn" data-lang="step-1-opt-b-cta">Bestanden uploaden</button>
+              <button class="step-option-btn" onclick="event.stopPropagation();window.location.href='mailto:tom@grouptrybou.be?subject=' + encodeURIComponent('Polissen doorsturen')" data-lang="step-1-opt-b-cta">E-mail opstellen naar Tom</button>
             </div>
           </div>
         </div>
@@ -2478,10 +2478,10 @@ var translations = {
     'step-1-or': 'of',
     'step-1-opt-a-title': 'Wij komen naar u toe',
     'step-1-opt-a-desc': 'We leren uw bedrijf kennen op uw locatie en tonen meteen waar ondernemers in uw sector de mist ingaan.',
-    'step-1-opt-b-title': 'Stuur uw polissen digitaal door',
+    'step-1-opt-b-title': 'Stuur uw polissen per e-mail door',
     'step-1-opt-a-cta': 'Plan uw check',
-    'step-1-opt-b-desc': 'We beginnen al aan een voorstel vóór onze afspraak op basis van uw huidige polissen.',
-    'step-1-opt-b-cta': 'Bestanden uploaden',
+    'step-1-opt-b-desc': 'We stellen een e-mail op naar Tom. U voegt uw polissen als bijlage toe en klikt op verzenden.',
+    'step-1-opt-b-cta': 'E-mail opstellen naar Tom',
     'step-2': 'Wij bekijken uw polissen',
     'step-2-desc': 'Onze KMO-adviseur analyseert wat u hebt, wat u mist en wat u te veel betaalt — transparant en zonder vakjargon.',
     'step-3': 'Wij maken uw voorstel op',
@@ -2826,10 +2826,10 @@ var translations = {
     'step-1-or': 'or',
     'step-1-opt-a-title': 'We come to you',
     'step-1-opt-a-desc': 'We get to know your business on-site and immediately show where entrepreneurs in your sector go wrong.',
-    'step-1-opt-b-title': 'Send your policies digitally',
+    'step-1-opt-b-title': 'Send your policies by email',
     'step-1-opt-a-cta': 'Schedule a check',
-    'step-1-opt-b-desc': "We'll already start on a proposal before our appointment, based on your current policies.",
-    'step-1-opt-b-cta': 'Upload files',
+    'step-1-opt-b-desc': "We compose an email to Tom. You add your policies as attachments and click send.",
+    'step-1-opt-b-cta': 'Compose email to Tom',
     'step-2': 'We review your policies',
     'step-2-desc': "Our SME advisor analyses what you have, what's missing and what you're overpaying for — transparent and jargon-free.",
     'step-3': 'We draw up your proposal',
@@ -3174,10 +3174,10 @@ var translations = {
     'step-1-or': 'ou',
     'step-1-opt-a-title': 'Nous venons chez vous',
     'step-1-opt-a-desc': "Nous apprenons à connaître votre entreprise sur place et montrons d'emblée où les entrepreneurs de votre secteur font fausse route.",
-    'step-1-opt-b-title': 'Envoyez vos polices par voie numérique',
+    'step-1-opt-b-title': 'Envoyez vos polices par e-mail',
     'step-1-opt-a-cta': 'Planifier un check',
-    'step-1-opt-b-desc': 'Nous commençons déjà à préparer une proposition avant notre rendez-vous, sur base de vos polices actuelles.',
-    'step-1-opt-b-cta': 'Envoyer les fichiers',
+    'step-1-opt-b-desc': 'Nous rédigeons un e-mail à Tom. Vous ajoutez vos polices en pièce jointe et cliquez sur envoyer.',
+    'step-1-opt-b-cta': "Rédiger l'e-mail à Tom",
     'step-2': 'Nous examinons vos polices',
     'step-2-desc': "Notre conseiller PME analyse ce que vous avez, ce qui manque et ce que vous payez en trop — transparent et sans jargon.",
     'step-3': 'Nous préparons votre proposition',
@@ -4610,6 +4610,24 @@ function dismissBanner() {
 
 // ===================== POLIS UPLOAD MODAL =====================
 var pmFiles = [];
+
+function openPolissenMail() {
+  var subject = 'Mijn polissen – verzekeringscheck aanvragen';
+  var body =
+    'Geachte heer/mevrouw,\n\n' +
+    'Via uw website wil ik graag mijn huidige polissen doorsturen voor een gratis verzekeringscheck.\n\n' +
+    '— Mijn gegevens —\n' +
+    'Naam:              \n' +
+    'Telefoonnummer:    \n' +
+    'Bedrijfsnaam:      \n' +
+    'Sector:            \n\n' +
+    '— Bijgevoegde polissen —\n' +
+    '(Voeg uw polissen hieronder toe als bijlage voor het verzenden)\n\n' +
+    'Met vriendelijke groeten,\n';
+  window.location.href = 'mailto:tom@grouptrybou.be' +
+    '?subject=' + encodeURIComponent(subject) +
+    '&body='    + encodeURIComponent(body);
+}
 
 function openPolissenModal() {
   var m = document.getElementById('polis-modal');
