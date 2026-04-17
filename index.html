@@ -1903,90 +1903,136 @@ footer a:hover{color:var(--white)}
             </span>
           </div>
           <div class="quiz-label" data-lang="quiz-label-intro">Gratis verzekeringscheck</div>
-          <h2 class="quiz-intro-title" data-lang="quiz-intro-title">Bent u optimaal beschermd?<br>Ontdek het in 3 vragen.</h2>
-          <p class="quiz-intro-sub" data-lang="quiz-intro-sub">Beantwoord 3 korte vragen en wij tonen u meteen waar mogelijke risico's of besparingen zitten. Volledig vrijblijvend en anoniem.</p>
+          <h2 class="quiz-intro-title" data-lang="quiz-intro-title">Bent u optimaal beschermd?<br>Ontdek het in 5 vragen.</h2>
+          <p class="quiz-intro-sub" data-lang="quiz-intro-sub">Beantwoord 5 eerlijke vragen over uw huidige situatie. We tonen u meteen wat er verbeterd kan worden. Volledig vrijblijvend en anoniem.</p>
           <button class="quiz-start-btn" onclick="quizStart()" data-lang="quiz-start-btn">Start de check →</button>
         </div>
       </div>
 
-      <!-- STAP 1: Profiel -->
+      <!-- STAP 1: Timing laatste check -->
       <div class="quiz-step" id="qstep-1">
         <div class="quiz-progress" id="quiz-prog-1"></div>
-        <div class="quiz-label" data-lang="quiz-step1-label">Stap 1 van 4</div>
-        <h2 class="quiz-question" data-lang="quiz-step1-q">Wie bent u?</h2>
+        <div class="quiz-label">Stap 1 van 5</div>
+        <h2 class="quiz-question">Wanneer heb je je verzekeringen voor het laatst grondig bekeken?</h2>
         <div class="quiz-options">
-          <div class="quiz-option" onclick="quizAnswer(1,'kmo',this)">
-            <div class="quiz-option-icon">🏢</div>
-            <div><div class="quiz-option-text" data-lang="quiz-opt-kmo-t">KMO of vennootschap</div><div class="quiz-option-sub" data-lang="quiz-opt-kmo-s">Bedrijf met personeel, gebouwen of voertuigen</div></div>
+          <div class="quiz-option" onclick="quizAnswer(1,'recent',this)">
+            <div class="quiz-option-icon">✅</div>
+            <div><div class="quiz-option-text">Minder dan 1 jaar geleden</div><div class="quiz-option-sub">Recentelijk bekeken of herzien</div></div>
           </div>
-          <div class="quiz-option" onclick="quizAnswer(1,'zelfstandige',this)">
-            <div class="quiz-option-icon">💼</div>
-            <div><div class="quiz-option-text" data-lang="quiz-opt-zelf-t">Zelfstandige</div><div class="quiz-option-sub" data-lang="quiz-opt-zelf-s">Eenmanszaak, vrij beroep of bijberoep</div></div>
+          <div class="quiz-option" onclick="quizAnswer(1,'medium',this)">
+            <div class="quiz-option-icon">⏳</div>
+            <div><div class="quiz-option-text">1–3 jaar geleden</div><div class="quiz-option-sub">Al een tijdje niet meer aangepast</div></div>
           </div>
-          <div class="quiz-option" onclick="quizAnswer(1,'prive',this)">
-            <div class="quiz-option-icon">🏠</div>
-            <div><div class="quiz-option-text" data-lang="quiz-opt-priv-t">Privépersoon</div><div class="quiz-option-sub" data-lang="quiz-opt-priv-s">Gezin, woning en voertuigen</div></div>
+          <div class="quiz-option" onclick="quizAnswer(1,'langer',this)">
+            <div class="quiz-option-icon">📅</div>
+            <div><div class="quiz-option-text">Langer geleden</div><div class="quiz-option-sub">Veel kan intussen veranderd zijn</div></div>
+          </div>
+          <div class="quiz-option" onclick="quizAnswer(1,'geenidee',this)">
+            <div class="quiz-option-icon">❓</div>
+            <div><div class="quiz-option-text">Geen idee</div><div class="quiz-option-sub">Ik heb er eigenlijk nooit bij stilgestaan</div></div>
           </div>
         </div>
       </div>
 
-      <!-- STAP 2: Tijdstip laatste check -->
+      <!-- STAP 2: Zekerheid dekking -->
       <div class="quiz-step" id="qstep-2">
         <div class="quiz-progress" id="quiz-prog-2"></div>
-        <div class="quiz-label" data-lang="quiz-step2-label">Stap 2 van 4</div>
-        <h2 class="quiz-question" data-lang="quiz-step2-q">Wanneer werd uw verzekeringsdossier voor het laatst grondig nagekeken?</h2>
+        <div class="quiz-label">Stap 2 van 5</div>
+        <h2 class="quiz-question">Hoe zeker ben je dat alles vandaag goed gedekt is?</h2>
         <div class="quiz-options">
-          <div class="quiz-option" onclick="quizAnswer(2,'recent',this)">
-            <div class="quiz-option-icon">✅</div>
-            <div><div class="quiz-option-text" data-lang="quiz-opt-recent-t">Minder dan 1 jaar geleden</div><div class="quiz-option-sub" data-lang="quiz-opt-recent-s">Recentelijk bekeken of herzien</div></div>
+          <div class="quiz-option" onclick="quizAnswer(2,'zeker',this)">
+            <div class="quiz-option-icon">💯</div>
+            <div><div class="quiz-option-text">100% zeker</div><div class="quiz-option-sub">Ik weet wat er in mijn polissen staat</div></div>
           </div>
-          <div class="quiz-option" onclick="quizAnswer(2,'medium',this)">
-            <div class="quiz-option-icon">⏳</div>
-            <div><div class="quiz-option-text" data-lang="quiz-opt-medium-t">1 tot 3 jaar geleden</div><div class="quiz-option-sub" data-lang="quiz-opt-medium-s">Al een tijdje niet meer nagekeken</div></div>
+          <div class="quiz-option" onclick="quizAnswer(2,'redelijk',this)">
+            <div class="quiz-option-icon">👍</div>
+            <div><div class="quiz-option-text">Redelijk zeker</div><div class="quiz-option-sub">Ik denk dat het wel in orde is</div></div>
           </div>
-          <div class="quiz-option" onclick="quizAnswer(2,'oud',this)">
-            <div class="quiz-option-icon">⚠️</div>
-            <div><div class="quiz-option-text" data-lang="quiz-opt-oud-t">Meer dan 3 jaar geleden</div><div class="quiz-option-sub" data-lang="quiz-opt-oud-s">Al een hele tijd niet meer</div></div>
+          <div class="quiz-option" onclick="quizAnswer(2,'twijfel',this)">
+            <div class="quiz-option-icon">🤔</div>
+            <div><div class="quiz-option-text">Twijfel</div><div class="quiz-option-sub">Er zijn dingen die ik niet goed begrijp</div></div>
           </div>
-          <div class="quiz-option" onclick="quizAnswer(2,'nooit',this)">
-            <div class="quiz-option-icon">❓</div>
-            <div><div class="quiz-option-text" data-lang="quiz-opt-nooit-t">Nooit / Weet niet</div><div class="quiz-option-sub" data-lang="quiz-opt-nooit-s">Ik heb het nooit laten nakijken</div></div>
+          <div class="quiz-option" onclick="quizAnswer(2,'geenidee',this)">
+            <div class="quiz-option-icon">🌫️</div>
+            <div><div class="quiz-option-text">Geen idee</div><div class="quiz-option-sub">Ik heb weinig zicht op wat gedekt is</div></div>
           </div>
         </div>
       </div>
 
-      <!-- STAP 3: Bezorgdheid -->
+      <!-- STAP 3: Grootste risico -->
       <div class="quiz-step" id="qstep-3">
         <div class="quiz-progress" id="quiz-prog-3"></div>
-        <div class="quiz-label" data-lang="quiz-step3-label">Stap 3 van 4</div>
-        <h2 class="quiz-question" data-lang="quiz-step3-q">Wat is de aanleiding voor uw check?</h2>
+        <div class="quiz-label">Stap 3 van 5</div>
+        <h2 class="quiz-question">Waar zit volgens jou vandaag het grootste risico in je onderneming?</h2>
         <div class="quiz-options">
-          <div class="quiz-option" onclick="quizAnswer(3,'besparen',this)">
-            <div class="quiz-option-icon">💰</div>
-            <div><div class="quiz-option-text" data-lang="quiz-opt-besparen-t">Ik wil besparen op mijn premies</div><div class="quiz-option-sub" data-lang="quiz-opt-besparen-s">Ik vermoed dat ik te veel betaal</div></div>
+          <div class="quiz-option" onclick="quizAnswer(3,'personeel',this)">
+            <div class="quiz-option-icon">👥</div>
+            <div><div class="quiz-option-text">Personeel</div><div class="quiz-option-sub">Ziekte, ongelukken, uitval van medewerkers</div></div>
           </div>
-          <div class="quiz-option" onclick="quizAnswer(3,'situatie',this)">
-            <div class="quiz-option-icon">🔄</div>
-            <div><div class="quiz-option-text" data-lang="quiz-opt-situatie-t">Mijn situatie is veranderd</div><div class="quiz-option-sub" data-lang="quiz-opt-situatie-s">Verhuis, uitbreiding, nieuw voertuig, nieuwe activiteit…</div></div>
+          <div class="quiz-option" onclick="quizAnswer(3,'materiaal',this)">
+            <div class="quiz-option-icon">🏗️</div>
+            <div><div class="quiz-option-text">Materiaal / infrastructuur</div><div class="quiz-option-sub">Machines, voertuigen, gebouwen, stock</div></div>
           </div>
-          <div class="quiz-option" onclick="quizAnswer(3,'dekking',this)">
-            <div class="quiz-option-icon">🛡️</div>
-            <div><div class="quiz-option-text" data-lang="quiz-opt-dekking-t">Ik twijfel of ik wel goed gedekt ben</div><div class="quiz-option-sub" data-lang="quiz-opt-dekking-s">Ik wil zeker zijn dat er geen gaten in mijn dossier zitten</div></div>
+          <div class="quiz-option" onclick="quizAnswer(3,'aansprakelijkheid',this)">
+            <div class="quiz-option-icon">⚖️</div>
+            <div><div class="quiz-option-text">Aansprakelijkheid</div><div class="quiz-option-sub">Schade aan klanten, derden of leveranciers</div></div>
           </div>
-          <div class="quiz-option" onclick="quizAnswer(3,'contract',this)">
-            <div class="quiz-option-icon">📋</div>
-            <div><div class="quiz-option-text" data-lang="quiz-opt-contract-t">Mijn contract loopt binnenkort af</div><div class="quiz-option-sub" data-lang="quiz-opt-contract-s">Goed moment om alternatieven te vergelijken</div></div>
-          </div>
-          <div class="quiz-option" onclick="quizAnswer(3,'opinie',this)">
-            <div class="quiz-option-icon">💬</div>
-            <div><div class="quiz-option-text" data-lang="quiz-opt-opinie-t">Ik wil gewoon een tweede mening</div><div class="quiz-option-sub" data-lang="quiz-opt-opinie-s">Vrijblijvend advies van een onafhankelijke makelaar</div></div>
+          <div class="quiz-option" onclick="quizAnswer(3,'geenidee',this)">
+            <div class="quiz-option-icon">🔍</div>
+            <div><div class="quiz-option-text">Ik heb daar nog niet echt zicht op</div><div class="quiz-option-sub">Een analyse zou me alvast helpen</div></div>
           </div>
         </div>
       </div>
 
-      <!-- STAP 4: Gegevens -->
+      <!-- STAP 4: Wat verbeteren -->
       <div class="quiz-step" id="qstep-4">
         <div class="quiz-progress" id="quiz-prog-4"></div>
+        <div class="quiz-label">Stap 4 van 5</div>
+        <h2 class="quiz-question">Wat wil je vooral verbeteren aan je huidige situatie?</h2>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="quizAnswer(4,'kosten',this)">
+            <div class="quiz-option-icon">💰</div>
+            <div><div class="quiz-option-text">Minder kosten</div><div class="quiz-option-sub">Ik vermoed dat ik te veel betaal voor wat ik krijg</div></div>
+          </div>
+          <div class="quiz-option" onclick="quizAnswer(4,'dekking',this)">
+            <div class="quiz-option-icon">🛡️</div>
+            <div><div class="quiz-option-text">Betere dekking</div><div class="quiz-option-sub">Ik wil zeker zijn dat er geen gaten in mijn dossier zitten</div></div>
+          </div>
+          <div class="quiz-option" onclick="quizAnswer(4,'duidelijkheid',this)">
+            <div class="quiz-option-icon">💡</div>
+            <div><div class="quiz-option-text">Meer duidelijkheid</div><div class="quiz-option-sub">Ik wil begrijpen wat ik juist betaal en waarvoor</div></div>
+          </div>
+          <div class="quiz-option" onclick="quizAnswer(4,'checken',this)">
+            <div class="quiz-option-icon">✨</div>
+            <div><div class="quiz-option-text">Gewoon eens laten checken</div><div class="quiz-option-sub">Ik ben benieuwd of alles nog actueel is</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAP 5: Timing actie -->
+      <div class="quiz-step" id="qstep-5">
+        <div class="quiz-progress" id="quiz-prog-5"></div>
+        <div class="quiz-label">Stap 5 van 5</div>
+        <h2 class="quiz-question">Wanneer wil je hier concreet mee aan de slag?</h2>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="quizAnswer(5,'snel',this)">
+            <div class="quiz-option-icon">🚀</div>
+            <div><div class="quiz-option-text">Zo snel mogelijk</div><div class="quiz-option-sub">Ik wil dit snel opgelost hebben</div></div>
+          </div>
+          <div class="quiz-option" onclick="quizAnswer(5,'maand',this)">
+            <div class="quiz-option-icon">📅</div>
+            <div><div class="quiz-option-text">Binnen de maand</div><div class="quiz-option-sub">Ik wil dit de komende weken aanpakken</div></div>
+          </div>
+          <div class="quiz-option" onclick="quizAnswer(5,'driemaanden',this)">
+            <div class="quiz-option-icon">🗓️</div>
+            <div><div class="quiz-option-text">Binnen 3 maanden</div><div class="quiz-option-sub">Geen haast, maar ik wil het dit kwartaal regelen</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAP 6: Gegevens -->
+      <div class="quiz-step" id="qstep-6">
+        <div class="quiz-progress" id="quiz-prog-6"></div>
         <div class="quiz-label" data-lang="quiz-step4-label">Bijna klaar</div>
         <h2 class="quiz-question" data-lang="quiz-step4-q">Op welk adres mogen wij u contacteren?</h2>
         <div class="quiz-form-row">
@@ -1999,8 +2045,8 @@ footer a:hover{color:var(--white)}
         <button class="quiz-start-btn" onclick="quizSubmitGegevens()" style="width:100%" data-lang="quiz-submit-btn">Bekijk mijn resultaat →</button>
       </div>
 
-      <!-- STAP 5: Resultaat -->
-      <div class="quiz-step" id="qstep-5">
+      <!-- STAP 7: Resultaat -->
+      <div class="quiz-step" id="qstep-7">
         <div class="quiz-result-card" id="quiz-result-content"></div>
       </div>
     </div>
@@ -2551,8 +2597,8 @@ var translations = {
     // Quiz
     'quiz-privacy-text': '100% discreet — uw huidige makelaar wordt niet op de hoogte gebracht',
     'quiz-label-intro': 'Gratis verzekeringscheck',
-    'quiz-intro-title': 'Bent u optimaal beschermd?<br>Ontdek het in 3 vragen.',
-    'quiz-intro-sub': "Beantwoord 3 korte vragen en wij tonen u meteen waar mogelijke risico's of besparingen zitten. Volledig vrijblijvend en anoniem.",
+    'quiz-intro-title': 'Bent u optimaal beschermd?<br>Ontdek het in 5 vragen.',
+    'quiz-intro-sub': "Beantwoord 5 eerlijke vragen over uw huidige situatie. We tonen u meteen wat er verbeterd kan worden. Volledig vrijblijvend en anoniem.",
     'quiz-start-btn': 'Start de check →',
     'quiz-step1-label': 'Stap 1 van 4',
     'quiz-step1-q': 'Wie bent u?',
@@ -2893,8 +2939,8 @@ var translations = {
     // Quiz
     'quiz-privacy-text': '100% discreet — your current broker will not be informed',
     'quiz-label-intro': 'Free insurance check',
-    'quiz-intro-title': 'Are you optimally protected?<br>Find out in 3 questions.',
-    'quiz-intro-sub': 'Answer 3 short questions and we will immediately show you where potential risks or savings lie. Completely non-binding and anonymous.',
+    'quiz-intro-title': 'Are you optimally protected?<br>Find out in 5 questions.',
+    'quiz-intro-sub': 'Answer 5 honest questions about your current situation. We will immediately show you what can be improved. Completely non-binding and anonymous.',
     'quiz-start-btn': 'Start the check →',
     'quiz-step1-label': 'Step 1 of 4',
     'quiz-step1-q': 'Who are you?',
@@ -3235,8 +3281,8 @@ var translations = {
     // Quiz
     'quiz-privacy-text': '100% discret — votre courtier actuel ne sera pas informé',
     'quiz-label-intro': 'Check assurance gratuit',
-    'quiz-intro-title': 'Êtes-vous optimalement protégé ?<br>Découvrez-le en 3 questions.',
-    'quiz-intro-sub': "Répondez à 3 courtes questions et nous vous montrons immédiatement où se trouvent les risques ou économies potentiels. Entièrement sans engagement et anonyme.",
+    'quiz-intro-title': 'Êtes-vous optimalement protégé ?<br>Découvrez-le en 5 questions.',
+    'quiz-intro-sub': "Répondez à 5 questions sincères sur votre situation actuelle. Nous vous montrons immédiatement ce qui peut être amélioré. Entièrement sans engagement et anonyme.",
     'quiz-start-btn': 'Démarrer le check →',
     'quiz-step1-label': 'Étape 1 sur 4',
     'quiz-step1-q': 'Qui êtes-vous ?',
@@ -3779,7 +3825,7 @@ function quizUpdateProgress(activeStep, doneCount) {
   var el = document.getElementById(id);
   if (!el) return;
   el.innerHTML = '';
-  for (var j = 0; j < 4; j++) {
+  for (var j = 0; j < 6; j++) {
     var d = document.createElement('div');
     d.className = 'quiz-progress-step' + (j < doneCount ? ' done' : '');
     el.appendChild(d);
@@ -3822,78 +3868,99 @@ function quizSubmitGegevens() {
 }
 
 function quizShowResult() {
-  var profile = quizAnswers[1];
-  var timing  = quizAnswers[2];
-  var concern = quizAnswers[3];
+  var timing      = quizAnswers[1]; // recent, medium, langer, geenidee
+  var zekerheid   = quizAnswers[2]; // zeker, redelijk, twijfel, geenidee
+  var risico      = quizAnswers[3]; // personeel, materiaal, aansprakelijkheid, geenidee
+  var verbetering = quizAnswers[4]; // kosten, dekking, duidelijkheid, checken
   var lang = currentLang || 'nl';
 
-  var urgency = (timing === 'oud' || timing === 'nooit') ? 'high' :
-                 timing === 'medium' ? 'medium' : 'low';
+  // Urgency scoring
+  var timingScore    = { recent: 0, medium: 1, langer: 2, geenidee: 2 };
+  var zekerheidScore = { zeker: 0, redelijk: 1, twijfel: 2, geenidee: 2 };
+  var score = (timingScore[timing] || 0) + (zekerheidScore[zekerheid] || 0);
+  var urgency = score >= 3 ? 'high' : score >= 1 ? 'medium' : 'low';
 
-  var emojiMap  = { high:'⚠️', medium:'🔍', low:'✅' };
-  var colorMap  = { high:'#fff3cd', medium:'#e8f0fb', low:'#d4edda' };
-  var titleMap  = {
-    nl: { high:'Aandacht vereist — uw dossier verdient een frisse blik.', medium:'Ruimte voor optimalisatie — de markt heeft niet stilgestaan.', low:'Goede start — een tweede mening brengt vaak een verrassing.' },
-    en: { high:'Attention required — your file deserves a fresh look.', medium:'Room for optimisation — the market has not stood still.', low:'Good start — a second opinion often brings a surprise.' },
-    fr: { high:'Attention requise — votre dossier mérite un regard neuf.', medium:"Marge d'optimisation — le marché n'a pas attendu.", low:'Bon départ — un deuxième avis réserve souvent des surprises.' }
+  var emojiMap = { high: '⚠️', medium: '🔍', low: '✅' };
+  var colorMap = { high: '#fff3cd', medium: '#e8f0fb', low: '#d4edda' };
+
+  var titleMap = {
+    nl: {
+      high:   'Actie aanbevolen — uw dossier verdient een grondige herziening.',
+      medium: 'Ruimte voor verbetering — de markt en uw situatie evolueren snel.',
+      low:    'Goed bezig — een onafhankelijke bevestiging is altijd waardevol.'
+    },
+    en: {
+      high:   'Action recommended — your file deserves a thorough review.',
+      medium: 'Room for improvement — the market and your situation evolve quickly.',
+      low:    'Looking good — an independent confirmation is always valuable.'
+    },
+    fr: {
+      high:   'Action recommandée — votre dossier mérite une révision approfondie.',
+      medium: "Marge d'amélioration — le marché et votre situation évoluent rapidement.",
+      low:    'Vous êtes sur la bonne voie — une confirmation indépendante est toujours utile.'
+    }
   };
+
   var bodyMap = {
     nl: {
-      high:   'In meer dan 3 jaar veranderen risico\'s, premiesniveaus en uw persoonlijke situatie aanzienlijk. Er is een reële kans dat u onvoldoende gedekt bent of te veel betaalt.',
-      medium: 'Tussen 1 en 3 jaar kunnen premies sterk schommelen en nieuwe risico\'s ontstaan. Een check kost niets en legt eventuele lacunes meteen bloot.',
-      low:    'U bent recent nagekeken, maar de verzekeringsmarkt evolueert snel. Een onafhankelijke second opinion is altijd de moeite waard.'
+      high:   'Op basis van uw antwoorden zit er waarschijnlijk meer risico in uw situatie dan u denkt. Een gratis check legt de zwakke plekken bloot — zonder verplichtingen.',
+      medium: 'Uw dossier is vermoedelijk niet optimaal afgestemd op uw huidige situatie. Een objectieve analyse kost niets en brengt altijd iets op.',
+      low:    'U bent recent nagekeken en voelt zich zeker. Toch loont een onafhankelijke second opinion altijd — de verzekeringsmarkt staat niet stil.'
     },
     en: {
-      high:   'Over 3 years, risks, premium levels and your personal situation change considerably. There is a real chance you are underinsured or overpaying.',
-      medium: 'In 1 to 3 years premiums can fluctuate strongly and new risks arise. A check costs nothing and immediately exposes any gaps.',
-      low:    'You have been recently reviewed, but the insurance market evolves quickly. An independent second opinion is always worthwhile.'
+      high:   'Based on your answers, there is likely more risk in your situation than you think. A free check reveals the weak spots — without obligations.',
+      medium: 'Your file is probably not optimally aligned with your current situation. An objective analysis costs nothing and always brings added value.',
+      low:    'You were recently reviewed and feel confident. An independent second opinion always pays off — the insurance market does not stand still.'
     },
     fr: {
-      high:   'En plus de 3 ans, les risques, les niveaux de primes et votre situation personnelle évoluent considérablement. Il est fort probable que vous soyez sous-assuré ou que vous payiez trop.',
-      medium: 'En 1 à 3 ans, les primes peuvent fortement fluctuer et de nouveaux risques apparaître. Un check ne coûte rien et révèle immédiatement les lacunes éventuelles.',
-      low:    "Vous avez été récemment examiné, mais le marché de l'assurance évolue vite. Un second avis indépendant vaut toujours la peine."
+      high:   "D'après vos réponses, il y a probablement plus de risque dans votre situation que vous ne le pensez. Un check gratuit révèle les points faibles — sans engagement.",
+      medium: "Votre dossier n'est probablement pas optimalement adapté à votre situation actuelle. Une analyse objective ne coûte rien et apporte toujours quelque chose.",
+      low:    "Vous avez été récemment examiné et vous vous sentez en confiance. Un second avis indépendant vaut toujours la peine — le marché de l'assurance n'attend pas."
     }
   };
-  var sectorHint = {
+
+  var risicoHints = {
     nl: {
-      kmo:          'Als KMO hebt u recht op een geconsolideerde pakketpolis — vaak aanzienlijk goedkoper dan losse polissen.',
-      zelfstandige: 'Als zelfstandige bent u persoonlijk aansprakelijk. Een VAPZ en gewaarborgd inkomen zijn essentieel.',
-      prive:        'Een gezinspolis bundelt woning, aansprakelijkheid en rechtsbijstand — en scheelt u tot 20% op jaarbasis.'
+      personeel:        'Arbeidsongevallen, gewaarborgd inkomen en groepsverzekering zijn essentieel bij personeelsrisico\'s.',
+      materiaal:        'Materiaalschade, machinebreuk en bedrijfsonderbreking zijn de meest onderschatte risico\'s in uw categorie.',
+      aansprakelijkheid:'BA Bedrijf en Beroepsaansprakelijkheid beschermen u wanneer schade aan derden wordt verhaald.',
+      geenidee:         'Geen zicht op risico\'s is het grootste risico. Een risicoanalyse geeft meteen duidelijkheid.'
     },
     en: {
-      kmo:          'As an SME you are entitled to a consolidated package policy — often considerably cheaper than separate policies.',
-      zelfstandige: 'As a self-employed person you are personally liable. Pension savings and guaranteed income are essential.',
-      prive:        'A family policy bundles home, liability and legal assistance — saving you up to 20% annually.'
+      personeel:        'Workplace accidents, guaranteed income and group insurance are essential for personnel risks.',
+      materiaal:        'Material damage, machine breakdown and business interruption are the most underestimated risks.',
+      aansprakelijkheid:'Business liability and professional liability protect you when third-party claims arise.',
+      geenidee:         'No insight into risks is the biggest risk. A risk analysis immediately provides clarity.'
     },
     fr: {
-      kmo:          "En tant que PME, vous avez droit à une police-package consolidée — souvent nettement moins chère que des polices séparées.",
-      zelfstandige: "En tant qu'indépendant, vous êtes personnellement responsable. Une PLCI et un revenu garanti sont essentiels.",
-      prive:        "Une police familiale regroupe habitation, responsabilité et assistance juridique — et vous fait économiser jusqu'à 20 % par an."
+      personeel:        "Les accidents du travail, le revenu garanti et l'assurance groupe sont essentiels pour les risques liés au personnel.",
+      materiaal:        "Les dégâts matériels, la panne de machine et l'interruption d'activité sont les risques les plus sous-estimés.",
+      aansprakelijkheid:"La RC Entreprise et la responsabilité professionnelle vous protègent en cas de dommages à des tiers.",
+      geenidee:         "Ne pas avoir de vision des risques est le plus grand risque. Une analyse de risque apporte immédiatement de la clarté."
     }
   };
-  var concernItems = {
+
+  var verbeteringHints = {
     nl: {
-      besparen: ['Premies kunnen sterk verschillen per maatschappij voor identieke dekking.', 'Wij vergelijken objectief bij meerdere verzekeraars — zonder bindend engagement.'],
-      situatie: ['Een gewijzigde situatie vraagt altijd om een herziening van uw dossier.', 'Onderverzekering of lacunes ontstaan vaak net na een wijziging.'],
-      dekking:  ['Een grondige analyse legt blinde vlekken en overlappingen bloot.', 'Wij controleren elk onderdeel van uw dossier op volledigheid en correctheid.'],
-      contract: ['Contractverlenging is het ideale moment om tarieven en voorwaarden te vergelijken.', 'Overstappen bij vervaldag is zonder kosten of sancties mogelijk.'],
-      opinie:   ['Als onafhankelijk makelaar werken wij voor u, niet voor de verzekeraar.', 'Geen verkooppraatje — enkel objectief advies op basis van uw dossier.']
+      kosten:      'Premies kunnen sterk verschillen per maatschappij voor identieke dekking. Wij vergelijken objectief — zonder bindend engagement.',
+      dekking:     'Een grondige analyse legt blinde vlekken en lacunes bloot. Wij controleren elk onderdeel van uw dossier.',
+      duidelijkheid:'Wij leggen in klare taal uit wat uw polissen juist inhouden en waar u op moet letten.',
+      checken:     'Als onafhankelijk makelaar werken wij voor u, niet voor de verzekeraar. Eerlijk advies, altijd.'
     },
     en: {
-      besparen: ['Premiums can vary widely between insurers for identical coverage.', 'We compare objectively across multiple insurers — without any commitment.'],
-      situatie: ['A changed situation always calls for a review of your file.', 'Under-insurance or gaps often arise right after a change.'],
-      dekking:  ['A thorough analysis reveals blind spots and overlaps.', 'We check every part of your file for completeness and accuracy.'],
-      contract: ['Contract renewal is the ideal moment to compare rates and terms.', 'Switching at the expiry date is possible without costs or penalties.'],
-      opinie:   ['As an independent broker we work for you, not for the insurer.', 'No sales pitch — only objective advice based on your file.']
+      kosten:      'Premiums can vary widely between insurers for identical coverage. We compare objectively — no binding commitment.',
+      dekking:     'A thorough analysis reveals blind spots and gaps. We check every part of your file.',
+      duidelijkheid:'We explain in plain language what your policies actually cover and what to watch out for.',
+      checken:     'As an independent broker we work for you, not the insurer. Honest advice, always.'
     },
     fr: {
-      besparen: ['Les primes peuvent varier fortement selon les compagnies pour une couverture identique.', 'Nous comparons objectivement auprès de plusieurs assureurs — sans engagement contraignant.'],
-      situatie: ['Une situation modifiée nécessite toujours une révision de votre dossier.', 'Sous-assurance ou lacunes surviennent souvent juste après un changement.'],
-      dekking:  ['Une analyse approfondie révèle les angles morts et les chevauchements.', "Nous vérifions chaque partie de votre dossier pour l'exhaustivité et l'exactitude."],
-      contract: ["Le renouvellement de contrat est le moment idéal pour comparer tarifs et conditions.", "Changer à la date d'échéance est possible sans frais ni sanctions."],
-      opinie:   ["En tant que courtier indépendant, nous travaillons pour vous, pas pour l'assureur.", 'Pas d\'argumentaire commercial — uniquement un conseil objectif basé sur votre dossier.']
+      kosten:      'Les primes peuvent fortement varier selon les compagnies pour une couverture identique. Nous comparons objectivement — sans engagement contraignant.',
+      dekking:     'Une analyse approfondie révèle les angles morts et les lacunes. Nous vérifions chaque partie de votre dossier.',
+      duidelijkheid:"Nous expliquons en termes clairs ce que vos polices couvrent réellement et ce à quoi vous devez faire attention.",
+      checken:     "En tant que courtier indépendant, nous travaillons pour vous, pas pour l'assureur. Conseils honnêtes, toujours."
     }
   };
+
   var lockText = {
     nl: 'Uw huidige makelaar wordt <u>niet</u> op de hoogte gebracht van deze check.',
     en: 'Your current broker will <u>not</u> be informed of this check.',
@@ -3910,11 +3977,15 @@ function quizShowResult() {
     fr: 'Recommencer'
   };
 
-  var t = titleMap[lang] || titleMap.nl;
-  var b = bodyMap[lang] || bodyMap.nl;
-  var s = sectorHint[lang] || sectorHint.nl;
-  var c = concernItems[lang] || concernItems.nl;
-  var items = (c[concern] || []);
+  var t  = (titleMap[lang]         || titleMap.nl);
+  var b  = (bodyMap[lang]          || bodyMap.nl);
+  var rh = (risicoHints[lang]      || risicoHints.nl);
+  var vh = (verbeteringHints[lang] || verbeteringHints.nl);
+
+  var hints = [];
+  if (rh[risico])      hints.push(rh[risico]);
+  if (vh[verbetering]) hints.push(vh[verbetering]);
+
   var checkSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
   var lockSvg  = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
 
@@ -3923,9 +3994,9 @@ function quizShowResult() {
       '<div class="quiz-result-emoji" style="background:' + colorMap[urgency] + '">' + emojiMap[urgency] + '</div>' +
       '<div class="quiz-result-title">' + t[urgency] + '</div>' +
     '</div>' +
-    '<p class="quiz-result-body">' + b[urgency] + (s[profile] ? '<br><br>' + s[profile] : '') + '</p>' +
+    '<p class="quiz-result-body">' + b[urgency] + '</p>' +
     '<div class="quiz-result-items">' +
-      items.map(function(i){ return '<div class="quiz-result-item">' + checkSvg + '<span>' + i + '</span></div>'; }).join('') +
+      hints.map(function(i){ return '<div class="quiz-result-item">' + checkSvg + '<span>' + i + '</span></div>'; }).join('') +
     '</div>' +
     '<div style="background:var(--blue-pale);border-radius:10px;padding:13px 18px;display:flex;align-items:center;gap:10px;margin-bottom:24px">' +
       lockSvg +
@@ -3937,19 +4008,19 @@ function quizShowResult() {
     '</div>';
 
   document.getElementById('quiz-result-content').innerHTML = html;
-  showQuizStep(5);
+  showQuizStep(7);
 }
 
 function quizScrollToForm() {
-  // Pre-fill contactformulier met quiz-gegevens
-  var profileLabels = { kmo: 'KMO of vennootschap', zelfstandige: 'Zelfstandige', prive: 'Privépersoon' };
-  var timingLabels  = { recent: 'Minder dan 1 jaar geleden', medium: '1 tot 3 jaar geleden', oud: 'Meer dan 3 jaar geleden', nooit: 'Nooit / Weet niet' };
-  var concernLabels = { besparen: 'Wil besparen op premies', situatie: 'Situatie is veranderd', dekking: 'Twijfelt over dekking', contract: 'Contract loopt af', opinie: 'Wil een tweede mening' };
+  var timingLabels      = { recent: 'Minder dan 1 jaar', medium: '1–3 jaar', langer: 'Langer geleden', geenidee: 'Geen idee' };
+  var zekerheidLabels   = { zeker: '100% zeker', redelijk: 'Redelijk zeker', twijfel: 'Twijfel', geenidee: 'Geen idee' };
+  var risicoLabels      = { personeel: 'Personeel', materiaal: 'Materiaal / infrastructuur', aansprakelijkheid: 'Aansprakelijkheid', geenidee: 'Geen zicht' };
+  var verbeteringLabels = { kosten: 'Minder kosten', dekking: 'Betere dekking', duidelijkheid: 'Meer duidelijkheid', checken: 'Gewoon checken' };
 
-  var fn = document.getElementById('form-input-firstname');
-  var ln = document.getElementById('form-input-lastname');
-  var em = document.getElementById('form-input-email');
-  var ph = document.getElementById('form-input-phone');
+  var fn  = document.getElementById('form-input-firstname');
+  var ln  = document.getElementById('form-input-lastname');
+  var em  = document.getElementById('form-input-email');
+  var ph  = document.getElementById('form-input-phone');
   var msg = document.getElementById('form-input-message');
 
   if (fn && quizAnswers.firstname) fn.value = quizAnswers.firstname;
@@ -3959,9 +4030,10 @@ function quizScrollToForm() {
 
   if (msg) {
     var lines = [];
-    if (quizAnswers[1]) lines.push('Profiel: ' + (profileLabels[quizAnswers[1]] || quizAnswers[1]));
-    if (quizAnswers[2]) lines.push('Laatste check: ' + (timingLabels[quizAnswers[2]] || quizAnswers[2]));
-    if (quizAnswers[3]) lines.push('Grootste bezorgdheid: ' + (concernLabels[quizAnswers[3]] || quizAnswers[3]));
+    if (quizAnswers[1]) lines.push('Laatste check: ' + (timingLabels[quizAnswers[1]] || quizAnswers[1]));
+    if (quizAnswers[2]) lines.push('Zekerheid: ' + (zekerheidLabels[quizAnswers[2]] || quizAnswers[2]));
+    if (quizAnswers[3]) lines.push('Grootste risico: ' + (risicoLabels[quizAnswers[3]] || quizAnswers[3]));
+    if (quizAnswers[4]) lines.push('Wil verbeteren: ' + (verbeteringLabels[quizAnswers[4]] || quizAnswers[4]));
     if (lines.length) msg.value = lines.join('\n');
   }
 
@@ -3970,9 +4042,11 @@ function quizScrollToForm() {
 }
 
 function quizAutoSubmit(btn) {
-  var profileLabels = { kmo: 'KMO of vennootschap', zelfstandige: 'Zelfstandige', prive: 'Privépersoon' };
-  var timingLabels  = { recent: 'Minder dan 1 jaar', medium: '1–3 jaar', oud: 'Meer dan 3 jaar', nooit: 'Nooit / Weet niet' };
-  var concernLabels = { besparen: 'Wil besparen', situatie: 'Situatie gewijzigd', dekking: 'Twijfelt over dekking', contract: 'Contract loopt af', opinie: 'Tweede mening' };
+  var timingLabels      = { recent: 'Minder dan 1 jaar', medium: '1–3 jaar', langer: 'Langer geleden', geenidee: 'Geen idee' };
+  var zekerheidLabels   = { zeker: '100% zeker', redelijk: 'Redelijk zeker', twijfel: 'Twijfel', geenidee: 'Geen idee' };
+  var risicoLabels      = { personeel: 'Personeel', materiaal: 'Materiaal / infrastructuur', aansprakelijkheid: 'Aansprakelijkheid', geenidee: 'Geen zicht' };
+  var verbeteringLabels = { kosten: 'Minder kosten', dekking: 'Betere dekking', duidelijkheid: 'Meer duidelijkheid', checken: 'Gewoon checken' };
+  var actieLabels       = { snel: 'Zo snel mogelijk', maand: 'Binnen de maand', driemaanden: 'Binnen 3 maanden' };
 
   var sendingText = { nl: 'Versturen…', en: 'Sending…', fr: 'Envoi…' };
   if (btn) { btn.disabled = true; btn.textContent = sendingText[currentLang] || sendingText.nl; }
@@ -3982,15 +4056,17 @@ function quizAutoSubmit(btn) {
     achternaam: (quizAnswers.lastname  || '').trim(),
     email:      (quizAnswers.email     || '').trim(),
     telefoon:   (quizAnswers.phone     || '').trim(),
-    sector:     profileLabels[quizAnswers[1]] || quizAnswers[1] || '',
+    sector:     '',
     kantoor:    '',
     bericht:    'Via simulator',
     datum:      new Date().toISOString(),
     gelezen:    false,
     quiz: {
-      profiel:    profileLabels[quizAnswers[1]] || quizAnswers[1] || '',
-      timing:     timingLabels[quizAnswers[2]]  || quizAnswers[2] || '',
-      aanleiding: concernLabels[quizAnswers[3]] || quizAnswers[3] || ''
+      timing:      timingLabels[quizAnswers[1]]      || quizAnswers[1] || '',
+      zekerheid:   zekerheidLabels[quizAnswers[2]]   || quizAnswers[2] || '',
+      risico:      risicoLabels[quizAnswers[3]]       || quizAnswers[3] || '',
+      verbetering: verbeteringLabels[quizAnswers[4]] || quizAnswers[4] || '',
+      actie:       actieLabels[quizAnswers[5]]        || quizAnswers[5] || ''
     }
   };
 
@@ -3999,6 +4075,7 @@ function quizAutoSubmit(btn) {
     en: '✓ Request received — we will contact you as soon as possible!',
     fr: '✓ Demande reçue — nous vous contacterons dans les plus brefs délais !'
   };
+
   function onSuccess() {
     var row = document.getElementById('quiz-cta-row');
     if (row) {
@@ -4014,14 +4091,16 @@ function quizAutoSubmit(btn) {
       voornaam:        data.voornaam,
       achternaam:      data.achternaam,
       email:           data.email,
-      telefoon:        data.telefoon       || '—',
-      sector:          data.sector         || '—',
-      kantoor:         data.kantoor        || '—',
-      bericht:         data.bericht        || '—',
+      telefoon:        data.telefoon  || '—',
+      sector:          data.sector    || '—',
+      kantoor:         data.kantoor   || '—',
+      bericht:         data.bericht   || '—',
       datum:           datum,
-      quiz_profiel:    quiz.profiel        || '—',
-      quiz_timing:     quiz.timing         || '—',
-      quiz_aanleiding: quiz.aanleiding     || '—'
+      quiz_timing:      quiz.timing      || '—',
+      quiz_zekerheid:   quiz.zekerheid   || '—',
+      quiz_risico:      quiz.risico      || '—',
+      quiz_verbetering: quiz.verbetering || '—',
+      quiz_actie:       quiz.actie       || '—'
     }).catch(function(){});
   }
 
@@ -4074,13 +4153,17 @@ function submitForm() {
   };
 
   if (typeof quizAnswers !== 'undefined' && (quizAnswers[1] || quizAnswers[2] || quizAnswers[3])) {
-    var pm = { kmo:'KMO of vennootschap', zelfstandige:'Zelfstandige', prive:'Privépersoon' };
-    var tm = { recent:'Minder dan 1 jaar', medium:'1–3 jaar', oud:'Meer dan 3 jaar', nooit:'Nooit / Weet niet' };
-    var cm = { besparen:'Wil besparen', situatie:'Situatie gewijzigd', dekking:'Twijfelt over dekking', contract:'Contract loopt af', opinie:'Tweede mening' };
+    var tm = { recent:'Minder dan 1 jaar', medium:'1–3 jaar', langer:'Langer geleden', geenidee:'Geen idee' };
+    var zm = { zeker:'100% zeker', redelijk:'Redelijk zeker', twijfel:'Twijfel', geenidee:'Geen idee' };
+    var rm = { personeel:'Personeel', materiaal:'Materiaal / infrastructuur', aansprakelijkheid:'Aansprakelijkheid', geenidee:'Geen zicht' };
+    var vm = { kosten:'Minder kosten', dekking:'Betere dekking', duidelijkheid:'Meer duidelijkheid', checken:'Gewoon checken' };
+    var am = { snel:'Zo snel mogelijk', maand:'Binnen de maand', driemaanden:'Binnen 3 maanden' };
     data.quiz = {
-      profiel:    pm[quizAnswers[1]] || quizAnswers[1] || '',
-      timing:     tm[quizAnswers[2]] || quizAnswers[2] || '',
-      aanleiding: cm[quizAnswers[3]] || quizAnswers[3] || ''
+      timing:      tm[quizAnswers[1]] || quizAnswers[1] || '',
+      zekerheid:   zm[quizAnswers[2]] || quizAnswers[2] || '',
+      risico:      rm[quizAnswers[3]] || quizAnswers[3] || '',
+      verbetering: vm[quizAnswers[4]] || quizAnswers[4] || '',
+      actie:       am[quizAnswers[5]] || quizAnswers[5] || ''
     };
   }
 
@@ -4106,9 +4189,11 @@ function submitForm() {
       kantoor:          data.kantoor         || '—',
       bericht:          data.bericht         || '—',
       datum:            datum,
-      quiz_profiel:     quiz.profiel         || '—',
-      quiz_timing:      quiz.timing          || '—',
-      quiz_aanleiding:  quiz.aanleiding      || '—'
+      quiz_timing:      quiz.timing      || '—',
+      quiz_zekerheid:   quiz.zekerheid   || '—',
+      quiz_risico:      quiz.risico      || '—',
+      quiz_verbetering: quiz.verbetering || '—',
+      quiz_actie:       quiz.actie       || '—'
     }).catch(function(){});
   }
 
