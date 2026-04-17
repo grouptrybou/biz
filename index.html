@@ -4663,6 +4663,7 @@ function pmShowError(msg) {
 }
 
 function submitPolissen() {
+  console.log('[PM] submitPolissen aangeroepen');
   var naam     = document.getElementById('pm-naam').value.trim();
   var email    = document.getElementById('pm-email').value.trim();
   var telefoon = document.getElementById('pm-telefoon').value.trim();
@@ -4671,6 +4672,7 @@ function submitPolissen() {
   if (!naam)                           { pmShowError('Naam is verplicht.'); return; }
   if (!email || !email.includes('@'))  { pmShowError('Geldig e-mailadres is verplicht.'); return; }
   if (!pmFiles.length)                 { pmShowError('Voeg minstens één polis toe.'); return; }
+  console.log('[PM] validatie ok, bestanden:', pmFiles.length);
 
   var btn  = document.getElementById('pm-submit');
   var wrap = document.getElementById('pm-progress-wrap');
@@ -4694,11 +4696,14 @@ function submitPolissen() {
   btn.disabled = true;
   showProgress(0, 'Uploaden…');
 
+  console.log('[PM] firebase.apps.length:', firebase.apps.length);
   var storage, db;
   try {
     storage = firebase.storage();
     db      = firebase.firestore();
+    console.log('[PM] firebase storage + firestore ok');
   } catch(initErr) {
+    console.error('[PM] firebase init fout:', initErr);
     pmShowError('Firebase niet beschikbaar (' + initErr.message + '). Mail naar info@grouptrybou.be.');
     restoreBtn();
     return;
@@ -4735,8 +4740,17 @@ function submitPolissen() {
     var total    = pmFiles.length;
     var safeName = file.name.replace(/[^a-zA-Z0-9._\-]/g, '_');
     var path     = 'polissen/' + Date.now() + '_' + safeName;
-    var ref      = storage.ref(path);
-    var task     = ref.put(file);
+    console.log('[PM] upload starten:', path);
+    var ref, task;
+    try {
+      ref  = storage.ref(path);
+      task = ref.put(file);
+      console.log('[PM] UploadTask aangemaakt:', !!task);
+    } catch(putErr) {
+      pmShowError('Upload starten mislukt (' + (putErr.code || putErr.message) + '). Probeer opnieuw.');
+      restoreBtn();
+      return;
+    }
     var timedOut = false;
 
     var globalPct = Math.round((currentIndex / total) * 100);
@@ -4749,8 +4763,10 @@ function submitPolissen() {
       restoreBtn();
     }, 60000);
 
+    console.log('[PM] task.on registreren');
     task.on('state_changed',
       function(snapshot) {
+        console.log('[PM] state_changed:', snapshot.state, snapshot.bytesTransferred, '/', snapshot.totalBytes);
         if (snapshot.totalBytes > 0) {
           var filePct   = snapshot.bytesTransferred / snapshot.totalBytes;
           var globalPct = Math.round(((currentIndex + filePct) / total) * 100);
@@ -4781,7 +4797,12 @@ function submitPolissen() {
     );
   }
 
-  uploadNext();
+  try {
+    uploadNext();
+  } catch(startErr) {
+    pmShowError('Onverwachte fout: ' + (startErr.message || startErr) + '. Probeer opnieuw.');
+    restoreBtn();
+  }
 }
 
 // Drag & drop
