@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Group Trybou CMS</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='5' fill='%230a539d'/><text x='16' y='22' text-anchor='middle' font-family='Arial Black,Arial,sans-serif' font-size='12' font-weight='900' fill='white'>.biz</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -1248,14 +1249,32 @@
       </div>
       <style>
         .kb-col.kb-over { outline:2px dashed var(--blue);outline-offset:-2px; }
-        .kb-card { background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 1px 6px rgba(0,0,0,.07);cursor:grab;margin-bottom:10px;transition:box-shadow .15s,transform .15s; }
-        .kb-card:active { cursor:grabbing; }
+        .kb-card { background:#fff;border-radius:10px;padding:0;box-shadow:0 1px 6px rgba(0,0,0,.07);cursor:default;margin-bottom:10px;transition:box-shadow .15s; }
         .kb-card.kb-dragging { opacity:.45;transform:scale(.97); }
+        .kb-card-header { display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding:12px 14px;cursor:grab;border-radius:10px;user-select:none; }
+        .kb-card-header:active { cursor:grabbing; }
+        .kb-card.kb-open .kb-card-header { border-radius:10px 10px 0 0;border-bottom:1px solid #f0f0f0; }
+        .kb-card-toggle { display:flex;align-items:center;gap:6px;flex-shrink:0;margin-top:1px; }
+        .kb-toggle-btn { background:none;border:1px solid #e5e7eb;border-radius:6px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#9ca3af;font-size:.65rem;transition:all .15s;flex-shrink:0;padding:0; }
+        .kb-toggle-btn:hover { background:#f3f4f6;color:var(--ink); }
+        .kb-delete-btn { background:none;border:none;cursor:pointer;color:#d1d5db;font-size:.95rem;padding:0;line-height:1;flex-shrink:0;transition:color .15s; }
+        .kb-delete-btn:hover { color:#dc3545; }
         .kb-card-name { font-weight:700;font-size:.9rem;color:var(--ink); }
-        .kb-card-date { font-size:.75rem;color:var(--muted);margin-top:1px; }
-        .kb-card-meta { margin-top:8px;font-size:.78rem;color:var(--slate);display:flex;flex-direction:column;gap:3px; }
+        .kb-card-date { font-size:.72rem;color:#9ca3af;margin-top:1px; }
+        .kb-card-preview { display:flex;flex-wrap:wrap;gap:3px;margin-top:6px; }
+        .kb-preview-tag { font-size:.68rem;color:#5271a0;background:#eef3fc;border-radius:20px;padding:2px 7px;white-space:nowrap; }
+        .kb-card-body { padding:12px 14px;display:none; }
+        .kb-card.kb-open .kb-card-body { display:block; }
+        .kb-card-meta { font-size:.78rem;color:var(--slate);display:flex;flex-direction:column;gap:4px;margin-bottom:10px; }
+        .kb-quiz-block { background:#f8faff;border-radius:8px;padding:10px 12px;margin-bottom:10px; }
+        .kb-quiz-title { font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#9ca3af;margin-bottom:8px; }
+        .kb-quiz-row { display:flex;gap:8px;padding:3px 0;border-bottom:1px solid #eef0f4; }
+        .kb-quiz-row:last-child { border-bottom:none; }
+        .kb-quiz-label { font-size:.75rem;color:#6b7280;flex:0 0 130px; }
+        .kb-quiz-val { font-size:.75rem;font-weight:600;color:var(--ink);flex:1; }
         .kb-card-actions { margin-top:10px;display:flex;gap:6px;flex-wrap:wrap; }
-        .kb-new-dot { width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block;margin-right:4px;vertical-align:middle; }
+        .kb-new-dot { width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block;margin-right:4px;vertical-align:middle;flex-shrink:0; }
+        .kb-note-dot { width:6px;height:6px;border-radius:50%;background:#f59e0b;display:inline-block;margin-left:5px;vertical-align:middle;flex-shrink:0; }
       </style>
 
       <div id="tab-instellingen" class="tab-pane">
@@ -1376,6 +1395,7 @@ const TAB_TITLES = {
 // ── AANVRAGEN KANBAN ──
 let allAanvragen = [];
 let kbDragId = null;
+const kbExpanded = new Set();
 
 const KB_COLS = ['nieuw', 'behandeling', 'afgehandeld'];
 
@@ -1386,12 +1406,7 @@ function loadAanvragen() {
     allAanvragen.forEach(a => {
       if (!a.status) a.status = a.gelezen ? 'behandeling' : 'nieuw';
     });
-    const ongelezen = allAanvragen.filter(a => a.status === 'nieuw').length;
-    const badge = document.getElementById('aanvragen-badge');
-    if (badge) {
-      if (ongelezen > 0) { badge.textContent = ongelezen; badge.style.display = 'inline'; }
-      else { badge.style.display = 'none'; }
-    }
+    updateBadge();
     renderAanvragen();
   }).catch(() => {});
 }
@@ -1412,60 +1427,127 @@ function renderAanvragen() {
     const listEl = document.getElementById('kb-list-' + col);
     if (!listEl) return;
     listEl.innerHTML = items.map(a => {
-      const datum = a.datum ? new Date(a.datum).toLocaleString('nl-BE', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '—';
-      const naam  = [a.voornaam, a.achternaam].filter(Boolean).join(' ') || '(geen naam)';
+      const datum   = a.datum ? new Date(a.datum).toLocaleString('nl-BE', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '—';
+      const naam    = [a.voornaam, a.achternaam].filter(Boolean).join(' ') || '(geen naam)';
       const isNieuw = col === 'nieuw';
-      const quizTags = a.quiz ? [
-        a.quiz.profiel    ? a.quiz.profiel    : null,
-        a.quiz.timing     ? a.quiz.timing     : null,
-        a.quiz.aanleiding ? a.quiz.aanleiding : null,
-      ].filter(Boolean).map(t => `<span style="background:#eef3fc;color:#3a5fad;border-radius:20px;font-size:.72rem;padding:2px 8px;">${esc(t)}</span>`).join('') : '';
+      const isOpen  = kbExpanded.has(a.id);
+
+      // Preview tags (collapsed state) — first 2 quiz answers
+      const previewFields = a.quiz ? [
+        a.quiz.timing      ? `⏱ ${a.quiz.timing}`      : null,
+        a.quiz.zekerheid   ? `🎯 ${a.quiz.zekerheid}`   : null,
+      ].filter(Boolean) : [];
+      const previewHtml = previewFields.map(t => `<span class="kb-preview-tag">${esc(t)}</span>`).join('');
+
+      // Quiz block (expanded state)
+      const quizRows = a.quiz ? [
+        a.quiz.timing      ? { label:'⏱ Laatste check',    val: a.quiz.timing }      : null,
+        a.quiz.zekerheid   ? { label:'🎯 Zekerheid',        val: a.quiz.zekerheid }   : null,
+        a.quiz.risico      ? { label:'⚠️ Grootste risico',  val: a.quiz.risico }      : null,
+        a.quiz.verbetering ? { label:'💡 Wil verbeteren',   val: a.quiz.verbetering } : null,
+        a.quiz.actie       ? { label:'🚀 Wanneer starten',  val: a.quiz.actie }       : null,
+        // legacy
+        (!a.quiz.timing && a.quiz.profiel)       ? { label:'Profiel',    val: a.quiz.profiel }    : null,
+        (!a.quiz.zekerheid && a.quiz.aanleiding) ? { label:'Aanleiding', val: a.quiz.aanleiding } : null,
+      ].filter(Boolean) : [];
+      const quizHtml = quizRows.length ? `
+        <div class="kb-quiz-block">
+          <div class="kb-quiz-title">Verzekeringscheck</div>
+          ${quizRows.map(r => `
+          <div class="kb-quiz-row">
+            <span class="kb-quiz-label">${esc(r.label)}</span>
+            <span class="kb-quiz-val">${esc(r.val)}</span>
+          </div>`).join('')}
+        </div>` : '';
+
       return `
-      <div class="kb-card${isNieuw ? ' kb-card-new' : ''}"
+      <div class="kb-card${isOpen ? ' kb-open' : ''}"
            draggable="true"
            data-id="${esc(a.id)}"
            ondragstart="kbDragStart(event,'${esc(a.id)}')"
            ondragend="this.classList.remove('kb-dragging')">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px;">
-          <div>
-            ${isNieuw ? '<span class="kb-new-dot"></span>' : ''}
-            <span class="kb-card-name">${esc(naam)}</span>
+
+        <!-- HEADER (altijd zichtbaar) -->
+        <div class="kb-card-header" onclick="toggleKbCard('${esc(a.id)}')">
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;gap:0;">
+              ${isNieuw ? '<span class="kb-new-dot"></span>' : ''}
+              <span class="kb-card-name">${esc(naam)}</span>
+              ${a.notes ? '<span class="kb-note-dot" title="Heeft notitie"></span>' : ''}
+            </div>
             <div class="kb-card-date">${datum}</div>
+            ${!isOpen && previewHtml ? `<div class="kb-card-preview">${previewHtml}</div>` : ''}
           </div>
-          <button onclick="deleteAanvraag('${esc(a.id)}')" title="Verwijder"
-            style="background:none;border:none;cursor:pointer;color:#ccc;font-size:1rem;padding:0;line-height:1;flex-shrink:0;"
-            onmouseenter="this.style.color='#dc3545'" onmouseleave="this.style.color='#ccc'">✕</button>
+          <div class="kb-card-toggle">
+            <button class="kb-toggle-btn" onclick="toggleKbCard('${esc(a.id)}');event.stopPropagation();" title="${isOpen ? 'Samenvouwen' : 'Uitvouwen'}">
+              ${isOpen ? '▲' : '▼'}
+            </button>
+            <button class="kb-delete-btn" onclick="deleteAanvraag('${esc(a.id)}');event.stopPropagation();" title="Verwijder">✕</button>
+          </div>
         </div>
-        <div class="kb-card-meta">
-          ${a.email    ? `<span>✉ <a href="mailto:${esc(a.email)}" style="color:var(--blue)">${esc(a.email)}</a></span>` : ''}
-          ${a.telefoon ? `<span>☎ <a href="tel:${esc(a.telefoon)}" style="color:inherit">${esc(a.telefoon)}</a></span>` : ''}
-          ${a.sector   ? `<span>🏢 ${esc(a.sector)}</span>` : ''}
-          ${a.kantoor  ? `<span>📍 ${esc(a.kantoor)}</span>` : ''}
-        </div>
-        ${a.bericht ? `<div style="margin-top:8px;font-size:.78rem;color:var(--slate);line-height:1.5;white-space:pre-wrap;border-top:1px solid #f0f0f0;padding-top:8px;">${esc(a.bericht)}</div>` : ''}
-        ${quizTags ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;">${quizTags}</div>` : ''}
-        <div style="margin-top:10px;border-top:1px solid #f0f0f0;padding-top:10px;">
-          <button onclick="toggleNote('${esc(a.id)}')" style="background:none;border:none;cursor:pointer;font-size:.78rem;color:var(--slate);padding:0;display:flex;align-items:center;gap:4px;font-family:inherit;">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-            ${a.notes ? `<span style="color:var(--blue);font-weight:600;">Notitie</span>` : 'Notitie toevoegen'}
-          </button>
-          <div id="note-wrap-${esc(a.id)}" style="display:none;margin-top:8px;">
-            ${a.notes ? `<div id="note-display-${esc(a.id)}" style="font-size:.78rem;color:var(--slate);white-space:pre-wrap;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:8px 10px;margin-bottom:6px;">${esc(a.notes)}</div>` : ''}
-            <textarea id="note-input-${esc(a.id)}" placeholder="Voeg een interne notitie toe…" style="width:100%;padding:8px 10px;border:1.5px solid #e5e7eb;border-radius:8px;font-family:inherit;font-size:.78rem;color:var(--ink);resize:vertical;min-height:70px;outline:none;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='#e5e7eb'">${a.notes ? esc(a.notes) : ''}</textarea>
-            <div style="display:flex;gap:6px;margin-top:6px;">
-              <button class="btn btn-primary btn-sm" onclick="saveNote('${esc(a.id)}')">Opslaan</button>
-              ${a.notes ? `<button class="btn btn-danger btn-sm" onclick="deleteNote('${esc(a.id)}')">Verwijder notitie</button>` : ''}
+
+        <!-- BODY (in/uitvouwbaar) -->
+        <div class="kb-card-body">
+          <div class="kb-card-meta">
+            ${a.email    ? `<span>✉ <a href="mailto:${esc(a.email)}" style="color:var(--blue)">${esc(a.email)}</a></span>` : ''}
+            ${a.telefoon ? `<span>☎ <a href="tel:${esc(a.telefoon)}" style="color:inherit">${esc(a.telefoon)}</a></span>` : ''}
+            ${a.sector   ? `<span>🏢 ${esc(a.sector)}</span>` : ''}
+            ${a.kantoor  ? `<span>📍 ${esc(a.kantoor)}</span>` : ''}
+          </div>
+          ${quizHtml}
+          ${a.bericht ? `<div style="font-size:.78rem;color:var(--slate);line-height:1.5;white-space:pre-wrap;background:#f9fafb;border-radius:6px;padding:8px 10px;margin-bottom:10px;">${esc(a.bericht)}</div>` : ''}
+          <div style="border-top:1px solid #f0f0f0;padding-top:10px;">
+            <button onclick="toggleNote('${esc(a.id)}')" style="background:none;border:none;cursor:pointer;font-size:.78rem;color:var(--slate);padding:0;display:flex;align-items:center;gap:4px;font-family:inherit;">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              ${a.notes ? `<span style="color:var(--blue);font-weight:600;">Notitie</span>` : 'Notitie toevoegen'}
+            </button>
+            <div id="note-wrap-${esc(a.id)}" style="display:none;margin-top:8px;">
+              ${a.notes ? `<div id="note-display-${esc(a.id)}" style="font-size:.78rem;color:var(--slate);white-space:pre-wrap;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:8px 10px;margin-bottom:6px;">${esc(a.notes)}</div>` : ''}
+              <textarea id="note-input-${esc(a.id)}" placeholder="Voeg een interne notitie toe…" style="width:100%;padding:8px 10px;border:1.5px solid #e5e7eb;border-radius:8px;font-family:inherit;font-size:.78rem;color:var(--ink);resize:vertical;min-height:70px;outline:none;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='#e5e7eb'">${a.notes ? esc(a.notes) : ''}</textarea>
+              <div style="display:flex;gap:6px;margin-top:6px;">
+                <button class="btn btn-primary btn-sm" onclick="saveNote('${esc(a.id)}')">Opslaan</button>
+                ${a.notes ? `<button class="btn btn-danger btn-sm" onclick="deleteNote('${esc(a.id)}')">Verwijder notitie</button>` : ''}
+              </div>
             </div>
           </div>
-        </div>
-        <div class="kb-card-actions">
-          ${col !== 'nieuw'        ? `<button class="btn btn-outline btn-sm" onclick="moveAanvraag('${esc(a.id)}','nieuw')">← Nieuw</button>` : ''}
-          ${col !== 'behandeling'  ? `<button class="btn btn-outline btn-sm" onclick="moveAanvraag('${esc(a.id)}','behandeling')">In behandeling</button>` : ''}
-          ${col !== 'afgehandeld'  ? `<button class="btn btn-outline btn-sm" onclick="moveAanvraag('${esc(a.id)}','afgehandeld')">Afgehandeld ✓</button>` : ''}
+          <div class="kb-card-actions">
+            ${col !== 'nieuw'        ? `<button class="btn btn-outline btn-sm" onclick="moveAanvraag('${esc(a.id)}','nieuw')">← Nieuw</button>` : ''}
+            ${col !== 'behandeling'  ? `<button class="btn btn-outline btn-sm" onclick="moveAanvraag('${esc(a.id)}','behandeling')">In behandeling</button>` : ''}
+            ${col !== 'afgehandeld'  ? `<button class="btn btn-outline btn-sm" onclick="moveAanvraag('${esc(a.id)}','afgehandeld')">Afgehandeld ✓</button>` : ''}
+          </div>
         </div>
       </div>`;
     }).join('');
   });
+}
+
+function updateBadge() {
+  const ongelezen = allAanvragen.filter(a => !a.gelezen).length;
+  const badge = document.getElementById('aanvragen-badge');
+  if (!badge) return;
+  if (ongelezen > 0) { badge.textContent = ongelezen; badge.style.display = 'inline'; }
+  else { badge.style.display = 'none'; }
+}
+
+function toggleKbCard(id) {
+  const card = document.querySelector(`.kb-card[data-id="${id}"]`);
+  if (!card) return;
+  if (kbExpanded.has(id)) {
+    kbExpanded.delete(id);
+    card.classList.remove('kb-open');
+  } else {
+    kbExpanded.add(id);
+    card.classList.add('kb-open');
+    // mark as read when opened
+    const item = allAanvragen.find(a => a.id === id);
+    if (item && !item.gelezen) {
+      item.gelezen = true;
+      db.collection('aanvragen').doc(id).update({ gelezen: true }).catch(() => {});
+      updateBadge();
+    }
+  }
+  const btn = card.querySelector('.kb-toggle-btn');
+  if (btn) btn.textContent = kbExpanded.has(id) ? '▲' : '▼';
 }
 
 function kbDragStart(e, id) {
@@ -1489,13 +1571,7 @@ function moveAanvraag(id, newStatus) {
   if (newStatus !== 'nieuw') item.gelezen = true;
   db.collection('aanvragen').doc(id).update({ status: newStatus, gelezen: newStatus !== 'nieuw' }).catch(() => {});
   renderAanvragen();
-  // update badge
-  const ongelezen = allAanvragen.filter(a => a.status === 'nieuw').length;
-  const badge = document.getElementById('aanvragen-badge');
-  if (badge) {
-    if (ongelezen > 0) { badge.textContent = ongelezen; badge.style.display = 'inline'; }
-    else { badge.style.display = 'none'; }
-  }
+  updateBadge();
 }
 
 function deleteAanvraag(id) {
@@ -1573,8 +1649,8 @@ function doLogin() {
     .then(() => {
       // handled by onAuthStateChanged
     })
-    .catch(() => {
-      errEl.textContent = 'Ongeldig e-mailadres of wachtwoord.';
+    .catch((err) => {
+      errEl.textContent = 'Ongeldig e-mailadres of wachtwoord. (' + err.code + ')';
       document.getElementById('login-pass').value = '';
     });
 }
