@@ -1029,12 +1029,12 @@ footer a:hover{color:var(--white)}
               <button class="step-option-btn" data-lang="step-1-opt-a-cta">Plan uw check</button>
             </div>
             <div class="step-option-or" data-lang="step-1-or">of</div>
-            <div class="step-option clickable" onclick="window.location.href='mailto:tom@grouptrybou.be?subject=' + encodeURIComponent('Polissen doorsturen')">
+            <div class="step-option clickable" onclick="openPolissenMail()">
               <div class="step-option-inner">
                 <div class="step-option-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
                 <div><strong data-lang="step-1-opt-b-title">Stuur uw polissen per e-mail door</strong><span class="step-opt-desc" data-lang="step-1-opt-b-desc">We stellen een e-mail op naar Tom. U voegt uw polissen als bijlage toe en klikt op verzenden.</span></div>
               </div>
-              <button class="step-option-btn" onclick="event.stopPropagation();window.location.href='mailto:tom@grouptrybou.be?subject=' + encodeURIComponent('Polissen doorsturen')" data-lang="step-1-opt-b-cta">E-mail opstellen naar Tom</button>
+              <button class="step-option-btn" onclick="event.stopPropagation();openPolissenMail()" data-lang="step-1-opt-b-cta">E-mail opstellen naar Tom</button>
             </div>
           </div>
         </div>
