@@ -943,7 +943,7 @@
           <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
           Ongedaan maken
         </button>
-        <a href="websiteeditV3.html" target="_blank" class="btn-visit">
+        <a href="Index.html" target="_blank" class="btn-visit">
           <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           Bekijk website
         </a>
@@ -1474,6 +1474,7 @@ function renderAanvragen() {
               ${isNieuw ? '<span class="kb-new-dot"></span>' : ''}
               <span class="kb-card-name">${esc(naam)}</span>
               ${a.notes ? '<span class="kb-note-dot" title="Heeft notitie"></span>' : ''}
+              ${a.polissen && a.polissen.length ? `<span title="${a.polissen.length} polis(sen) bijgevoegd" style="margin-left:4px;font-size:.7rem;background:#dbeafe;color:#1d4ed8;border-radius:4px;padding:1px 5px;font-weight:600;">📎${a.polissen.length}</span>` : ''}
             </div>
             <div class="kb-card-date">${datum}</div>
             ${!isOpen && previewHtml ? `<div class="kb-card-preview">${previewHtml}</div>` : ''}
@@ -1496,6 +1497,11 @@ function renderAanvragen() {
           </div>
           ${quizHtml}
           ${a.bericht ? `<div style="font-size:.78rem;color:var(--slate);line-height:1.5;white-space:pre-wrap;background:#f9fafb;border-radius:6px;padding:8px 10px;margin-bottom:10px;">${esc(a.bericht)}</div>` : ''}
+          ${a.polissen && a.polissen.length ? `
+          <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 12px;margin-bottom:10px;">
+            <div style="font-size:.72rem;font-weight:700;color:#1d4ed8;letter-spacing:.04em;text-transform:uppercase;margin-bottom:7px;">📎 Doorgestuurde polissen (${a.polissen.length})</div>
+            ${a.polissen.map(p => `<a href="${p.url}" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--blue);text-decoration:none;padding:4px 0;border-bottom:1px solid rgba(191,219,254,.5);" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>${esc(p.naam)}</a>`).join('')}
+          </div>` : ''}
           <div style="border-top:1px solid #f0f0f0;padding-top:10px;">
             <button onclick="toggleNote('${esc(a.id)}')" style="background:none;border:none;cursor:pointer;font-size:.78rem;color:var(--slate);padding:0;display:flex;align-items:center;gap:4px;font-family:inherit;">
               <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
